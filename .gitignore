@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Graphify tool outputs & caches
+graphify-out/
+.graphify*/
+
+# JetBrains / IntelliJ IDEA
+# Official recommended practice: share core project settings, ignore user-specific files and caches
+.idea/caches/
+.idea/shelf/
+.idea/workspace.xml
+.idea/**/workspace.xml
+.idea/usage.statistics.xml
+.idea/tasks.xml
+.idea/**/tasks.xml
+.idea/sonarlint/
+.idea/httpRequests/
+
+# Python / build artifacts (if applicable)
+__pycache__/
+*.py[cod]
+*$py.class
