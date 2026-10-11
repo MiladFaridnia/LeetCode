@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>یادداشت گوینده — راهنمای شروع لیت‌کد</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0d0d1a;--surf:#141428;--surf2:#1c1c38;
+      --teal:#4ecca3;--purple:#7c8ff5;--amber:#e9a84c;--red:#e96c6c;
+      --text:#dde1f5;--dim:#7a8299;--border:rgba(78,204,163,.12);
+      --fs-scale:1;
+      --font:'Yekan Bakh','Segoe UI',Tahoma,sans-serif;
+    }
+    html.light{
+      --bg:#f4f4ff;--surf:#e8e8f8;--surf2:#dcdcf0;
+      --teal:#1a9972;--purple:#4a5fd0;--amber:#b06010;--red:#c03838;
+      --text:#18182c;--dim:#525870;--border:rgba(30,30,100,.1);
+    }
+    @font-face{
+      font-family:'Yekan Bakh';
+      src:url('fonts/yekan_bakh_fa_num_regular.ttf') format('truetype');
+      font-weight:normal;font-style:normal;font-display:swap;
+    }
+    html,body{height:100%;background:var(--bg);color:var(--text);
+      font-family:var(--font);transition:background .3s,color .3s}
+    .app{display:flex;flex-direction:column;height:100vh}
+
+    .topbar{
+      padding:14px 24px;border-bottom:1px solid var(--border);
+      background:var(--surf);display:flex;align-items:center;gap:14px;flex-shrink:0;
+    }
+    .topbar h1{font-size:calc(14px * var(--fs-scale));color:var(--teal);
+      text-transform:uppercase;letter-spacing:.08em;font-weight:700;white-space:nowrap}
+    .slide-info{flex:1;min-width:0}
+    .slide-info .num{font-size:calc(12px * var(--fs-scale));color:var(--dim);margin-bottom:2px}
+    .slide-info .title{font-size:calc(20px * var(--fs-scale));font-weight:700;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .status{font-size:calc(11px * var(--fs-scale));padding:4px 10px;border-radius:20px;
+      border:1px solid;white-space:nowrap;flex-shrink:0}
+    .status.ok{color:var(--teal);border-color:rgba(78,204,163,.3);background:rgba(78,204,163,.08)}
+    .status.wait{color:var(--amber);border-color:rgba(233,168,76,.3);background:rgba(233,168,76,.08)}
+    .ctrls{display:flex;gap:8px;flex-shrink:0}
+    .btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+      background:rgba(10,10,22,.9);color:var(--text);cursor:pointer;
+      font-size:calc(14px * var(--fs-scale));display:flex;align-items:center;
+      justify-content:center;transition:all .2s;font-family:var(--font)}
+    .btn:hover{background:rgba(78,204,163,.14);border-color:var(--teal);color:var(--teal)}
+    html.light .btn{background:rgba(240,240,255,.9)}
+
+    main{flex:1;overflow-y:auto;padding:24px 28px 32px}
+    main::-webkit-scrollbar{width:5px}
+    main::-webkit-scrollbar-thumb{background:rgba(78,204,163,.2);border-radius:2px}
+
+    .note-content{font-size:calc(16px * var(--fs-scale));line-height:1.95;color:var(--dim)}
+    .note-content h4{color:var(--text);font-size:calc(16.5px * var(--fs-scale));
+      margin:1.1rem 0 .45rem;font-weight:700}
+    .note-content h4:first-child{margin-top:0}
+    .note-content ul{margin:.4rem 1.4rem 0 0}
+    .note-content li{margin-bottom:.35rem}
+    .note-content .example{
+      background:var(--surf2);border-radius:8px;padding:12px 14px;
+      margin:.6rem 0;font-size:calc(14.5px * var(--fs-scale));
+      border:1px solid var(--border);line-height:1.8;color:var(--text);
+    }
+    .note-content code{font-family:monospace;font-size:.9em;color:var(--teal);
+      background:rgba(78,204,163,.1);padding:2px 6px;border-radius:4px}
+
+    .next-box{
+      margin-top:28px;padding:14px 16px;border-radius:10px;
+      background:rgba(124,143,245,.06);border:1px solid rgba(124,143,245,.18);
+      border-right:3px solid var(--purple);
+    }
+    .next-box .lbl{font-size:calc(10px * var(--fs-scale));font-weight:700;
+      letter-spacing:.8px;text-transform:uppercase;color:var(--purple);margin-bottom:6px}
+    .next-box .txt{font-size:calc(14.5px * var(--fs-scale));color:var(--dim)}
+
+    .empty{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      height:100%;text-align:center;color:var(--dim);gap:12px;padding:2rem;
+    }
+    .empty .icon{font-size:3rem;opacity:.5}
+    .empty p{font-size:calc(15px * var(--fs-scale));line-height:1.7;max-width:360px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>یادداشت گوینده</h1>
+      <div class="slide-info">
+        <div class="num" id="slideNum">—</div>
+        <div class="title" id="slideTitle">در انتظار اتصال…</div>
+      </div>
+      <span class="status wait" id="status">در انتظار ارائه</span>
+      <div class="ctrls">
+        <button class="btn" id="font-dn" title="کوچک‌تر">A−</button>
+        <button class="btn" id="font-up" title="بزرگ‌تر">A+</button>
+        <button class="btn" id="theme-btn" title="تغییر تم">☀️</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="empty" id="placeholder">
+        <div class="icon">📝</div>
+        <p>صفحه ارائه را باز کنید و دکمه 📝 (یا کلید N) را بزنید.<br>این پنجره به‌صورت خودکار با اسلایدها همگام می‌شود.</p>
+      </div>
+      <div id="notesView" hidden>
+        <div class="note-content" id="noteContent"></div>
+        <div class="next-box" id="nextBox" hidden>
+          <div class="lbl">اسلاید بعدی</div>
+          <div class="txt" id="nextTitle"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="speaker-notes-data.js"></script>
+  <script>
+    const FS_MIN = 0.85, FS_MAX = 1.45, FS_STEP = 0.05;
+    let fsScale = 1, currentIndex = -1, totalSlides = SPEAKER_NOTES.length;
+    const channel = new BroadcastChannel(PRESENTATION_CHANNEL);
+
+    function toPersianNum(n) {
+      return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    }
+
+    function applyFontScale() {
+      document.documentElement.style.setProperty('--fs-scale', fsScale);
+    }
+
+    function setTheme(isLight) {
+      document.documentElement.classList.toggle('light', isLight);
+      document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+    }
+
+    function render(index, total) {
+      currentIndex = index;
+      totalSlides = total || SPEAKER_NOTES.length;
+      const note = SPEAKER_NOTES[index];
+      const connected = index >= 0;
+
+      document.getElementById('status').textContent = connected ? 'متصل' : 'در انتظار ارائه';
+      document.getElementById('status').className = 'status ' + (connected ? 'ok' : 'wait');
+      document.getElementById('placeholder').hidden = connected;
+      document.getElementById('notesView').hidden = !connected;
+
+      if (!connected) return;
+
+      document.getElementById('slideNum').textContent =
+        'اسلاید ' + toPersianNum(index + 1) + ' از ' + toPersianNum(totalSlides);
+      document.getElementById('slideTitle').textContent = note?.title || '—';
+      document.getElementById('noteContent').innerHTML = note?.content || '<p>یادداشتی برای این اسلاید نیست.</p>';
+
+      const nextBox = document.getElementById('nextBox');
+      if (index < totalSlides - 1) {
+        nextBox.hidden = false;
+        document.getElementById('nextTitle').textContent =
+          toPersianNum(index + 2) + '. ' + (SPEAKER_NOTES[index + 1]?.title || '');
+      } else {
+        nextBox.hidden = true;
+      }
+    }
+
+    channel.onmessage = e => {
+      const msg = e.data;
+      if (msg.type === 'state') {
+        render(msg.index, msg.total);
+        if (typeof msg.isLight === 'boolean') setTheme(msg.isLight);
+      }
+    };
+
+    channel.postMessage({ type: 'request-sync' });
+
+    document.getElementById('font-up').addEventListener('click', () => {
+      fsScale = Math.min(FS_MAX, +(fsScale + FS_STEP).toFixed(2));
+      applyFontScale();
+    });
+    document.getElementById('font-dn').addEventListener('click', () => {
+      fsScale = Math.max(FS_MIN, +(fsScale - FS_STEP).toFixed(2));
+      applyFontScale();
+    });
+    document.getElementById('theme-btn').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+    });
+
+    window.addEventListener('beforeunload', () => channel.close());
+  </script>
+</body>
+</html>

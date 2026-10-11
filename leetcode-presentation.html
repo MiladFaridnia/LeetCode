@@ -1,0 +1,3294 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>راهنمای جامع شروع LeetCode — ارائه تخصصی</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0d0d1a; --surf:#141428; --surf2:#1c1c38;
+      --teal:#4ecca3; --purple:#7c8ff5; --amber:#e9a84c; --red:#e96c6c; --cyan:#38bdf8;
+      --text:#dde1f5; --dim:#7a8299; --codebg:#08080f; --border:rgba(78,204,163,.12);
+      --fs-scale:1;
+      --font:'Yekan Bakh','Segoe UI',Tahoma,sans-serif;
+    }
+    html.light{
+      --bg:#f4f4ff; --surf:#e8e8f8; --surf2:#dcdcf0;
+      --teal:#1a9972; --purple:#4a5fd0; --amber:#b06010; --red:#c03838; --cyan:#0284c7;
+      --text:#18182c; --dim:#525870; --codebg:#1e1e30; --border:rgba(30,30,100,.1);
+    }
+    html.light #s1{
+      background:radial-gradient(ellipse 80% 55% at 50% 42%,rgba(26,153,114,.12) 0%,transparent 68%),
+                 radial-gradient(ellipse 55% 35% at 22% 78%,rgba(74,95,208,.09) 0%,transparent 55%),
+                 #f4f4ff !important;
+    }
+    html.light #sclosing{
+      background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(74,95,208,.1) 0%,transparent 65%),
+                 #f4f4ff !important;
+    }
+    html.light #sthanks{
+      background:radial-gradient(ellipse 80% 55% at 50% 42%,rgba(78,204,163,.1) 0%,transparent 68%),
+                 radial-gradient(ellipse 55% 35% at 22% 78%,rgba(124,143,245,.08) 0%,transparent 55%),
+                 #f4f4ff !important;
+    }
+    html.light .tqmain{color:#18182c;-webkit-text-fill-color:#18182c}
+    html.light .tmain{
+      background:none !important;
+      -webkit-background-clip:unset;background-clip:unset;
+      -webkit-text-fill-color:#18182c;color:#18182c;
+    }
+    html.light .ctitle{
+      background:linear-gradient(135deg,#18182c 30%,#4a5fd0 100%) !important;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      color:#18182c;
+    }
+    html.light .nb{background:rgba(240,240,255,.9)}
+    html.light .scenario{background:rgba(176,96,16,.08)}
+    html.light .compare .bad{background:rgba(192,56,56,.08)}
+    html.light .compare .good{background:rgba(26,153,114,.08)}
+    html.light .quote{background:rgba(74,95,208,.08)}
+
+    @font-face{
+      font-family:'Yekan Bakh';
+      src:url('fonts/yekan_bakh_fa_num_regular.ttf') format('truetype');
+      font-weight:normal;font-style:normal;font-display:swap;
+    }
+
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
+      color:var(--text);font-family:var(--font);transition:background .3s,color .3s}
+
+    /* ── DECK ─────────────────────────────────────────────── */
+    #deck{width:100vw;height:100vh;position:relative;overflow:hidden}
+    .slide{position:absolute;inset:0;display:flex;flex-direction:column;
+      opacity:0;transform:translateY(16px);pointer-events:none;
+      transition:opacity .36s ease,transform .36s ease,background .3s}
+    .slide.active{opacity:1;transform:none;pointer-events:all}
+    .slide.exit{opacity:0;transform:translateY(-16px);transition:opacity .26s ease,transform .26s ease}
+
+    /* ── PROGRESS & CONTROLS ─────────────────────────────── */
+    #prog{position:fixed;bottom:0;left:0;height:3px;
+      background:linear-gradient(90deg,var(--teal),var(--purple));
+      transition:width .3s ease;z-index:200}
+    #ctrl{position:fixed;bottom:22px;right:28px;display:flex;
+      align-items:center;gap:12px;z-index:200}
+    .nb{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+      background:rgba(10,10,22,.9);backdrop-filter:blur(12px);color:var(--text);
+      font-size:calc(16px * var(--fs-scale));cursor:pointer;display:flex;align-items:center;
+      justify-content:center;transition:all .2s;font-family:var(--font)}
+    .nb:hover{background:rgba(78,204,163,.14);border-color:var(--teal);color:var(--teal)}
+    .nb.on{background:rgba(78,204,163,.18);border-color:var(--teal);color:var(--teal)}
+    #ctr{font-size:calc(12px * var(--fs-scale));color:var(--dim);min-width:52px;text-align:center;letter-spacing:.5px}
+
+    /* ── HEADER BAR ──────────────────────────────────────── */
+    .sh{padding:13px 44px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:12px;flex-shrink:0;min-height:54px}
+    .shtitle{font-size:calc(24px * var(--fs-scale));font-weight:700;letter-spacing:-.3px}
+    .sp{flex:1}
+    .badge{padding:4px 11px;border-radius:20px;font-size:calc(11px * var(--fs-scale));font-weight:700;
+      letter-spacing:.8px;text-transform:uppercase;flex-shrink:0;border:1px solid}
+    .bc{background:rgba(78,204,163,.12);color:var(--teal);border-color:rgba(78,204,163,.25)}
+    .bs{background:rgba(124,143,245,.12);color:var(--purple);border-color:rgba(124,143,245,.25)}
+    .bb{background:rgba(233,168,76,.12);color:var(--amber);border-color:rgba(233,168,76,.25)}
+    .bk{background:rgba(233,108,108,.12);color:var(--red);border-color:rgba(233,108,108,.25)}
+    .bcy{background:rgba(56,189,248,.12);color:var(--cyan);border-color:rgba(56,189,248,.25)}
+
+    /* ── SLIDE BODY ──────────────────────────────────────── */
+    .sbody{flex:1;overflow-y:auto;padding:22px 44px 56px;min-height:0}
+    .sbody::-webkit-scrollbar{width:4px}
+    .sbody::-webkit-scrollbar-thumb{background:rgba(78,204,163,.2);border-radius:2px}
+    .sbody p,.sbody li{font-size:calc(16.5px * var(--fs-scale));line-height:1.85;color:var(--text)}
+    .sbody ul,.sbody ol{margin:.5rem 1.5rem 0 0}
+    .sbody li{margin-bottom:.45rem}
+    .sbody h3{font-size:calc(17px * var(--fs-scale));color:var(--teal);margin:1.1rem 0 .55rem;font-weight:700}
+    .sbody strong{color:var(--text);font-weight:700}
+    .sbody code{font-family:monospace;font-size:.88em;color:var(--teal);
+      background:var(--surf2);padding:2px 7px;border-radius:4px}
+
+    .scenario{
+      background:rgba(233,168,76,.08);border-right:3px solid var(--amber);
+      padding:12px 16px;border-radius:0 10px 10px 0;margin:1rem 0;
+      font-size:calc(15.5px * var(--fs-scale));line-height:1.7;
+    }
+    .scenario strong{color:var(--amber)}
+
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1rem 0}
+    .compare .bad{
+      background:rgba(233,108,108,.08);border:1px solid rgba(233,108,108,.22);
+      border-top:2px solid var(--red);border-radius:10px;padding:12px 14px;
+    }
+    .compare .good{
+      background:rgba(78,204,163,.06);border:1px solid rgba(78,204,163,.2);
+      border-top:2px solid var(--teal);border-radius:10px;padding:12px 14px;
+    }
+    .compare .label{font-size:calc(10px * var(--fs-scale));font-weight:700;
+      letter-spacing:.8px;text-transform:uppercase;margin-bottom:.5rem}
+    .compare .bad .label{color:var(--red)}
+    .compare .good .label{color:var(--teal)}
+    .compare p{font-size:calc(14.5px * var(--fs-scale));line-height:1.7;color:var(--dim)}
+
+    .quote{
+      font-style:italic;border-right:3px solid var(--purple);
+      padding:12px 16px;margin:1rem 0;color:var(--dim);
+      background:rgba(124,143,245,.06);border-radius:0 8px 8px 0;
+      font-size:calc(15.5px * var(--fs-scale));line-height:1.75;
+    }
+
+    .card-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1rem 0}
+    .card-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:1rem 0}
+    .card-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:1rem 0}
+    .card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1rem 0}
+    .card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px;transition:transform .2s}
+    .card:hover{transform:translateY(-2px)}
+    .card-grid-5 .card{padding:12px 10px}
+    .card-teal{border-top:3px solid var(--teal)}
+    .card-purple{border-top:3px solid var(--purple)}
+    .card-amber{border-top:3px solid var(--amber)}
+    .card-cyan{border-top:3px solid var(--cyan)}
+    .card-red{border-top:3px solid var(--red)}
+    .card-hd{font-size:calc(14.5px * var(--fs-scale));font-weight:700;margin-bottom:6px}
+    .card-desc{font-size:calc(13px * var(--fs-scale));color:var(--dim);line-height:1.6}
+
+    .ktable{width:100%;border-collapse:collapse;margin:1rem 0;font-size:calc(14.5px * var(--fs-scale))}
+    .ktable th,.ktable td{padding:9px 12px;border:1px solid var(--border);text-align:right}
+    .ktable th{background:var(--surf2);color:var(--teal);font-size:calc(11px * var(--fs-scale));
+      font-weight:700;letter-spacing:.5px}
+    .ktable td{color:var(--dim)}
+
+    /* ── CODE BOX ────────────────────────────────────────── */
+    .code-box{
+      background:var(--codebg);border:1px solid var(--border);border-radius:10px;
+      padding:16px 20px;margin:1rem 0;direction:ltr;text-align:left;
+      overflow-x:auto;font-family:'Fira Code',Consolas,Monaco,monospace;
+      font-size:calc(14px * var(--fs-scale));line-height:1.65;
+      white-space:pre;tab-size:4;display:block;
+    }
+    .code-box code{
+      font-family:inherit;font-size:inherit;color:inherit;white-space:inherit;
+    }
+    .kw{color:#f472b6;font-weight:600}
+    .fn{color:#60a5fa}
+    .str{color:#34d399}
+    .ty{color:#fbbf24}
+    .cm{color:#64748b;font-style:italic}
+    .num{color:#f87171}
+
+    /* ── INTERACTIVE VISUAL SIMULATOR ────────────────────── */
+    .sim-header-ctrl{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;flex-wrap:wrap;margin:0.4rem 0 0.8rem;
+    }
+    .sim-stepper{
+      display:flex;align-items:center;gap:6px;flex-wrap:wrap;direction:rtl;
+    }
+    .step-dot{
+      background:var(--surf2);border:1.5px solid var(--border);border-radius:8px;
+      padding:4px 10px;cursor:pointer;display:flex;flex-direction:column;
+      align-items:center;transition:all .25s ease;color:var(--dim);font-family:var(--font);
+    }
+    .step-dot span{font-size:calc(11.5px * var(--fs-scale));font-weight:700}
+    .step-dot small{font-size:calc(9.5px * var(--fs-scale));opacity:.8;font-family:monospace}
+    .step-dot:hover{border-color:var(--teal);color:var(--text)}
+    .step-dot.active{
+      border-color:var(--teal);background:rgba(78,204,163,.15);
+      color:var(--teal);transform:translateY(-2px);box-shadow:0 3px 10px rgba(78,204,163,.25);
+    }
+    .step-dot.passed{
+      border-color:rgba(124,143,245,.4);color:var(--purple);background:rgba(124,143,245,.08);
+    }
+    .step-connector{width:12px;height:2px;background:var(--border)}
+
+    .sim-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .sim-btn{
+      padding:6px 14px;border-radius:7px;border:1px solid var(--border);
+      background:var(--surf2);color:var(--text);cursor:pointer;font-family:var(--font);
+      font-size:calc(12.5px * var(--fs-scale));transition:all .2s;
+    }
+    .sim-btn:hover{background:var(--surf);border-color:var(--teal);color:var(--teal)}
+    .sim-btn-primary{
+      background:rgba(78,204,163,.15);border-color:var(--teal);color:var(--teal);font-weight:700;
+    }
+    .sim-btn-primary:hover{background:var(--teal);color:#0d0d1a}
+    .sim-btn-play{
+      background:rgba(233,168,76,.12);border-color:var(--amber);color:var(--amber);font-weight:700;
+    }
+    .sim-btn-play:hover{background:var(--amber);color:#0d0d1a}
+
+    .sim-board{
+      background:var(--surf);border:1px solid var(--border);border-radius:12px;
+      padding:14px 18px;display:flex;flex-direction:column;gap:12px;
+      box-shadow:0 6px 24px rgba(0,0,0,.25);margin:0.2rem 0;
+    }
+    .sim-arr-section{
+      display:flex;flex-direction:column;gap:6px;align-items:center;
+      padding-bottom:10px;border-bottom:1px dashed var(--border);
+    }
+    .sim-section-label{
+      width:100%;display:flex;justify-content:space-between;align-items:center;
+      font-size:calc(12px * var(--fs-scale));color:var(--dim);
+    }
+    .sim-target-badge{
+      background:rgba(233,168,76,.15);color:var(--amber);border:1px solid rgba(233,168,76,.3);
+      border-radius:6px;padding:3px 10px;font-weight:700;font-size:calc(12px * var(--fs-scale));
+    }
+    .arr-display{
+      display:flex;gap:16px;direction:ltr;align-items:center;justify-content:center;padding:4px 0;
+    }
+    .arr-slot{
+      display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;
+    }
+    .arr-ptr{
+      height:18px;font-size:calc(11.5px * var(--fs-scale));font-weight:700;
+      font-family:monospace;color:var(--amber);opacity:0;transform:translateY(-3px);
+      transition:all .25s ease;display:flex;align-items:center;gap:2px;
+    }
+    .arr-slot.current .arr-ptr{opacity:1;transform:translateY(0)}
+    .arr-item{
+      width:52px;height:52px;border-radius:10px;background:var(--surf2);
+      border:2px solid var(--border);display:flex;flex-direction:column;
+      align-items:center;justify-content:center;position:relative;transition:all .3s ease;
+    }
+    .arr-item .val{font-size:calc(17px * var(--fs-scale));font-weight:700;color:var(--text)}
+    .arr-item .idx{font-size:calc(10px * var(--fs-scale));color:var(--dim);margin-top:-2px;font-family:monospace}
+    .arr-tag{
+      font-size:calc(9.5px * var(--fs-scale));color:var(--dim);border-radius:4px;
+      padding:1px 6px;font-family:var(--font);transition:all .3s ease;
+    }
+    .arr-slot.current .arr-item{
+      border-color:var(--amber);background:rgba(233,168,76,.18);
+      transform:translateY(-3px);box-shadow:0 4px 14px rgba(233,168,76,.35);
+    }
+    .arr-slot.current .arr-tag{
+      background:rgba(233,168,76,.2);color:var(--amber);font-weight:700;
+    }
+    .arr-slot.visited .arr-item{
+      border-color:rgba(124,143,245,.4);background:rgba(124,143,245,.1);
+    }
+    .arr-slot.visited .arr-tag{color:var(--purple)}
+    .arr-slot.found .arr-item{
+      border-color:var(--teal);background:rgba(78,204,163,.25);
+      transform:translateY(-4px) scale(1.06);box-shadow:0 0 18px rgba(78,204,163,.5);
+      animation:pulseTeal 1.2s infinite alternate;
+    }
+    .arr-slot.found .arr-tag{
+      background:rgba(78,204,163,.25);color:var(--teal);font-weight:700;
+    }
+    .arr-slot.skipped .arr-item{opacity:0.4;border-style:dashed}
+    .arr-slot.skipped .arr-tag{color:var(--dim)}
+
+    /* Brute Force Pointer styles */
+    .arr-slot.ptr-i .arr-ptr{opacity:1;transform:translateY(0);color:var(--purple)}
+    .arr-slot.ptr-i .arr-item{border-color:var(--purple);background:rgba(124,143,245,.22);transform:translateY(-3px);box-shadow:0 4px 14px rgba(124,143,245,.35)}
+    .arr-slot.ptr-i .arr-tag{background:rgba(124,143,245,.2);color:var(--purple);font-weight:700}
+
+    .arr-slot.ptr-j .arr-ptr{opacity:1;transform:translateY(0);color:var(--amber)}
+    .arr-slot.ptr-j .arr-item{border-color:var(--amber);background:rgba(233,168,76,.22);transform:translateY(-3px);box-shadow:0 4px 14px rgba(233,168,76,.35)}
+    .arr-slot.ptr-j .arr-tag{background:rgba(233,168,76,.2);color:var(--amber);font-weight:700}
+
+    .arr-slot.tested .arr-item{border-color:rgba(122,130,153,.35);background:rgba(122,130,153,.08);opacity:0.7}
+    .arr-slot.tested .arr-tag{color:var(--dim)}
+
+    @keyframes pulseTeal{
+      0%{box-shadow:0 0 6px rgba(78,204,163,.3)}
+      100%{box-shadow:0 0 18px rgba(78,204,163,.7)}
+    }
+
+    /* ── LIVE HUD ── */
+    .sim-hud{
+      display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;
+    }
+    .hud-card{
+      background:var(--surf2);border-radius:9px;padding:9px 12px;
+      border:1px solid var(--border);border-top:3px solid var(--purple);
+      display:flex;flex-direction:column;gap:3px;
+    }
+    .hud-card.hud-card-diff{border-top-color:var(--amber)}
+    .hud-card.hud-card-query{border-top-color:var(--teal)}
+    .hud-title{
+      font-size:calc(11px * var(--fs-scale));color:var(--dim);
+      font-weight:700;display:flex;align-items:center;gap:4px;
+    }
+    .hud-val{
+      font-size:calc(13.5px * var(--fs-scale));font-weight:700;color:var(--text);
+      font-family:monospace;display:flex;align-items:center;gap:6px;direction:ltr;text-align:left;
+    }
+    .hud-desc{font-size:calc(11px * var(--fs-scale));color:var(--dim);line-height:1.5}
+
+    /* ── SPLIT VIEW (MEMORY + CODE) ── */
+    .sim-split{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    }
+    .sim-panel{
+      background:var(--surf2);border-radius:9px;border:1px solid var(--border);
+      padding:10px 14px;display:flex;flex-direction:column;gap:8px;
+    }
+    .sim-panel-hd{
+      display:flex;align-items:center;justify-content:space-between;
+      font-size:calc(11.5px * var(--fs-scale));
+    }
+    .sim-panel-title{font-weight:700;color:var(--teal);display:flex;align-items:center;gap:4px}
+    .sim-mem-count-badge{
+      font-size:calc(10.5px * var(--fs-scale));background:rgba(78,204,163,.1);
+      color:var(--teal);padding:2px 8px;border-radius:12px;border:1px solid rgba(78,204,163,.2);
+    }
+    .sim-mem-cells{
+      display:flex;gap:8px;flex-wrap:wrap;direction:ltr;align-items:center;
+      min-height:50px;padding:8px 10px;background:var(--codebg);
+      border:1px dashed var(--border);border-radius:7px;
+    }
+    .sim-mem-empty{
+      color:var(--dim);font-size:calc(11.5px * var(--fs-scale));
+      direction:rtl;width:100%;text-align:center;padding:4px;
+    }
+    .mem-cell{
+      display:flex;align-items:center;background:var(--surf2);border:1.5px solid var(--border);
+      border-radius:7px;padding:5px 10px;gap:6px;font-size:calc(12px * var(--fs-scale));
+      transition:all .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.15);
+    }
+    .mem-cell .cell-tag{font-size:calc(9px * var(--fs-scale));color:var(--dim);font-family:var(--font)}
+    .mem-cell .cell-key{color:var(--amber);font-weight:700;font-family:monospace;font-size:calc(13px * var(--fs-scale))}
+    .mem-cell .cell-arrow{color:var(--dim);font-size:calc(11px * var(--fs-scale))}
+    .mem-cell .cell-val{color:var(--purple);font-weight:700;font-family:monospace;font-size:calc(13px * var(--fs-scale))}
+    .mem-cell.just-added{border-color:var(--amber);background:rgba(233,168,76,.12);animation:popIn .35s ease}
+    .mem-cell.matched{
+      border-color:var(--teal);background:rgba(78,204,163,.25);
+      box-shadow:0 0 12px rgba(78,204,163,.5);transform:scale(1.04);
+    }
+    .mem-cell.matched .cell-key{color:var(--teal)}
+    .sim-panel-ft{
+      font-size:calc(10.5px * var(--fs-scale));color:var(--dim);display:flex;align-items:center;gap:4px;
+    }
+
+    /* ── CODE TRACER ── */
+    .sim-code-state{
+      font-size:calc(10.5px * var(--fs-scale));color:var(--amber);
+      font-weight:700;font-family:monospace;
+    }
+    .sim-mini-code{
+      direction:ltr;font-family:monospace;font-size:calc(11.5px * var(--fs-scale));
+      background:var(--codebg);padding:8px 10px;border-radius:7px;border:1px solid var(--border);
+      display:flex;flex-direction:column;gap:2px;overflow-x:auto;
+    }
+    .scl{
+      display:flex;align-items:center;gap:8px;padding:2px 6px;border-radius:4px;
+      color:var(--dim);transition:all .2s ease;white-space:pre;
+    }
+    .scl .ln{
+      font-size:calc(9.5px * var(--fs-scale));color:#555b70;width:14px;
+      text-align:right;user-select:none;
+    }
+    .scl code{font-family:inherit;font-size:inherit}
+    .scl.active{
+      background:rgba(233,168,76,.15);color:var(--text);
+      border-left:3px solid var(--amber);font-weight:600;
+    }
+    .scl.success{
+      background:rgba(78,204,163,.2);color:var(--teal);
+      border-left:3px solid var(--teal);font-weight:700;
+    }
+
+    /* ── UNIFIED SIMPLE TRACE BOX ── */
+    .sim-unified-box{
+      background:var(--surf2);border:1px solid var(--border);border-radius:10px;
+      padding:12px 16px;display:flex;flex-direction:column;gap:10px;
+      border-right:4px solid var(--teal);transition:all .3s ease;
+    }
+    .sub-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding-bottom:6px;border-bottom:1px dashed var(--border);
+    }
+    .sub-step-title{font-size:calc(13.5px * var(--fs-scale));font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+    .sub-badge{font-size:calc(11px * var(--fs-scale));padding:3px 10px;border-radius:12px;font-weight:700}
+    .sub-badge.ok{background:rgba(78,204,163,.15);color:var(--teal);border:1px solid rgba(78,204,163,.3)}
+    .sub-badge.working{background:rgba(124,143,245,.15);color:var(--purple);border:1px solid rgba(124,143,245,.3)}
+    .sub-badge.warn{background:rgba(233,168,76,.15);color:var(--amber);border:1px solid rgba(233,168,76,.3)}
+    .sub-badge.skip{background:rgba(233,108,108,.15);color:var(--red);border:1px solid rgba(233,108,108,.3)}
+    .sub-grid{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    }
+    .sub-pill{
+      background:rgba(15,15,30,.7);border:1px solid var(--border);border-radius:7px;
+      padding:6px 12px;display:inline-flex;align-items:center;gap:6px;
+      font-size:calc(12px * var(--fs-scale));
+    }
+    .sub-pill-lbl{color:var(--dim);font-weight:600}
+    .sub-pill-val{color:var(--teal);font-family:monospace;font-weight:700;direction:ltr}
+    .sub-pill-val.amber{color:var(--amber)}
+    .sub-pill-val.purple{color:var(--purple)}
+    .sub-pill-val.cyan{color:var(--cyan)}
+    .sub-pill-val.red{color:var(--red)}
+    .sub-desc{
+      font-size:calc(13px * var(--fs-scale));line-height:1.75;color:var(--text);
+      background:rgba(78,204,163,.06);padding:8px 12px;border-radius:6px;
+      border:1px dashed rgba(78,204,163,.2);
+    }
+    .arr-slot.ptr-left .arr-item{border-color:var(--purple);background:rgba(124,143,245,.18)}
+    .arr-slot.ptr-right .arr-item{border-color:var(--cyan);background:rgba(67,206,233,.18)}
+    .arr-slot.ptr-i .arr-item{border-color:var(--amber);background:rgba(233,168,76,.18)}
+    .arr-slot.ptr-both .arr-item{border-color:var(--teal);background:rgba(78,204,163,.3)}
+
+    /* ── SUMMARY BOX ── */
+    .sim-summary-box{
+      background:rgba(78,204,163,.06);border:1px solid rgba(78,204,163,.2);
+      border-radius:8px;padding:10px 14px;font-size:calc(12.5px * var(--fs-scale));
+      line-height:1.75;display:flex;align-items:center;gap:8px;
+    }
+    @keyframes popIn{
+      0%{transform:scale(0.85);opacity:0}
+      100%{transform:scale(1);opacity:1}
+    }
+
+    /* ── TITLE SLIDE ─────────────────────────────────────── */
+    #s1{align-items:center;justify-content:center;
+      background:radial-gradient(ellipse 80% 55% at 50% 42%,rgba(78,204,163,.09) 0%,transparent 68%),
+                 radial-gradient(ellipse 55% 35% at 22% 78%,rgba(124,143,245,.07) 0%,transparent 55%),
+                 var(--bg)}
+    .tc{text-align:center;max-width:880px;padding:40px}
+    .tey{font-size:calc(12px * var(--fs-scale));letter-spacing:3px;text-transform:uppercase;color:var(--teal);
+      margin-bottom:24px;opacity:0;animation:fu .6s ease .2s forwards}
+    .tmain{font-size:calc(54px * var(--fs-scale));font-weight:800;line-height:1.15;
+      font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+      background:linear-gradient(140deg,var(--text) 40%,var(--teal) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      margin-bottom:20px;opacity:0;animation:fadeUp .6s ease .4s forwards}
+    .tsub{font-size:calc(19px * var(--fs-scale));color:var(--dim);line-height:1.65;margin-bottom:34px;
+      opacity:0;animation:fu .6s ease .6s forwards}
+    .tauthor{font-size:calc(15px * var(--fs-scale));color:var(--purple);margin-bottom:14px;
+      opacity:0;animation:fu .6s ease .7s forwards}
+    .tpresenter{font-size:calc(16px * var(--fs-scale));color:var(--text);margin-bottom:30px;
+      opacity:0;animation:fu .6s ease .75s forwards;
+      font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+    .tpresenter-label{color:var(--dim);font-family:var(--font);font-size:calc(13px * var(--fs-scale));
+      margin-left:.5rem}
+    .ttags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+      opacity:0;animation:fu .6s ease .85s forwards}
+    .ttag{padding:7px 20px;border-radius:20px;font-size:calc(12.5px * var(--fs-scale));font-weight:600;
+      letter-spacing:.5px;border:1px solid}
+    .tt1{border-color:rgba(78,204,163,.4);color:var(--teal);background:rgba(78,204,163,.07)}
+    .tt2{border-color:rgba(124,143,245,.4);color:var(--purple);background:rgba(124,143,245,.07)}
+    .tt3{border-color:rgba(233,168,76,.4);color:var(--amber);background:rgba(233,168,76,.07)}
+    .hint{position:absolute;bottom:42px;left:50%;transform:translateX(-50%);
+      font-size:calc(12px * var(--fs-scale));color:var(--dim);animation:pulse 2.2s ease 1.4s infinite}
+
+    /* ── CLOSING SLIDE ───────────────────────────────────── */
+    #sclosing{align-items:center;justify-content:center;
+      background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(124,143,245,.08) 0%,transparent 65%),var(--bg)}
+    .ccont{max-width:760px;padding:40px;text-align:center}
+    .ctitle{font-size:calc(42px * var(--fs-scale));font-weight:800;line-height:1.2;
+      background:linear-gradient(135deg,var(--text) 30%,var(--purple) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:26px;
+      animation:fadeUp .45s ease .1s both}
+    .tklist{display:flex;flex-direction:column;gap:14px;margin-bottom:28px;text-align:right}
+    .tki{display:flex;align-items:flex-start;gap:14px;font-size:calc(16.5px * var(--fs-scale));line-height:1.6;color:var(--dim)}
+    .tkn{color:var(--teal);font-weight:800;font-size:calc(18px * var(--fs-scale));flex-shrink:0;width:24px}
+    .tki em{color:var(--text);font-style:normal;font-weight:600}
+    .cquote{font-size:calc(15px * var(--fs-scale));color:var(--dim);border-right:3px solid var(--purple);
+      padding-right:16px;line-height:1.7;font-style:italic;text-align:right}
+
+    /* ── THANK YOU SLIDE ─────────────────────────────────── */
+    #sthanks{align-items:center;justify-content:center;
+      background:radial-gradient(ellipse 80% 55% at 50% 42%,rgba(78,204,163,.09) 0%,transparent 68%),
+                 radial-gradient(ellipse 55% 35% at 78% 78%,rgba(124,143,245,.07) 0%,transparent 55%),
+                 var(--bg)}
+    .tqmain{font-size:calc(50px * var(--fs-scale));font-weight:800;line-height:1.2;
+      background:linear-gradient(140deg,var(--text) 40%,var(--teal) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      margin-bottom:26px;opacity:0;animation:fadeUp .6s ease .3s forwards}
+    .tqsub{font-size:calc(36px * var(--fs-scale));font-weight:700;color:var(--purple);
+      margin-bottom:30px;opacity:0;animation:fu .6s ease .5s forwards}
+    .tqauthor{font-size:calc(16px * var(--fs-scale));color:var(--dim);
+      opacity:0;animation:fu .6s ease .65s forwards;
+      font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+
+    /* ── SLIDE NUMBER ────────────────────────────────────── */
+    .snum{position:absolute;bottom:28px;right:44px;font-size:calc(10.5px * var(--fs-scale));
+      color:rgba(122,130,153,.3);letter-spacing:.5px;pointer-events:none}
+
+    /* ── ANIMATIONS ──────────────────────────────────────── */
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0}to{opacity:1}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+    .anim{opacity:0}
+    .slide.active .anim{animation:fu .45s ease forwards}
+    .slide.active .anim:nth-child(1){animation-delay:.05s}
+    .slide.active .anim:nth-child(2){animation-delay:.12s}
+    .slide.active .anim:nth-child(3){animation-delay:.19s}
+    .slide.active .anim:nth-child(4){animation-delay:.26s}
+    .slide.active .anim:nth-child(5){animation-delay:.33s}
+    .slide.active .anim:nth-child(6){animation-delay:.40s}
+
+    @media(max-width:900px){
+      .compare{grid-template-columns:1fr}
+      .card-grid-5{grid-template-columns:repeat(2,1fr)}
+      .card-grid-4{grid-template-columns:repeat(2,1fr)}
+      .card-grid-3{grid-template-columns:1fr}
+      .sbody{padding:16px 24px 56px}
+      .sh{padding:12px 24px}
+      .tmain{font-size:calc(38px * var(--fs-scale))}
+    }
+    @media(max-width:600px){
+      .card-grid-5{grid-template-columns:1fr}
+      .card-grid-4{grid-template-columns:1fr}
+      .card-grid-2{grid-template-columns:1fr}
+    }
+    @media print{
+      body{overflow:visible;background:#fff;color:#000}
+      #ctrl,#prog{display:none!important}
+      .slide{position:relative;opacity:1!important;transform:none!important;
+        page-break-after:always;min-height:100vh}
+    }
+  </style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ══ SLIDE 0 — TITLE ════════════════════════════════════ -->
+  <div class="slide active" id="s1" data-slide="0">
+    <div class="tc">
+      <p class="tey">ارائه تخصصی ارزیابی‌های فنی · ALGORITHMIC PROBLEM SOLVING</p>
+      <h1 class="tmain">راهنمای جامع شروع LeetCode</h1>
+      <p class="tsub">چرا لیت‌کد ضروری است؟ چگونه اصولی مطالعه کنیم و حل عملی اولین مسئله</p>
+      <p class="tauthor">بر اساس متدولوژی سیستماتیک یادگیری و الگوهای کلیدی ارزیابی فنی</p>
+      <p class="tpresenter">Milad Faridnia <span class="tpresenter-label">· ارائه‌دهنده</span></p>
+      <div class="ttags">
+        <span class="ttag tt1">تفکر الگوریتمی</span>
+        <span class="ttag tt2">متدولوژی مطالعه</span>
+        <span class="ttag tt3">حل عملی Two Sum</span>
+      </div>
+    </div>
+    <p class="hint">→ یا Space برای اسلاید بعد · 📝 کلید N برای یادداشت گوینده</p>
+  </div>
+
+  <!-- ══ SLIDE 1 — چرا لیت‌کد؟ ═══════════════════════════════ -->
+  <div class="slide" data-slide="1">
+    <div class="sh"><span class="shtitle">چرا لیت‌کد؟ ضرورت و واقعیت بازار کار</span><span class="sp"></span><span class="badge bc">ضرورت · Why LeetCode</span></div>
+    <div class="sbody">
+      <p class="anim">امروزه <strong>LeetCode</strong> به زبان مشترک و استاندارد ارزیابی مهندسان در جلسات فنی شرکت‌های بزرگ و بین‌المللی تبدیل شده است.</p>
+      <h3 class="anim">چرا تسلط بر فریم‌ورک‌ها به‌تنهایی کافی نیست؟</h3>
+      <p class="anim">فریم‌ورک‌ها و ابزارها مدام عوض می‌شوند (امروز React، فردا Vue، روز دیگر شیوه جدید)؛ اما <strong>مبانی علوم کامپیوتر و ساختارهای داده</strong> دهه‌هاست که تغییرناپذیر باقی مانده‌اند.</p>
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. مدیریت فشار</div>
+          <div class="card-desc">سنجش توانایی تفکر شفاف و ساختاریافته وقتی مسئله جدید است و زمان محدود.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. شناخت Edge Cases</div>
+          <div class="card-desc">آیا قبل از شروع، ورودی‌های خالی، منفی یا اعداد تکراری را پیش‌بینی می‌کنید؟</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. ارزیابی Trade-offs</div>
+          <div class="card-desc">تحلیل هوشمندانه بین زمان اجرا (Time Complexity) و مصرف حافظه (Space Complexity).</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۴. کدنویسی تمیز</div>
+          <div class="card-desc">نوشتن کدی خوانا، ماژولار، با نام‌گذاری‌های دقیق و بدون خطوط زائد.</div>
+        </div>
+      </div>
+      <p class="quote anim">«هیچ‌کس به دنبال یادگیری سینتکس زبان نیست؛ نحوه رویارویی شما با مسائل مبهم معیار اصلی ارزیابی است.»</p>
+    </div>
+    <span class="snum">۱ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 2 — افسانه‌زدایی ═══════════════════════════════ -->
+  <div class="slide" data-slide="2">
+    <div class="sh"><span class="shtitle">افسانه‌زدایی: لیت‌کد آزمون هوش نیست!</span><span class="sp"></span><span class="badge bs">تغییر نگرش · Mindset</span></div>
+    <div class="sbody">
+      <p class="anim">بزرگ‌ترین سد ذهنی مهندسان در مواجهه با لیت‌کد، یک باور نادرست است: <em>«من استعداد الگوریتم ندارم!»</em></p>
+      <div class="compare anim">
+        <div class="bad">
+          <div class="label">باور نادرست و بازدارنده</div>
+          <p>«برای حل لیت‌کد باید نابغه ریاضی یا مدال‌آور المپیاد بود. اگر مسئله‌ای را نتوانستم حل کنم یعنی مهندس ناتوانی هستم.»</p>
+        </div>
+        <div class="good">
+          <div class="label">واقعیت علمی و روان‌شناختی</div>
+          <p>«لیت‌کد یک مهارت کاملاً تمرین‌پذیر (Learnable Skill) بر پایه شناسایی الگوها (Pattern Recognition) است، درست مثل نواختن پیانو.»</p>
+        </div>
+      </div>
+      <h3 class="anim">منحنی احساسی یادگیری (The Learning Curve)</h3>
+      <ul class="anim">
+        <li><strong>مرحله ۱ (شوک طبیعی):</strong> در مواجهه با اولین مسائل Easy احساس ناتوانی می‌کنید؛ این کاملاً طبیعی است.</li>
+        <li><strong>مرحله ۲ (کشف الگوها):</strong> پس از دیدن و پیاده‌سازی ۲۰ تا ۳۰ مسئله، شباهت مسائل آشکار می‌شود.</li>
+        <li><strong>مرحله ۳ (شهود و لذت):</strong> با دیدن صورت مسئله، خودبه‌خود ساختار داده و روش بهینه در ذهنتان مجسم می‌شود.</li>
+      </ul>
+      <div class="scenario anim">
+        <strong>قانون طلایی:</strong> هیچ‌کس بدون تمرین گام‌ها و انگشت‌گذاری، سمفونی اجرا نکرده است. لیت‌کد حاصل تکرار سیستماتیک است، نه هوش ذاتی.
+      </div>
+    </div>
+    <span class="snum">۲ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 3 — اصل اول ═══════════════════════════════════ -->
+  <div class="slide" data-slide="3">
+    <div class="sh"><span class="shtitle">اصل اول: فراتر از فقط خواندن راه‌حل‌ها بروید</span><span class="sp"></span><span class="badge bc">کدنویسی فعال · Active Coding</span></div>
+    <div class="sbody">
+      <p class="anim">بزرگ‌ترین دام در مسیر یادگیری: <strong>توهم دانایی (Illusion of Competence)</strong> ناشی از تماشای ویدیو یا خواندن راهنماها.</p>
+      <div class="compare anim">
+        <div class="bad">
+          <div class="label">رویکرد منفعل (Passive) — اتلاف وقت</div>
+          <p>دیدن راه‌حل در یوتیوب یا NeetCode و گفتن: «آها، چقدر واضح بود!» اما وقتی صفحه خالی است، دست‌ها روی کیبورد قفل می‌شود.</p>
+        </div>
+        <div class="good">
+          <div class="label">رویکرد فعال (Active) — یادگیری واقعی</div>
+          <p>بستن تمام تب‌ها، باز کردن یک ادیتور کاملاً خالی، و نوشتن و دیباگ کردن کد از صفر تا رسیدن به وضعیت Accepted.</p>
+        </div>
+      </div>
+      <h3 class="anim">پروتکل مواجهه با بن‌بست (قانون ۲۵ دقیقه)</h3>
+      <ol class="anim">
+        <li><strong>۲۰ تا ۲۵ دقیقه:</strong> تلاش مستقل با کاغذ و قلم و نوشتن ایده اولیه بدون چک کردن راهنما.</li>
+        <li><strong>در صورت بن‌بست:</strong> مطالعه Hint اول یا خواندن ۲ دقیقه از ویدیوی توضیحی صرفاً برای درک ایده.</li>
+        <li><strong>بستن کامل راه‌حل:</strong> ۱۵ دقیقه به خود استراحت دهید و سپس پشت سیستم بنشینید و از صفر تا صد کد را پیاده کنید.</li>
+      </ol>
+      <p class="quote anim">تا زمانی که باگ‌های مرزی (Off-by-one errors) را خودتان رفع نکنید، آن مسئله متعلق به شما نیست.</p>
+    </div>
+    <span class="snum">۳ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 4 — اصل دوم ═══════════════════════════════════ -->
+  <div class="slide" data-slide="4">
+    <div class="sh"><span class="shtitle">اصل دوم: قدرت تکرار فاصله‌دار (Spaced Repetition)</span><span class="sp"></span><span class="badge bb">تکرار فاصله‌دار · Repetition</span></div>
+    <div class="sbody">
+      <p class="anim">یک مسئله یک‌بار حل شدنی نیست! اگر مسئله‌ای را امروز حل کنید و ۱ ماه بعد بازبینی نکنید، در روز جلسه ارزیابی مانند روز اول فراموش خواهید کرد.</p>
+      <h3 class="anim">چرخه ۳ مرحله‌ای تثبیت حافظه</h3>
+      <div class="card-grid-3 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">مرور اول: ۳ روز بعد</div>
+          <div class="card-desc">تست یادآوری ایده اصلی مسئله. آیا الگوی بهینه را بدون نگاه به کد قبلی به یاد می‌آورید؟</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">مرور دوم: ۱ هفته بعد</div>
+          <div class="card-desc">حل کامل و سریع مسئله روی صفحه خالی با هدف رسیدن به سرعت زیر ۱۵ دقیقه.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">مرور سوم: ۳ هفته بعد</div>
+          <div class="card-desc">تثبیت نهایی در حافظه بلندمدت؛ نوشتن خط به خط، تست دستی Edge Caseها و تحلیل پیچیدگی.</div>
+        </div>
+      </div>
+      <h3 class="anim">سیستم برچسب‌گذاری شخصی</h3>
+      <ul class="anim">
+        <li>🔴 <strong>نیاز به مرور فوری:</strong> مسائلی که بدون کمک نتوانستید راه‌حل بهینه را بزنید.</li>
+        <li>🟡 <strong>در حال تثبیت:</strong> ایده را کشف کردید اما پیاده‌سازی سینتکسی با کندی انجام شد.</li>
+        <li>🟢 <strong>ملکه ذهن:</strong> زیر ۱۰ دقیقه بدون هیچ خطایی با پیچیدگی مطلوب پیاده شد.</li>
+      </ul>
+    </div>
+    <span class="snum">۴ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 5 — اصل سوم ═══════════════════════════════════ -->
+  <div class="slide" data-slide="5">
+    <div class="sh"><span class="shtitle">اصل سوم: تسلط برق‌آسا بر الگوریتم‌ها و ساختارهای پایه</span><span class="sp"></span><span class="badge bs">الگوهای پایه · Core Patterns</span></div>
+    <div class="sbody">
+      <p class="anim">اشتباه بزرگ مبتدی‌ها: حل تصادفی ۴۰۰ سوال! در حالی که باید ابتدا <strong>جعبه‌ابزار بنیادین</strong> خود را کامل کنند.</p>
+      <div class="scenario anim">
+        <strong>چرا باید الگوهای پایه ملکه ذهن باشند؟</strong> اگر پیاده‌سازی یک Binary Search ساده یا یک حلقه Sliding Window ۵ دقیقه طول بکشد و سر شرط‌های مرزی دستپاچه شوید، تمام توان مغز هدر می‌رود. اما اگر پایه زیر ۳ دقیقه نوشته شود، ۱۰۰٪ ظرفیت ذهنی صرف حل منطق پیچیده مسئله Medium/Hard خواهد شد.
+      </div>
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. Binary Search</div>
+          <div class="card-desc">جستجوی لگاریتمی O(log n)، تسلط بر شرط مرزی <code>low &lt;= high</code> و حرکت مرزها.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. Two Pointers & Window</div>
+          <div class="card-desc">انقباض و انبساط پنجره‌های پویا، جستجو در آرایه‌های مرتب و حذف حلقه‌های تودرتو.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. DFS & BFS</div>
+          <div class="card-desc">پیمایش‌های پشته‌ای (عمقی) و صفی (سطحی) برای درخت‌ها، گراف‌ها و ماتریس‌ها.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۴. Hash Map & Set</div>
+          <div class="card-desc">جستجو و ذخیره‌سازی فوری در میانگین زمانی O(1) و معجزه Trade-off فضا در برابر زمان.</div>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۵ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 6 — پیچیدگی زمانی ═══════════════════════════════ -->
+  <div class="slide" data-slide="6">
+    <div class="sh"><span class="shtitle">مفهوم کلیدی: پیچیدگی زمانی (Big-O) و تحلیل کارایی</span><span class="sp"></span><span class="badge bs">تحلیل کارایی · Time Complexity</span></div>
+    <div class="sbody">
+      <p class="anim">پیچیدگی زمانی (Time Complexity) سنجش ثانیه‌ها با کرونومتر نیست؛ بلکه سنجش <strong>نرخ رشد تعداد عملیات کامپیوتر</strong> با افزایش حجم ورودی (<code>n</code>) است.</p>
+
+      <div class="scenario anim" style="margin: 0.8rem 0;">
+        <strong>💡 مثال ملموس: پیدا کردن یک نام در دفترچه تلفن ۱ میلیون نفره (n = 1,000,000)</strong>
+        <br>• <strong>جستجوی خطی (O(n)):</strong> ورق زدن صفحه به صفحه از ابتدا تا انتها ➔ در بدترین حالت <strong>۱,۰۰۰,۰۰۰ مقایسه</strong>!
+        <br>• <strong>جستجوی دودویی (O(log n)):</strong> باز کردن از وسط و حذف نیمی از گزینه‌ها در هر گام ➔ فقط <strong>۲۰ مقایسه</strong>!
+      </div>
+
+      <div class="card-grid-5 anim" style="margin: 0.8rem 0;">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. O(1) · ثابت</div>
+          <div class="card-desc">دسترسی مستقیم با اندیس <code>arr[i]</code> یا کلید Hash Map. مستقل از حجم داده (۱ عملیات).</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. O(log n) · لگاریتمی</div>
+          <div class="card-desc">جستجوی دودویی؛ نصف شدن داده‌ها در هر گام. جهش سرعت در ورودی بزرگ (۲۰ گام برای ۱M).</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۳. O(n) · خطی</div>
+          <div class="card-desc">یک حلقه ساده پیمایش آرایه. رشد عملیات مستقیماً و همگام با اندازه ورودی (n گام).</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۴. O(n log n) · شبه‌خطی</div>
+          <div class="card-desc">مرتب‌سازی‌های بهینه (Merge Sort و <code>sort()</code> پیش‌فرض). حدود ۲۰M عملیات برای ۱M داده.</div>
+        </div>
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">۵. O(n²) · درجه دو</div>
+          <div class="card-desc">دو حلقه تودرتو (Brute Force). مقایسه تمام جفت‌ها؛ برای ورودی‌های بالای ۱۰K سریعاً TLE می‌گیرد.</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.8rem 0;">
+        <div class="good">
+          <div class="label">قانون طلایی ۱۰ به توان ۸ (مرز پذیرش در لیت‌کد)</div>
+          <p>یک پردازنده در هر ثانیه حدود <code>10⁸</code> عملیات انجام می‌دهد. اگر طول ورودی <code>n = 10⁵</code> باشد:<br>
+          • روش <code>O(n)</code>: فقط <code>10⁵</code> عملیات ➔ <strong>۰.۰۰۱ ثانیه (Pass ✅)</strong><br>
+          • روش <code>O(n²)</code>: <code>10¹⁰</code> عملیات ➔ <strong>حدود ۱۰۰ ثانیه (Time Limit Exceeded ❌)</strong></p>
+        </div>
+        <div class="bad">
+          <div class="label">تله ارزیابی: فقط کار کردن کد کافی نیست!</div>
+          <p>پرسشگر بلافاصله می‌پرسد: <em>«Big-O کدت چقدر است و چطور آن را کاهش می‌دهی؟»</em><br>
+          کدی که خروجی درست بدهد اما در ورودی‌های بزرگ زمانش به پایان برسد (TLE)، کاملاً غیرقابل‌قبول است.</p>
+        </div>
+      </div>
+
+      <p class="quote anim" style="margin: 0.6rem 0;">«تسلط بر Big-O به شما شهود مهندسی می‌دهد تا پیش از نوشتن حتی یک خط کد، تشخیص دهید کدام ایده به پاسخ بهینه می‌رسد و کدام به بن‌بست خواهد خورد.»</p>
+    </div>
+    <span class="snum">۶ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 7 — اصل چهارم ══════════════════════════════════ -->
+  <div class="slide" data-slide="7">
+    <div class="sh"><span class="shtitle">اصل چهارم: چرایی را بپرسید، حفظ نکنید</span><span class="sp"></span><span class="badge bcy">کشف چرایی · Ask "Why"</span></div>
+    <div class="sbody">
+      <p class="anim">حفظ کردن خطوط کد، خطرناک‌ترین دام یادگیری است. پرسشگر کافی است یک فرض کوچک را عوض کند تا کد حفظی کاملاً بی‌فایده شود.</p>
+
+      <div class="scenario anim" style="margin: 0.8rem 0;">
+        <strong>💡 یک مثال بسیار ساده و ملموس: تکنیک دو اشاره‌گر (Two Pointers)</strong>
+        <br>فرض کنید در آرایه مرتب <code>[1, 3, 5, 8, 12]</code> به دنبال دو عدد با جمع <code>10</code> هستیم.
+        <br>اشاره‌گر اول روی <code>1</code> (چپ) و دومی روی <code>12</code> (راست) است: مجموع <code>1 + 12 = 13</code> (بزرگ‌تر از ۱۰).
+      </div>
+
+      <div class="compare anim" style="margin: 0.8rem 0;">
+        <div class="bad">
+          <div class="label">کاندیدای حفظ‌کننده (بدون درک چرایی)</div>
+          <p><strong>حفظ کرده:</strong> «اگر جمع بزرگ‌تر بود، اشاره‌گر راست را عقب بیاور (R--).»<br>
+          <strong>وقتی پرسشگر می‌پرسد «چرا؟»:</strong> دستپاچه می‌شود: «چون توی ویدیوی آموزشی این‌طوری حل کردند!»</p>
+        </div>
+        <div class="good">
+          <div class="label">مهندس تحلیل‌گر (با درک منطق و چرایی)</div>
+          <p><strong>دلیل را می‌فهمد:</strong> «چون آرایه مرتب است، برای کم کردن مجموع، تنها راه این است که بزرگ‌ترین عدد را برداریم و عدد کوچک‌تری از سمت راست انتخاب کنیم (R--).»</p>
+        </div>
+      </div>
+
+      <div class="card-grid-2 anim" style="margin: 0.8rem 0;">
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">⚡ تست پرسشگر (تغییر صورت مسئله)</div>
+          <div class="card-desc">
+            پرسشگر می‌گوید: <em>«اگر آرایه نزولی مرتب شده بود چه؟»</em>
+            <br>• کاندیدای حفظ‌کننده: کاملاً قفل می‌کند چون کدی که حفظ کرده دیگر کار نمی‌کند!
+            <br>• فردی که چرایی را فهمیده: در ۲ ثانیه متوجه می‌شود جهت حرکت اشاره‌گرها معکوس می‌شود.
+          </div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">🎯 ۳ سوال طلایی که بعد از هر مسئله باید بپرسید:</div>
+          <div class="card-desc">
+            ۱. <strong>چرا این ساختار داده؟</strong> چرا اینجا Hash Map جواب داد ولی لیست عادی کند بود؟
+            <br>۲. <strong>چرا این جهت حرکت؟</strong> منطق ریاضی پشت جلو یا عقب رفتن متغیرها چیست؟
+            <br>۳. <strong>اگر فرضیات عوض شوند؟</strong> اگر اعداد منفی باشند یا آرایه تکراری باشد چه؟
+          </div>
+        </div>
+      </div>
+
+      <p class="quote anim" style="margin: 0.6rem 0;">«وقتی چرایی عملکرد یک الگوریتم را بفهمید، آن ایده برای همیشه در ذهنتان تثبیت می‌شود و هیچ سوال جدیدی نمی‌تواند شما را غافلگیر کند.»</p>
+    </div>
+    <span class="snum">۷ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 8 — اصل پنجم ══════════════════════════════════ -->
+  <div class="slide" data-slide="8">
+    <div class="sh"><span class="shtitle">اصل پنجم: ابزارهای آنالوگ؛ قدرت قلم و کاغذ</span><span class="sp"></span><span class="badge bk">ابزار آنالوگ · Pen & Paper</span></div>
+    <div class="sbody">
+      <p class="anim">در ۱۰ دقیقه اول مواجهه با مسئله، <strong>دستان خود را از کیبورد دور نگه دارید!</strong></p>
+      <div class="scenario anim">
+        <strong>دام تایپ زودهنگام:</strong> وقتی مستقیماً شروع به تایپ در ادیتور می‌کنید، مغز درگیر سینتکس، متغیرهای موقت و خطاهای کامپایلر می‌شود و از معماری کلان راه‌حل بازمی‌ماند.
+      </div>
+      <h3 class="anim">۳ گام الزامی روی کاغذ قبل از تایپ:</h3>
+      <ol class="anim">
+        <li><strong>رسم یک مثال کوچک و ملموس:</strong> یک آرایه ۴ یا ۵ عضوی روی کاغذ بکشید و مقادیر واقعی در آن بگذارید.</li>
+        <li><strong>ردیابی دستی نشانگرها و مقادیر (Dry Run):</strong> متغیرها را با خودکار روی کاغذ بنویسید و گام‌به‌گام آپدیت کنید.</li>
+        <li><strong>کشف استثناها (Edge Cases):</strong> چه اتفاقی می‌افتد اگر آرایه خالی باشد؟ فقط ۱ عضو داشته باشد؟ تمام مقادیر منفی باشند؟</li>
+      </ol>
+      <p class="quote anim">«کشف یک باگ منطقی روی کاغذ ۳۰ ثانیه وقت می‌برد؛ اما دیباگ کردن همان باگ در کد ۲۰ دقیقه زمان می‌سوزاند.»</p>
+    </div>
+    <span class="snum">۸ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 9 — نقشه راه ═══════════════════════════════════ -->
+  <div class="slide" data-slide="9">
+    <div class="sh"><span class="shtitle">نقشه راه مطالعه و سیستم منظم روزانه</span><span class="sp"></span><span class="badge bc">نقشه راه · Roadmap</span></div>
+    <div class="sbody">
+      <p class="anim">کیفیت تمرین بسیار مهم‌تر از کمیت آن است: <strong>۱ مسئله که در عمق فهمیده شود &gt; ۱۰ مسئله که سطحی رد شوید.</strong></p>
+      <h3 class="anim">ساختار ۴۵ دقیقه‌ای مطالعه هر مسئله:</h3>
+      <table class="ktable anim">
+        <thead>
+          <tr>
+            <th>مرحله</th>
+            <th>مدت زمان</th>
+            <th>اقدام کلیدی</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>۱. درک و شفاف‌سازی</strong></td>
+            <td>۵ دقیقه</td>
+            <td>خواندن دقیق صورت مسئله، استخراج محدودیت‌ها و ورودی/خروجی</td>
+          </tr>
+          <tr>
+            <td><strong>۲. کاغذ و قلم</strong></td>
+            <td>۱۰ دقیقه</td>
+            <td>رسم مثال، کشف ایده Brute Force و سپس بهینه‌سازی شهودی</td>
+          </tr>
+          <tr>
+            <td><strong>۳. کدنویسی تمیز</strong></td>
+            <td>۱۵ دقیقه</td>
+            <td>پیاده‌سازی ماژولار و دقیق در ادیتور بدون استفاده از میانبرها</td>
+          </tr>
+          <tr>
+            <td><strong>۴. تست دستی و پیچیدگی</strong></td>
+            <td>۱۰ دقیقه</td>
+            <td>تست با تست‌کیس‌های مرزی و تحلیل دقیق مرتبه زمانی و حافظه</td>
+          </tr>
+          <tr>
+            <td><strong>۵. ثبت در جدول مرور</strong></td>
+            <td>۵ دقیقه</td>
+            <td>ثبت تاریخ مرور در سیستم تکرار فاصله‌دار (۳ روز بعد)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="anim" style="margin-top:0.8rem">دو نقشه راه رسمی و استاندارد LeetCode:</h3>
+      <div class="card-grid-2 anim" style="margin: 0.6rem 0;">
+        <a href="https://leetcode.com/studyplan/leetcode-75/" target="_blank" class="card card-teal" style="text-decoration:none;display:block;color:inherit;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span class="card-hd" style="color:var(--teal);margin-bottom:0;">📌 LeetCode 75</span>
+            <span class="badge bc" style="font-size:10px;padding:1px 8px;">Study Plan</span>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;direction:ltr;text-align:right;">Ace Coding Interview with 75 Qs</div>
+          <div class="card-desc">بهترین نقطه شروع؛ ۷۵ مسئله برگزیده با پوشش الگوهای اصلی بدون غرق شدن در سوالات تکراری.</div>
+        </a>
+        <a href="https://leetcode.com/studyplan/top-interview-150/" target="_blank" class="card card-purple" style="text-decoration:none;display:block;color:inherit;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span class="card-hd" style="color:var(--purple);margin-bottom:0;">🔥 Top Interview 150</span>
+            <span class="badge bs" style="font-size:10px;padding:1px 8px;">Must-Do List</span>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;direction:ltr;text-align:right;">Must-do List for Interview Prep</div>
+          <div class="card-desc">جامع‌ترین مجموعه ۱۵۰ سوال پرتقاضای ارزیابی‌های فنی شرکت‌های بزرگ و لول بالای جهانی.</div>
+        </a>
+      </div>
+    </div>
+    <span class="snum">۹ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 10 — ورود HASH MAP ════════════════════════════ -->
+  <div class="slide" data-slide="10">
+    <div class="sh"><span class="shtitle">پرسیدن «چرا؟» و کشف جهش بهینه: ورود Hash Map</span><span class="sp"></span><span class="badge bcy">جهش بهینه · Breakthrough</span></div>
+    <div class="sbody">
+      <p class="anim">طبق <strong>اصل چهارم</strong>، از خود می‌پرسیم: <em>«کجای راه‌حل‌های خام و مستقیم وقت هدر می‌رود و چطور آن را از بین ببریم؟»</em></p>
+
+      <div class="compare anim" style="margin: 0.8rem 0;">
+        <div class="bad">
+          <div class="label">گلوگاه روش‌های مستقیم و خام (نگاه به آینده)</div>
+          <p>در هر عنصر می‌ایستیم و برای یافتن جفت یا مکمل، کل بقیه آرایه را با حلقه دوم جستجوی خطی <code>O(n)</code> شخم می‌زنیم. برای ۱۰,۰۰۰ ورودی ➔ <strong>۵۰ میلیون عملیات و خطای قطعی TLE!</strong></p>
+        </div>
+        <div class="good">
+          <div class="label">تغییر پارادایم با پرسیدن «چرا؟» (حافظه گذشته)</div>
+          <p>چرا به جای شخم زدن آینده، یک <strong>«دفترچه یادداشت گذشته (Seen Map)»</strong> نداشته باشیم؟ در هر خانه فقط می‌پرسیم: <em>«آیا مکمل من قبلاً گذشته و ثبت شده است؟»</em></p>
+        </div>
+      </div>
+
+      <h3 class="anim">چرا جدول درهم‌سازی (در کاتلین: MutableMap / HashMap) معجزه می‌کند؟</h3>
+      <p class="anim">در آرایه برای جستجو باید تک‌تک خانه‌ها بررسی شوند (<code>O(n)</code>)؛ اما در <strong>Hash Map</strong>، تابع هش مقدار کلید (<code>Key = عدد</code>) را مستقیماً به نشانی حافظه نگاشت می‌کند. در نتیجه، استعلام «آیا این کلید هست؟» در <strong>میانگین زمان <code>O(1)</code></strong> انجام می‌شود!</p>
+
+      <div class="scenario anim" style="margin: 0.8rem 0;">
+        <strong>دادوستد فضا در برابر زمان (Space-Time Tradeoff):</strong> ما با صرف کمی حافظه کمکی <code>O(n)</code> برای ساختار Map، زمان اجرای الگوریتم را از <code>O(n²)</code> فاجعه‌بار به <strong><code>O(n)</code> خطی و فوق‌العاده سریع</strong> می‌رسانیم. این شهود دقیقاً همان چیزی است که پرسشگر از یک مهندس ارشد انتظار دارد!
+      </div>
+    </div>
+    <span class="snum">۱۰ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 11 — چک‌لیست طلایی جلسه ارزیابی ════════════════ -->
+  <div class="slide" data-slide="11">
+    <div class="sh"><span class="shtitle">چک‌لیست طلایی جلسه ارزیابی واقعی</span><span class="sp"></span><span class="badge bs">جلسه فنی · Evaluation</span></div>
+    <div class="sbody">
+      <p class="anim">پروتکل گام‌به‌گام برای مدیریت جلسه ارزیابی ۴۵ دقیقه‌ای تا استرس مانع تفکر شما نشود:</p>
+      <div class="card-grid-2 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. Clarification (۵ دقیقه اول)</div>
+          <div class="card-desc">شفاف‌سازی سوالات از پرسشگر: «آیا آرایه مرتب است؟ آیا اعداد منفی داریم؟ اگر جوابی نبود چه برگردانم؟» این کار نشانه پختگی مهندسی است.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. Pen & Paper / Whiteboard (۵ دقیقه)</div>
+          <div class="card-desc">یک مثال ساده را روی تخته یا پد آنلاین رسم کنید و تریس دستی را با صدای بلند برای پرسشگر شرح دهید.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. Brute Force & Trade-off (۵ دقیقه)</div>
+          <div class="card-desc">راه‌حل خام اولیه را در ۲ دقیقه بیان کنید و خودتان پیچیدگی O(n²) آن را نقد کنید و پیشنهاد استفاده از Hash Map بدهید.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۴. Clean Code & Dry Run (۲۵ دقیقه)</div>
+          <div class="card-desc">کد را تمیز و با نام‌گذاری‌های استاندارد بنویسید. در پایان با یک تست‌کیس مرزی آن را خط‌به‌خط به همراه پرسشگر اجرا کنید.</div>
+        </div>
+      </div>
+      <p class="quote anim">«همیشه بلندبلند فکر کنید (Think Out Loud). پرسشگر ترجیح می‌دهد مسیر فکری کاندیدا را بشنود تا سکوت طولانی او را.»</p>
+    </div>
+    <span class="snum">۱۱ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 12 — معرفی TWO SUM ═════════════════════════════ -->
+  <div class="slide" data-slide="12">
+    <div class="sh">
+      <span class="shtitle">ورود به فاز عملی: حل مسئله Two Sum</span>
+      <span class="sp"></span>
+      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bs" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;" title="مشاهده مسئله در سایت LeetCode">
+        <span>🔗 LeetCode #1</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <p class="anim">بیایید این اصول ۵گانه و چک‌لیست ارزیابی را روی <strong>مشهورترین مسئله تاریخ لیت‌کد یعنی Two Sum (#1)</strong> پیاده کنیم؛ مسئله‌ای که نقطه شروع مشترک در هر دو مجموعه معتبر <a href="https://leetcode.com/studyplan/leetcode-75/" target="_blank" style="color:var(--teal);text-decoration:underline;">LeetCode 75</a> و <a href="https://leetcode.com/studyplan/top-interview-150/" target="_blank" style="color:var(--purple);text-decoration:underline;">Top Interview 150</a> است.</p>
+      <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>nums</code> و یک عدد صحیح بنام <code>target</code> داده شده است. اندیس دو عددی را بازگردانید که مجموع آن‌ها برابر با <code>target</code> شود.</div>
+        <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
+      </div>
+      <h3 class="anim">محدودیت‌ها و مفروضات کلیدی (Constraints)</h3>
+      <ul class="anim">
+        <li>دقیقاً یک جواب یکتا وجود دارد: <code>Exactly one valid answer exists.</code></li>
+        <li>نمی‌توان از یک عنصر دوبار استفاده کرد: <code>May not use the same element twice.</code></li>
+        <li>طول آرایه: <code>2 &le; nums.length &le; 10⁴</code> (الگوریتم O(n²) کند خواهد بود!)</li>
+        <li>مقادیر اعداد: <code>-10⁹ &le; nums[i] &le; 10⁹</code> (اعداد ممکن است منفی باشند!)</li>
+      </ul>
+      <p class="quote anim">هدف ما: گذر از یک تفکر ساده به راه‌حلی فوق‌العاده بهینه با استفاده از الگوریتم و ساختار داده.</p>
+    </div>
+    <span class="snum">۱۲ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 13 — تحلیل آنالوگ BRUTE FORCE O(n²) ═══════════════ -->
+  <div class="slide" data-slide="13">
+    <div class="sh">
+      <span class="shtitle">تحلیل آنالوگ روی کاغذ: تریس روش ساده (Brute Force O(n²))</span>
+      <span class="sp"></span>
+      <span class="badge bb">روش اولیه · Brute Force O(n²)</span>
+      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum">
+        <span>🔗 LeetCode #1</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <!-- نوار کنترل و استپر گام‌به‌گام -->
+      <div class="sim-header-ctrl anim" style="margin-bottom:0.7rem;">
+        <div class="sim-stepper" id="bf-stepper" style="overflow-x:auto;">
+          <button class="step-dot active" data-bf-step="0"><span>گام ۰</span><small>آغاز</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="1"><span>تکرار ۱</span><small>i=0, j=1</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="2"><span>تکرار ۲</span><small>i=0, j=2..7</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="3"><span>تکرار ۳</span><small>i=1, j=2</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="4"><span>تکرار ۴</span><small>i=1, j=3</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="5"><span>تکرار ۵</span><small>i=1, j=4</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-bf-step="6"><span>تکرار ۶</span><small>🎯 صید هدف [1, 5]</small></button>
+        </div>
+
+        <div class="sim-actions">
+          <button class="sim-btn" id="bf-prev">❮ گام قبل</button>
+          <button class="sim-btn sim-btn-primary" id="bf-next">گام بعد ❯</button>
+          <button class="sim-btn sim-btn-play" id="bf-play">⏵ پخش خودکار</button>
+          <button class="sim-btn" id="bf-reset">شروع مجدد ↺</button>
+        </div>
+      </div>
+
+      <div class="sim-board anim" style="margin-bottom:0.8rem;">
+        <!-- بخش آرایه ورودی با نشانگرهای دوگانه i و j -->
+        <div class="sim-arr-section">
+          <div class="sim-section-label">
+            <span>📊 آرایه ورودی روی کاغذ: <code>nums = [4, -2, 5, 0, 6, 3, 2, 7]</code></span>
+            <span class="sim-target-badge">🎯 هدف مسئله: <code>target = 1</code></span>
+          </div>
+
+          <div class="arr-display" id="bf-arr" style="gap:10px; overflow-x:auto; padding:6px 0;">
+            <div class="arr-slot" data-bf-idx="0">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">4</span>
+                <span class="idx">[0]</span>
+              </div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="1">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">-2</span>
+                <span class="idx">[1]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="2">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">5</span>
+                <span class="idx">[2]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="3">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">0</span>
+                <span class="idx">[3]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="4">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">6</span>
+                <span class="idx">[4]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="5">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">3</span>
+                <span class="idx">[5]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="6">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">2</span>
+                <span class="idx">[6]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-bf-idx="7">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item">
+                <span class="val">7</span>
+                <span class="idx">[7]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- کارت‌های داشبورد شرایط حلقه اول، حلقه دوم و آزمون برابری با هدف -->
+        <div class="sim-hud" id="bf-hud" style="margin-top:0.6rem;">
+          <!-- با جاوااسکریپت به روز می‌شود -->
+        </div>
+
+        <!-- باکس شرح زنده گام فعلی -->
+        <div class="sim-summary" id="bf-summary-box" style="margin-top:0.6rem; padding:10px 14px; background:var(--surf2); border-right:3px solid var(--purple); border-radius:0 8px 8px 0; font-size:calc(13.5px * var(--fs-scale)); line-height:1.7;">
+          <!-- با جاوااسکریپت پر می‌شود -->
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">مزیت تفکر Brute Force روی کاغذ</div>
+          <p>شروع ساده و اثبات این‌که مسئله را کامل فهمیده‌اید، بدون نیاز به هیچ ساختار داده کمکی (حافظه <code>O(1)</code>).</p>
+        </div>
+        <div class="bad">
+          <div class="label">نقطه ضعف مهلک: انفجار مقایسه‌ها (O(n²))</div>
+          <p>مقایسه‌های تکراری و جفت‌های کورکورانه؛ برای آرایه ۱۰ هزار تایی تا ۵۰ میلیون بار چک انجام می‌شود که به خطای TLE می‌انجامد!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۱۳ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 14 — روش اول BRUTE FORCE ══════════════════════ -->
+  <div class="slide" data-slide="14">
+    <div class="sh"><span class="shtitle">روش اول: راه‌حل ساده و مستقیم (Brute Force)</span><span class="sp"></span><span class="badge bb">روش اولیه · Brute Force</span></div>
+    <div class="sbody">
+      <p class="anim">در جلسه ارزیابی، همیشه بیان راه‌حل اولیه (Brute Force) اولین گام است تا نشان دهید مسئله را کامل فهمیده‌اید.</p>
+      <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSumBruteForce</span>(nums: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
+    <span class="kw">val</span> size = nums.size
+
+    <span class="cm">// حلقه اول: یک عدد را برمی‌داریم</span>
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until size) {
+        <span class="kw">val</span> firstNumber = nums[i]
+
+        <span class="cm">// حلقه دوم: در خانه‌های بعدی به دنبال عدد دوم می‌گردیم</span>
+        <span class="kw">for</span> (j <span class="kw">in</span> (i + <span class="num">1</span>) until size) {
+            <span class="kw">val</span> secondNumber = nums[j]
+
+            <span class="cm">// آیا جمع این دو عدد برابر با هدف است؟</span>
+            <span class="kw">val</span> sum = firstNumber + secondNumber
+            <span class="kw">if</span> (sum == target) {
+                <span class="kw">return</span> <span class="fn">intArrayOf</span>(i, j)  <span class="cm">// پاسخ پیدا شد!</span>
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// اگر هیچ جفتی پیدا نشد</span>
+}</code></pre>
+      <h3 class="anim">تحلیل پیچیدگی:</h3>
+      <ul class="anim">
+        <li><strong>پیچیدگی زمانی:</strong> <code>O(n²)</code> — تعداد مقایسه‌ها برابر است با <code>n*(n-1)/2</code>.</li>
+        <li><strong>پیچیدگی فضایی:</strong> <code>O(1)</code> — هیچ حافظه کمکی اضافه‌ای استفاده نمی‌شود.</li>
+      </ul>
+      <div class="scenario anim">
+        <strong>چرا این راه‌حل در لیت‌کد رد می‌شود؟</strong> وقتی طول آرایه به <code>10⁴</code> می‌رسد، تعداد عملیات به حدود ۵۰ میلیون می‌رسد که منجر به خطای <strong>Time Limit Exceeded (TLE)</strong> می‌شود.
+      </div>
+    </div>
+    <span class="snum">۱۴ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 15 — پیاده‌سازی کد بهینه ═══════════════════════ -->
+  <div class="slide" data-slide="15">
+    <div class="sh"><span class="shtitle">پیاده‌سازی تمیز و خط به خط کد بهینه (Kotlin)</span><span class="sp"></span><span class="badge bc">کدنویسی تمیز · Clean Code</span></div>
+    <div class="sbody">
+      <p class="anim">پیاده‌سازی تک‌پیمایشی (One-Pass Hash Table) با زبان Kotlin با ساختار کاملاً شفاف، گام‌به‌گام و قابل فهم:</p>
+      <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSum</span>(nums: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
+    <span class="cm">// دفترچه یادداشت: ذخیره اعدادی که قبلاً ملاقات کرده‌ایم</span>
+    <span class="cm">// کلید (Key) = مقدار خود عدد | مقدار (Value) = اندیس آن عدد در آرایه</span>
+    <span class="kw">val</span> seen = <span class="fn">mutableMapOf</span>&lt;<span class="ty">Int</span>, <span class="ty">Int</span>&gt;()
+
+    <span class="cm">// پیمایش تک‌تک خانه‌های آرایه از ابتدا تا انتها</span>
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until nums.size) {
+        <span class="kw">val</span> currentNumber = nums[i]
+
+        <span class="cm">// محاسبه مکمل: چه عددی کم داریم تا جمعش با عدد فعلی بشود target؟</span>
+        <span class="kw">val</span> neededNumber = target - currentNumber
+
+        <span class="cm">// آیا این مکمل را قبلاً دیده‌ایم و در حافظه داریم؟</span>
+        <span class="kw">if</span> (seen.<span class="fn">containsKey</span>(neededNumber)) {
+            <span class="kw">val</span> complementIndex = seen[neededNumber]!!
+            <span class="kw">return</span> <span class="fn">intArrayOf</span>(complementIndex, i)  <span class="cm">// جفت هدف پیدا شد!</span>
+        }
+
+        <span class="cm">// اگر مکمل نبود، عدد فعلی و اندیسش را برای مراحل بعد یادداشت می‌کنیم</span>
+        seen[currentNumber] = i
+    }
+
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// اگر هیچ جفتی پیدا نشد</span>
+}</code></pre>
+      <h3 class="anim">تحلیل نکات ظریف پیاده‌سازی و خوانایی:</h3>
+      <ul class="anim">
+        <li><strong>تفکیک صریح متغیرها:</strong> استخراج عدد جاری (<code>currentNumber</code>)، محاسبه مکمل (<code>neededNumber</code>)، و خواندن اندیس مکمل (<code>complementIndex</code>) هرکدام در یک خط مستقل انجام شده تا جریان منطق کاملاً شفاف باشد.</li>
+        <li><strong>جستجوی <code>O(1)</code> با <code>containsKey</code>:</strong> با این متد در زمان ثابت چک می‌کنیم آیا کلید مکمل در جدول هش وجود دارد یا خیر (در کاتلین فرم <code>neededNumber in seen</code> نیز معادل آن است).</li>
+        <li><strong>عدم تکرار یک عنصر:</strong> چون عدد فعلی بعد از شرط در Map درج می‌شود، ناممکن است که یک عنصر با خودش جمع شود.</li>
+        <li><strong>پیچیدگی نهایی:</strong> زمان <strong><code>O(n)</code></strong> (یک بار پیمایش آرایه) · حافظه <strong><code>O(n)</code></strong> (ذخیره عناصر در HashMap).</li>
+      </ul>
+    </div>
+    <span class="snum">۱۵ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 16 — شبیه‌ساز تعاملی ═══════════════════════════ -->
+  <div class="slide" data-slide="16">
+    <div class="sh">
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم Two Sum</span>
+      <span class="sp"></span>
+      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum">
+        <span>🔗 LeetCode #1</span>
+      </a>
+      <span class="badge bcy">شبیه‌ساز فوق‌شهودی · Interactive Visualizer</span>
+    </div>
+    <div class="sbody">
+      <!-- نوار کنترل و استپر ۷ مرحله‌ای -->
+      <div class="sim-header-ctrl anim">
+        <div class="sim-stepper" id="sim-stepper" style="overflow-x:auto;">
+          <button class="step-dot active" data-step="0"><span>گام ۰</span><small>آماده‌سازی</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="1"><span>تکرار ۱</span><small>nums[0]=4</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="2"><span>تکرار ۲</span><small>nums[1]=-2</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="3"><span>تکرار ۳</span><small>nums[2]=5</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="4"><span>تکرار ۴</span><small>nums[3]=0</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="5"><span>تکرار ۵</span><small>nums[4]=6</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-step="6"><span>تکرار ۶</span><small>🎯 صید مکمل</small></button>
+        </div>
+
+        <div class="sim-actions">
+          <button class="sim-btn" id="sim-prev">❮ گام قبل</button>
+          <button class="sim-btn sim-btn-primary" id="sim-next">گام بعد ❯</button>
+          <button class="sim-btn sim-btn-play" id="sim-play">⏵ پخش خودکار</button>
+          <button class="sim-btn" id="sim-reset">شروع مجدد ↺</button>
+        </div>
+      </div>
+
+      <div class="sim-board anim">
+        <!-- بالا: نمایش بصری آرایه و نشانگرهای پویا -->
+        <div class="sim-arr-section">
+          <div class="sim-section-label">
+            <span>📊 آرایه ورودی (Input Array): <code>nums = [4, -2, 5, 0, 6, 3, 2, 7]</code></span>
+            <span class="sim-target-badge">🎯 هدف مسئله: <code>target = 1</code></span>
+          </div>
+
+          <div class="arr-display" id="sim-arr" style="gap:10px; overflow-x:auto; padding:6px 0;">
+            <div class="arr-slot" data-idx="0">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 0</span></div>
+              <div class="arr-item">
+                <span class="val">4</span>
+                <span class="idx">[0]</span>
+              </div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-idx="1">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 1</span></div>
+              <div class="arr-item">
+                <span class="val">-2</span>
+                <span class="idx">[1]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="2">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 2</span></div>
+              <div class="arr-item">
+                <span class="val">5</span>
+                <span class="idx">[2]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="3">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 3</span></div>
+              <div class="arr-item">
+                <span class="val">0</span>
+                <span class="idx">[3]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="4">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 4</span></div>
+              <div class="arr-item">
+                <span class="val">6</span>
+                <span class="idx">[4]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="5">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 5</span></div>
+              <div class="arr-item">
+                <span class="val">3</span>
+                <span class="idx">[5]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="6">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 6</span></div>
+              <div class="arr-item">
+                <span class="val">2</span>
+                <span class="idx">[6]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+            <div class="arr-slot" data-idx="7">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i = 7</span></div>
+              <div class="arr-item">
+                <span class="val">7</span>
+                <span class="idx">[7]</span>
+              </div>
+              <div class="arr-tag">در نوبت</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- باکس ساده و یکپارچه تریس متغیرها و وضعیت مرحله -->
+        <div class="sim-unified-box anim" id="sim-trace-box" style="margin-top:0.7rem;">
+          <!-- با JS پر می‌شود -->
+        </div>
+      </div>
+
+      <!-- باکس جمع‌بندی طلایی و مقایسه با روش اولیه -->
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">کشف طلایی Two Sum (تغییر پارادایم)</div>
+          <p>هسته مسئله Two Sum «جمع کردن همه جفت‌ها» نیست؛ بلکه <strong>«جستجوی عدد مکمل (target - currentNumber) در میانگین زمان O(1)»</strong> است!</p>
+        </div>
+        <div class="bad">
+          <div class="label">تفاوت با روش ساده (Brute Force)</div>
+          <p>در روش دو حلقه، ۱۱ مقایسه کورکورانه انجام شد؛ اما در اینجا با <strong>تنها یک بار عبور (One-Pass)</strong> و بدون حلقه دوم، پاسخ در لحظه صید شد.</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۱۶ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 17 — TWO SUM II: صورت مسئله و تفاوت کلیدی ═══════════ -->
+  <div class="slide" data-slide="17">
+    <div class="sh">
+      <span class="shtitle">مسئله دوم: Two Sum II - آرایه مرتب‌شده (Input Array Is Sorted)</span>
+      <span class="sp"></span>
+      <span class="badge bc">الگوی دو نشانگر · Two Pointers</span>
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله در LeetCode">
+        <span>🔗 LeetCode #167</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>numbers</code> داده شده که از قبل به صورت غیرنزولی مرتب شده است (<code>numbers[i] &le; numbers[i+1]</code>). اندیس دو عدد (۱-محور یا 1-indexed) را بیابید که جمعشان برابر با <code>target</code> شود.</div>
+        <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
+      </div>
+
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. آرایه از قبل مرتب است</div>
+          <div class="card-desc">اعداد صعودی هستند؛ عناصر سمت چپ کوچک‌ترین و عناصر سمت راست بزرگ‌ترین مقادیر ممکن هستند.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. قید حیاتی حافظه: O(1)</div>
+          <div class="card-desc">صورت مسئله صریحاً قید کرده: <strong>«تنها از حافظه اضافی O(1) استفاده کنید»</strong>. پس استفاده از Hash Map مجاز نیست!</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. خروجی ۱-محور (1-Indexed)</div>
+          <div class="card-desc">اندیس‌ها از ۱ آغاز می‌شوند نه از ۰؛ بنابراین اندیس‌های کشف‌شده نهایی باید با ۱ جمع شوند: <code>[left + 1, right + 1]</code>.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۴. تضمین جواب یکتا</div>
+          <div class="card-desc">دقیقاً یک جفت پاسخ وجود دارد و نمی‌توانید از یک عنصر دو بار استفاده کنید (<code>index1 &lt; index2</code>).</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">چرا Hash Map گزینه ایده‌آل نیست؟</div>
+          <p>روش جدول هش زمان <code>O(n)</code> دارد اما حافظه <code>O(n)</code> مصرف می‌کند و مهم‌تر از همه، <strong>اطلاعات ارزشمند مرتب بودن آرایه را هدر می‌دهد</strong>.</p>
+        </div>
+        <div class="bad">
+          <div class="label">تغییر پارادایم: دو نشانگر همگرا (Two Pointers)</div>
+          <p>با استقرار دو اشاره‌گر در ابتدا و انتهای آرایه، در هر گام یکی را با اطمینان ریاضی به جلو یا عقب می‌بریم؛ در زمان <strong><code>O(n)</code></strong> و حافظه <strong><code>O(1)</code></strong>!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۱۷ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 18 — TWO SUM II: راه‌حل‌های اولیه و غیربهینه ════════════ -->
+  <div class="slide" data-slide="18">
+    <div class="sh">
+      <span class="shtitle">راه‌حل‌های اولیه و غیربهینه: چرا بروت‌فورس و هش‌مپ در Two Sum II رد می‌شوند؟</span>
+      <span class="sp"></span>
+      <span class="badge bb">روش‌های غیربهینه · Naive Approaches</span>
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #167</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="margin-bottom:0.7rem;">
+        <strong>قبل از پریدن به الگوی بهینه:</strong> در جلسه ارزیابی، بررسی راه‌حل‌های ساده و تشریح این‌که چرا این راه‌حل‌ها برای مسئله کافی نیستند، نشان‌دهنده درک عمیق شما از دادوستدهای زمان و حافظه (Trade-offs) است.
+      </div>
+
+      <div class="card-grid-3 anim">
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۱. روش بروت‌فورس (دو حلقه تو در تو)</div>
+          <div class="card-desc">بررسی تمام جفت‌های <code>(i, j)</code> با دو حلقه <code>for</code>.<br>
+          • <strong>پیچیدگی:</strong> زمان <code>O(n²)</code> · حافظه <code>O(1)</code><br>
+          • <strong>علت شکست:</strong> برای <code>n = 30,000</code>، حدود ۴۵۰ میلیون مقایسه رخ می‌دهد که قطعاً خطای <strong>Time Limit Exceeded (TLE)</strong> می‌گیرد؛ علاوه بر این، <strong>مرتب بودن آرایه را کاملاً هدر می‌دهد!</strong></div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۲. استفاده از Hash Map (روش مسئله اول)</div>
+          <div class="card-desc">پیمایش تک‌مرحله‌ای با ذخیره مکمل در جدول هش.<br>
+          • <strong>پیچیدگی:</strong> زمان <code>O(n)</code> · حافظه <code>O(n)</code><br>
+          • <strong>علت شکست:</strong> صورت مسئله صریحاً قید کرده: <strong>«تنها از حافظه اضافی O(1) استفاده کنید»</strong>. تخصیص جدول هش با حافظه <code>O(n)</code> نقض مستقیم قید مسئله است.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۳. جستجوی باینری مکمل (Binary Search)</div>
+          <div class="card-desc">برای هر عنصر <code>numbers[i]</code>، مکمل را با Binary Search در باقی آرایه جستجو کنیم.<br>
+          • <strong>پیچیدگی:</strong> زمان <code>O(n log n)</code> · حافظه <code>O(1)</code><br>
+          • <strong>علت ناکافی بودن:</strong> حافظه <code>O(1)</code> را رعایت می‌کند، اما زمان <code>O(n log n)</code> هنوز بهینه نیست!</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">بن‌بست روش‌های اولیه</div>
+          <p>بروت‌فورس زمان را هدر می‌دهد (<code>O(n²)</code>)، هش‌مپ حافظه را هدر می‌دهد (<code>O(n)</code>)، و باینری سرچ به زمان بهینه خطی نمی‌رسد.</p>
+        </div>
+        <div class="bad">
+          <div class="label">جهش بهینه: الگوی دو نشانگر (Two Pointers)</div>
+          <p>ما به الگوریتمی نیاز داریم که از صعودی بودن آرایه اهرم بسازد تا هم در زمان <strong><code>O(n)</code></strong> و هم با حافظه کمکی <strong><code>O(1)</code></strong> به پاسخ برسد!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۱۸ / ۲۷</span>
+  </div>
+
+
+  <!-- ══ SLIDE 18 — TWO SUM II: تریس آنالوگ دو نشانگر ═══════════════ -->
+  <div class="slide" data-slide="19">
+    <div class="sh">
+      <span class="shtitle">تحلیل آنالوگ روی کاغذ: تریس الگوریتم دو نشانگر (Two Pointers)</span>
+      <span class="sp"></span>
+      <span class="badge bb">تریس آنالوگ · Two Pointers Intuition</span>
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #167</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="margin-bottom:0.7rem;">
+        <strong>شهود ریاضی حرکت نشانگرها:</strong> دو نشانگر <code>left = 0</code> و <code>right = n - 1</code> را در دو سر آرایه قرار می‌دهیم و جمع آن‌ها یعنی <code>currentSum = numbers[left] + numbers[right]</code> را می‌سنجیم:
+      </div>
+
+      <div class="card-grid-3 anim">
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">حالت اول: currentSum &gt; target</div>
+          <div class="card-desc">مجموع بزرگتر از هدف است! چون <code>numbers[left]</code> کوچک‌ترین مقدار ممکن است، عدد <code>numbers[right]</code> با هیچ عنصر دیگری جفت هدف نخواهد شد. پس باید <strong><code>right--</code></strong> شود.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">حالت دوم: currentSum &lt; target</div>
+          <div class="card-desc">مجموع کوچکتر از هدف است! چون <code>numbers[right]</code> بزرگ‌ترین مقدار ممکن است، عدد <code>numbers[left]</code> با هیچ عنصر دیگری جور نمی‌شود. پس باید <strong><code>left++</code></strong> شود.</div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">حالت سوم: currentSum == target</div>
+          <div class="card-desc">هدف دقیقاً صید شد! پاسخ ۱-محور را بازمی‌گردانیم: <code>intArrayOf(left + 1, right + 1)</code>. الگوریتم در همین نقطه متوقف می‌شود.</div>
+        </div>
+      </div>
+
+      <!-- جعبه تریس نمونه روی کاغذ -->
+      <div class="sim-board anim" style="margin-top:0.7rem; padding:12px 16px; background:var(--surf); border-radius:10px; border:1px solid var(--border);">
+        <div style="font-weight:700; color:var(--teal); margin-bottom:8px; font-size:calc(13.5px * var(--fs-scale));">
+          📋 تریس نمونه روی کاغذ: <code>numbers = [2, 7, 11, 15]</code> و <code>target = 9</code>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; font-size:calc(12.5px * var(--fs-scale));">
+          <div style="background:var(--surf2); padding:10px 12px; border-radius:8px; border-right:3px solid var(--purple);">
+            <strong>گام ۱:</strong><br>
+            <code>left=0 (مقدار ۲)</code>، <code>right=3 (مقدار ۱۵)</code><br>
+            <code>جمع = ۲ + ۱۵ = ۱۷ &gt; ۹</code> ➔ کاهش راست (<code>right = 2</code>)
+          </div>
+          <div style="background:var(--surf2); padding:10px 12px; border-radius:8px; border-right:3px solid var(--purple);">
+            <strong>گام ۲:</strong><br>
+            <code>left=0 (مقدار ۲)</code>، <code>right=2 (مقدار ۱۱)</code><br>
+            <code>جمع = ۲ + ۱۱ = ۱۳ &gt; ۹</code> ➔ کاهش راست (<code>right = 1</code>)
+          </div>
+          <div style="background:var(--surf2); padding:10px 12px; border-radius:8px; border-right:3px solid var(--teal);">
+            <strong>گام ۳ (پایان):</strong><br>
+            <code>left=0 (مقدار ۲)</code>، <code>right=1 (مقدار ۷)</code><br>
+            <code>جمع = ۲ + ۷ = ۹ == ۹</code> ➔ صید هدف! 🎉 پاسخ: <code>[1, 2]</code>
+          </div>
+        </div>
+      </div>
+
+      <p class="quote anim" style="margin: 0.6rem 0;">«در هر گام، فضای جستجو یک خانه کوچک‌تر می‌شود بدون آنکه هیچ حالت معتبری از دست برود؛ حداکثر در n گام پاسخ به دست می‌آید.»</p>
+    </div>
+    <span class="snum">۱۹ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 19 — TWO SUM II: پیاده‌سازی کاتلین ═══════════════════ -->
+  <div class="slide" data-slide="20">
+    <div class="sh">
+      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: Two Sum II (دو نشانگر)</span>
+      <span class="sp"></span>
+      <span class="badge bc">کدنویسی تمیز · Clean Code</span>
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #167</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <p class="anim">پیاده‌سازی الگوریتم Two Pointers با تفکیک صریح متغیرها و ساختار شفاف و خوانا در کاتلین:</p>
+      <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSum</span>(numbers: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
+    <span class="cm">// دو نشانگر در ابتدا و انتهای آرایه مرتب‌شده</span>
+    <span class="kw">var</span> leftIndex = <span class="num">0</span>
+    <span class="kw">var</span> rightIndex = numbers.size - <span class="num">1</span>
+
+    <span class="cm">// حرکت همگرای نشانگرها به سمت یکدیگر تا لحظه برخورد</span>
+    <span class="kw">while</span> (leftIndex &lt; rightIndex) {
+        <span class="kw">val</span> currentSum = numbers[leftIndex] + numbers[rightIndex]
+
+        <span class="kw">when</span> {
+            currentSum == target -&gt; {
+                <span class="cm">// مسئله ۱-محور است؛ بنابراین ۱ واحد به هر اندیس اضافه می‌کنیم</span>
+                <span class="kw">return</span> <span class="fn">intArrayOf</span>(leftIndex + <span class="num">1</span>, rightIndex + <span class="num">1</span>)
+            }
+            currentSum &lt; target -&gt; {
+                <span class="cm">// جمع کوچک‌تر از هدف است؛ برای افزایش جمع، نشانگر چپ را جلو می‌بریم</span>
+                leftIndex++
+            }
+            <span class="kw">else</span> -&gt; {
+                <span class="cm">// جمع بزرگ‌تر از هدف است؛ برای کاهش جمع، نشانگر راست را عقب می‌آوریم</span>
+                rightIndex--
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// طبق صورت مسئله هرگز به این خط نمی‌رسد</span>
+}</code></pre>
+
+      <h3 class="anim">تحلیل پیچیدگی و نکات طراحی کد:</h3>
+      <ul class="anim">
+        <li><strong>تفکیک نام‌ها و وضوح خوانش:</strong> استفاده از نام‌های شفاف <code>leftIndex</code>، <code>rightIndex</code> و <code>currentSum</code> به جای حروف اختصاری مبهم، خوانایی را تضمین می‌کند.</li>
+        <li><strong>ساختار ساخت‌یافته <code>when</code>:</strong> تصمیم‌گیری سه‌گانه (برابری، کوچکتری، بزرگتری) به جای if-else تو در تو، خوانش منطق را برای بررسی‌کننده کد دلپذیر می‌سازد.</li>
+        <li><strong>پیچیدگی زمانی: <code>O(n)</code></strong> — در هر دور حلقه، حداقل یکی از دو نشانگر یک گام جابجا می‌شود؛ بنابراین حداکثر <code>n</code> مقایسه انجام می‌گیرد.</li>
+        <li><strong>پیچیدگی فضایی: <code>O(1)</code></strong> — هیچ ساختار داده یا آرایه کمکی تولید نمی‌شود و قید سخت‌گیرانه مسئله کاملاً رعایت شده است.</li>
+      </ul>
+    </div>
+    <span class="snum">۲۰ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 20 — TWO SUM II: شبیه‌ساز تعاملی دو نشانگر ══════ -->
+  <div class="slide" data-slide="21">
+    <div class="sh">
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام Two Sum II (دو نشانگر)</span>
+      <span class="sp"></span>
+      <span class="badge bc">الگوی دو نشانگر · Interactive Visualizer</span>
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum II">
+        <span>🔗 LeetCode #167</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <!-- نوار کنترل و استپر ۵ مرحله‌ای -->
+      <div class="sim-header-ctrl anim">
+        <div class="sim-stepper" id="t2-stepper" style="overflow-x:auto;">
+          <button class="step-dot active" data-t2-step="0"><span>گام ۰</span><small>آماده‌سازی</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-t2-step="1"><span>تکرار ۱</span><small>L=0, R=6</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-t2-step="2"><span>تکرار ۲</span><small>L=0, R=5</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-t2-step="3"><span>تکرار ۳</span><small>L=0, R=4</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-t2-step="4"><span>تکرار ۴</span><small>🎯 صید [2, 5]</small></button>
+        </div>
+
+        <div class="sim-actions">
+          <button class="sim-btn" id="t2-prev">❮ گام قبل</button>
+          <button class="sim-btn sim-btn-primary" id="t2-next">گام بعد ❯</button>
+          <button class="sim-btn sim-btn-play" id="t2-play">⏵ پخش خودکار</button>
+          <button class="sim-btn" id="t2-reset">شروع مجدد ↺</button>
+        </div>
+      </div>
+
+      <div class="sim-board anim">
+        <!-- نمایش آرایه ورودی با نشانگرهای دوگانه Left و Right -->
+        <div class="sim-arr-section">
+          <div class="sim-section-label">
+            <span>📊 آرایه مرتب‌شده: <code>numbers = [1, 2, 4, 6, 8, 11, 15]</code></span>
+            <span class="sim-target-badge">🎯 هدف مسئله: <code>target = 10</code></span>
+          </div>
+
+          <div class="arr-display" id="t2-arr" style="gap:10px; overflow-x:auto; padding:6px 0;">
+            <div class="arr-slot" data-t2-idx="0">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">L</span></div>
+              <div class="arr-item"><span class="val">1</span><span class="idx">[0]</span></div>
+              <div class="arr-tag">L=0</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="1">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">2</span><span class="idx">[1]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="2">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">4</span><span class="idx">[2]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="3">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">6</span><span class="idx">[3]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="4">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">8</span><span class="idx">[4]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="5">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">11</span><span class="idx">[5]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-t2-idx="6">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">R</span></div>
+              <div class="arr-item"><span class="val">15</span><span class="idx">[6]</span></div>
+              <div class="arr-tag">R=6</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- باکس ساده و یکپارچه تریس متغیرها -->
+        <div class="sim-unified-box anim" id="t2-trace-box" style="margin-top:0.7rem;">
+          <!-- با JS پر می‌شود -->
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">کشف بنیادین Two Pointers در آرایه مرتب</div>
+          <p>جهت حرکت نشانگرها قطعی است: اگر جمع بزرگتر از هدف باشد با <code>right--</code> عدد بزرگتر حذف می‌شود و اگر جمع کمتر باشد با <code>left++</code> عدد کوچکتر جایگزین می‌گردد.</p>
+        </div>
+        <div class="bad">
+          <div class="label">تفاوت حیاتی مصرف حافظه با Two Sum</div>
+          <p>در Two Sum به جدول هش با حافظه <code>O(n)</code> نیاز داشتیم؛ اما در اینجا <strong>حافظه دقیقاً O(1)</strong> است و هیچ ساختار کمکی ساخته نمی‌شود!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۱ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 21 — 3SUM: صورت مسئله و چالش تکرارها ════════════════ -->
+  <div class="slide" data-slide="22">
+    <div class="sh">
+      <span class="shtitle">مسئله سوم (چالشی): 3Sum - مجموع سه عدد (LeetCode #15)</span>
+      <span class="sp"></span>
+      <span class="badge ba">مسئله چالشی · Challenging Problem</span>
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله در LeetCode">
+        <span>🔗 LeetCode #15</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>nums</code> داده شده است. تمام سه‌تایی‌های یکتا <code>[nums[i], nums[j], nums[k]]</code> را بیابید به طوری که اندیس‌ها متمایز باشند (<code>i &ne; j &ne; k</code>) و جمع آن‌ها دقیقاً صفر شود: <strong><code>nums[i] + nums[j] + nums[k] == 0</code></strong>.</div>
+        <a href="https://leetcode.com/problems/3sum/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
+      </div>
+
+      <div class="card-grid-4 anim">
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۱. معادله هدف</div>
+          <div class="card-desc">معادله اصلی: <code>a + b + c = 0</code> یا به بیانی دیگر: <code>b + c = -a</code>. آیا این ساختار شما را به یاد Two Sum نمی‌اندازد؟</div>
+        </div>
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">۲. بن‌بست Brute Force</div>
+          <div class="card-desc">سه حلقه تو در تو با زمان <strong><code>O(n³)</code></strong>! برای آرایه ۳ هزارتایی، به ۲۷ میلیارد عملیات می‌رسد و قطعاً TLE می‌دهد.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. چالش اصلی: حذف تکرارها</div>
+          <div class="card-desc">قید اکید مسئله: <strong>«خروجی نباید شامل سه‌تایی تکراری باشد»</strong>. اگر عناصر یکسان در آرایه باشند، ممکن است سه‌تایی‌های تکراری تولید شوند.</div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۴. شاه‌کلید: مرتب‌سازی آرایه</div>
+          <div class="card-desc">هزینه مرتب‌سازی <code>O(n log n)</code> است. وقتی آرایه مرتب شود، عناصر تکراری همسایه می‌شوند و می‌توان از الگوی Two Pointers استفاده کرد!</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">چرا 3Sum یک آزمون سنجش عیار واقعی است؟</div>
+          <p>در جلسات فنی، بسیاری از افراد ایده Two Pointers را می‌شناسند، اما در <strong>«مدیریت بدون باگ تکرارها (Deduplication)»</strong> بدون استفاده از حافظه سربار Set شکست می‌خورند!</p>
+        </div>
+        <div class="bad">
+          <div class="label">رویکرد ضعیف و رد شونده</div>
+          <p>تولید همه سه‌تایی‌ها و ذخیره در یک <code>HashSet&lt;List&lt;Int&gt;&gt;</code> برای رفع تکرار؛ هم مصرف حافظه وحشتناک دارد و هم بررسی‌کننده را ناامید می‌کند.</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۲ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 23 — 3SUM: راه‌حل ساده و غیربهینه ═════════════════════ -->
+  <div class="slide" data-slide="23">
+    <div class="sh">
+      <span class="shtitle">راه‌حل ساده و غیربهینه: بن‌بست ۳ حلقه‌ای Brute Force و تله تکرارها با HashSet</span>
+      <span class="sp"></span>
+      <span class="badge ba">روش غیربهینه · Naive Approach</span>
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #15</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="margin-bottom:0.7rem;">
+        <strong>راه‌حل مستقیم اما فاجعه‌بار:</strong> بیایید ببینیم اگر بخواهیم 3Sum را بدون تفکر الگوریتمی و صرفاً با ساده‌ترین روش ممکن حل کنیم، با چه بن‌بست‌های مهلکی روبرو می‌شویم:
+      </div>
+
+      <div class="card-grid-3 anim">
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">۱. انفجار زمانی O(n³) و خطای TLE قطعی</div>
+          <div class="card-desc">سه حلقه <code>for</code> تو در تو برای بررسی تمام سه‌تایی‌های <code>(i, j, k)</code>.<br>
+          برای <code>n = 3000</code>، تعداد کل حالات برابر است با:<br>
+          <code>C(3000, 3) ≈ 4.5 × 10⁹</code> (۴.۵ میلیارد عملیات!)<br>
+          اجرای این حجم از عملیات بیش از ۴۵ ثانیه زمان می‌برد و در لیت‌کد فوراً با <strong>Time Limit Exceeded</strong> متوقف می‌شود.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. تله حافظه و افت شدید با HashSet</div>
+          <div class="card-desc">برای جلوگیری از سه‌تایی‌های تکراری، معمولاً هر سه‌تایی معتبر را مرتب کرده و داخل <code>HashSet&lt;List&lt;Int&gt;&gt;</code> می‌ریزند.<br>
+          • تخصیص میلیون‌ها آبجکت موقت لیست در حافظه Heap<br>
+          • سربار سنگین محاسبه کد هش و مقایسه برابر بودن<br>
+          • خطر بروز خطای <strong>Memory Limit Exceeded (MLE)</strong>.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. ضعف ساختاری و معماری کد</div>
+          <div class="card-desc">تکیه بر Set به عنوان یک سرپوش بر عدم تسلط الگوریتمی تلقی می‌شود.<br>
+          یک مهندس توانمند باید بتواند تولید تکراری‌ها را در همان ریشه و با <strong>منطق ریاضی اندیس‌ها</strong> مهار کند، نه این‌که ابتدا زباله تولید کند و سپس با Set آن را پاک‌سازی نماید!</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">چرا Brute Force در 3Sum یک بن‌بست کامل است؟</div>
+          <p>پیچیدگی وحشتناک <code>O(n³)</code>، اتلاف شدید حافظه با HashSet و ناکارآمدی مطلق در داده‌های با اندازه بزرگ.</p>
+        </div>
+        <div class="bad">
+          <div class="label">نقطه عطف: مرتب‌سازی + کاهش به Two Sum II</div>
+          <p>با مرتب‌سازی در زمان <code>O(n log n)</code> و تثبیت عنصر اول، مسئله را به <strong><code>O(n²)</code></strong> کاهش می‌دهیم و تکراری‌ها را درجا و با حافظه کمکی <strong><code>O(1)</code></strong> مهار می‌کنیم!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۳ / ۲۷</span>
+  </div>
+
+
+  <!-- ══ SLIDE 22 — 3SUM: کاهش مسئله و حذف تکراری‌ها ═══════════════ -->
+  <div class="slide" data-slide="24">
+    <div class="sh">
+      <span class="shtitle">کاهش الگو: تبدیل 3Sum به Two Sum II و حذف هوشمند تکرارها</span>
+      <span class="sp"></span>
+      <span class="badge bb">کاهش الگو · Pattern Reduction</span>
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #15</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="margin-bottom:0.7rem;">
+        <strong>تبدیل مسئله پیچیده به مسئله حل‌شده قبلی:</strong> اگر یک عدد را تثبیت کنیم (<code>firstNum = nums[i]</code>)، پیدا کردن دو عدد بعدی با جمع <code>-firstNum</code> در آرایه مرتب، دقیقاً همان <strong>Two Sum II</strong> است!
+      </div>
+
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">گام ۱: مرتب‌سازی اولیه</div>
+          <div class="card-desc">با <code>nums.sort()</code> در زمان <code>O(n log n)</code> آرایه مرتب می‌شود؛ مقادیر هم‌ارز کنار هم می‌نشینند.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">گام ۲: بهینه‌سازی توقف اولیه</div>
+          <div class="card-desc">اگر عدد اول مثبت باشد (<code>nums[i] &gt; 0</code>)، چون آرایه مرتب است اعداد بعدی نیز مثبتند و جمع سه عدد مثبت هرگز صفر نمی‌شود (<code>break</code> فوری!).</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">گام ۳: پرش در حلقه بیرونی</div>
+          <div class="card-desc">اگر مقدار فعلی با خانه قبل یکی بود (<code>nums[i] == nums[i-1]</code>)، با <code>continue</code> عبور می‌کنیم تا پاسخ‌های تکراری با آن عدد نسازیم.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">گام ۴: پرش در دو نشانگر</div>
+          <div class="card-desc">هنگام یافتن جفت معتبر، <code>left</code> و <code>right</code> را تا زمانی که به مقادیر تکراری هم‌جوار خود می‌خورند به جلو و عقب پرش می‌دهیم.</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">زیبایی مدیریت درجا (In-Place Deduplication)</div>
+          <p>بدون تخصیص حتی یک بایت حافظه اضافی برای Set، صرفاً با بررسی مقادیر هم‌جوار در آرایه مرتب، یکتایی تمام سه‌تایی‌ها با قاطعیت تضمین می‌شود.</p>
+        </div>
+        <div class="bad">
+          <div class="label">کاهش مرتبه زمانی شگفت‌انگیز</div>
+          <p>با یک حلقه بیرونی و یک جستجوی دو نشانگری درونی: <code>n * O(n) = O(n²)</code>. جهش بزرگ از <code>O(n³)</code> به <strong><code>O(n²)</code></strong>!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۴ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 23 — 3SUM: پیاده‌سازی کاتلین ═════════════════════════ -->
+  <div class="slide" data-slide="25">
+    <div class="sh">
+      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: 3Sum با مدیریت خط به خط تکرارها</span>
+      <span class="sp"></span>
+      <span class="badge bc">کدنویسی تمیز · Clean Code</span>
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>🔗 LeetCode #15</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <p class="anim">پیاده‌سازی اصولی با زبان Kotlin با رعایت کامل مدیریت تکرارها و تفکیک نام متغیرها:</p>
+      <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">threeSum</span>(nums: <span class="ty">IntArray</span>): <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="ty">Int</span>&gt;&gt; {
+    <span class="kw">val</span> result = <span class="fn">mutableListOf</span>&lt;<span class="ty">List</span>&lt;<span class="ty">Int</span>&gt;&gt;()
+    nums.<span class="fn">sort</span>()  <span class="cm">// مرتب‌سازی در زمان O(n log n)</span>
+
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until nums.size - <span class="num">2</span>) {
+        <span class="kw">val</span> firstNum = nums[i]
+
+        <span class="cm">// بهینه‌سازی: اگر کوچک‌ترین عدد مثبت باشد، جمع سه عدد هرگز صفر نمی‌شود</span>
+        <span class="kw">if</span> (firstNum &gt; <span class="num">0</span>) <span class="kw">break</span>
+
+        <span class="cm">// جلوگیری از تکرار: اگر عدد اول با قبلی یکی بود، از آن عبور کن</span>
+        <span class="kw">if</span> (i &gt; <span class="num">0</span> &amp;&amp; firstNum == nums[i - <span class="num">1</span>]) <span class="kw">continue</span>
+
+        <span class="kw">var</span> leftIndex = i + <span class="num">1</span>
+        <span class="kw">var</span> rightIndex = nums.size - <span class="num">1</span>
+
+        <span class="kw">while</span> (leftIndex &lt; rightIndex) {
+            <span class="kw">val</span> currentSum = firstNum + nums[leftIndex] + nums[rightIndex]
+
+            <span class="kw">when</span> {
+                currentSum == <span class="num">0</span> -&gt; {
+                    result.<span class="fn">add</span>(<span class="fn">listOf</span>(firstNum, nums[leftIndex], nums[rightIndex]))
+
+                    <span class="cm">// پرش از عناصر تکراری هم‌جوار در سمت چپ</span>
+                    <span class="kw">while</span> (leftIndex &lt; rightIndex &amp;&amp; nums[leftIndex] == nums[leftIndex + <span class="num">1</span>]) {
+                        leftIndex++
+                    }
+                    <span class="cm">// پرش از عناصر تکراری هم‌جوار در سمت راست</span>
+                    <span class="kw">while</span> (leftIndex &lt; rightIndex &amp;&amp; nums[rightIndex] == nums[rightIndex - <span class="num">1</span>]) {
+                        rightIndex--
+                    }
+
+                    leftIndex++
+                    rightIndex--
+                }
+                currentSum &lt; <span class="num">0</span> -&gt; leftIndex++   <span class="cm">// جمع کوچک است؛ حرکت به سمت اعداد بزرگ‌تر</span>
+                <span class="kw">else</span> -&gt; rightIndex--            <span class="cm">// جمع بزرگ است؛ حرکت به سمت اعداد کوچک‌تر</span>
+            }
+        }
+    }
+
+    <span class="kw">return</span> result
+}</code></pre>
+
+      <h3 class="anim">تحلیل پیچیدگی و ظرافت‌های مهندسی:</h3>
+      <ul class="anim">
+        <li><strong>پیچیدگی زمانی: <code>O(n²)</code></strong> — مرتب‌سازی در <code>O(n log n)</code> انجام می‌شود و حلقه بیرونی با الگوی Two Pointers درونی زمان <code>O(n²)</code> می‌گیرد؛ زمان کل <code>O(n² + n log n) = O(n²)</code> است.</li>
+        <li><strong>پیچیدگی فضایی: <code>O(1)</code></strong> — به جز لیست پاسخ، هیچ ساختار کمکی اضافی مانند Set یا Map استفاده نمی‌شود.</li>
+        <li><strong>دو پرش هوشمند برای یکتایی کامل:</strong> بررسی <code>firstNum == nums[i-1]</code> در حلقه بیرونی، و پرش حلقه‌های داخلی پس از ثبت پاسخ، تضمین ریاضی برای عدم تکرار هر سه‌تایی ارائه می‌دهد.</li>
+      </ul>
+    </div>
+    <span class="snum">۲۵ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 24 — 3SUM: شبیه‌ساز تعاملی سه‌تایی‌ها ═════════════ -->
+  <div class="slide" data-slide="26">
+    <div class="sh">
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم 3Sum</span>
+      <span class="sp"></span>
+      <span class="badge ba">کاهش الگو و حذف تکراری‌ها · Interactive Visualizer</span>
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله 3Sum">
+        <span>🔗 LeetCode #15</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <!-- نوار کنترل و استپر ۶ مرحله‌ای -->
+      <div class="sim-header-ctrl anim">
+        <div class="sim-stepper" id="s3-stepper" style="overflow-x:auto;">
+          <button class="step-dot active" data-s3-step="0"><span>گام ۰</span><small>آرایه سورت‌شده</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-s3-step="1"><span>تکرار ۱</span><small>i=0 (۴-)</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-s3-step="2"><span>تکرار ۲</span><small>🎯 صید [-1, -1, 2]</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-s3-step="3"><span>تکرار ۳</span><small>🎯 صید [-1, 0, 1]</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-s3-step="4"><span>تکرار ۴</span><small>⏭️ پرش تکراری (i=2)</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-s3-step="5"><span>تکرار ۵</span><small>🛑 خروج زودهنگام</small></button>
+        </div>
+
+        <div class="sim-actions">
+          <button class="sim-btn" id="s3-prev">❮ گام قبل</button>
+          <button class="sim-btn sim-btn-primary" id="s3-next">گام بعد ❯</button>
+          <button class="sim-btn sim-btn-play" id="s3-play">⏵ پخش خودکار</button>
+          <button class="sim-btn" id="s3-reset">شروع مجدد ↺</button>
+        </div>
+      </div>
+
+      <div class="sim-board anim">
+        <!-- نمایش آرایه مرتب‌شده با نشانگرهای سه‌گانه i و L و R -->
+        <div class="sim-arr-section">
+          <div class="sim-section-label">
+            <span>📊 آرایه مرتب‌شده: <code>nums = [-4, -1, -1, 0, 1, 2]</code></span>
+            <span class="sim-target-badge">🎯 معادله هدف: <code>a + b + c = 0</code></span>
+          </div>
+
+          <div class="arr-display" id="s3-arr" style="gap:10px; overflow-x:auto; padding:6px 0;">
+            <div class="arr-slot" data-s3-idx="0">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">i</span></div>
+              <div class="arr-item"><span class="val">-4</span><span class="idx">[0]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-s3-idx="1">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">L</span></div>
+              <div class="arr-item"><span class="val">-1</span><span class="idx">[1]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-s3-idx="2">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">-1</span><span class="idx">[2]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-s3-idx="3">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">0</span><span class="idx">[3]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-s3-idx="4">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt"></span></div>
+              <div class="arr-item"><span class="val">1</span><span class="idx">[4]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+            <div class="arr-slot" data-s3-idx="5">
+              <div class="arr-ptr"><span class="ptr-arrow">▼</span> <span class="ptr-txt">R</span></div>
+              <div class="arr-item"><span class="val">2</span><span class="idx">[5]</span></div>
+              <div class="arr-tag">آماده</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- باکس ساده و یکپارچه تریس متغیرها -->
+        <div class="sim-unified-box anim" id="s3-trace-box" style="margin-top:0.7rem;">
+          <!-- با JS پر می‌شود -->
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">شاهکار حذف درجا تکرارها (In-Place Deduplication)</div>
+          <p>بدون نیاز به اختصاص حافظه اضافه برای <code>HashSet</code>، با پرش ساده نشانگرها از روی عناصر یکسان، پاسخ کاملاً یکتا به دست آمد.</p>
+        </div>
+        <div class="bad">
+          <div class="label">توقف هوشمند با خروج زودهنگام (Early Exit)</div>
+          <p>به محض اینکه عدد اول مثبت شد (<code>nums[i] &gt; 0</code>)، الگوریتم فوراً متوقف شد زیرا مجموع سه عدد مثبت هرگز صفر نخواهد شد.</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۶ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 25 — برنامه ۳۰ روزه ═══════════════════════════ -->
+  <div class="slide" data-slide="27">
+    <div class="sh"><span class="shtitle">جمع‌بندی و برنامه ۳۰ روزه آینده</span><span class="sp"></span><span class="badge bc">برنامه اقدام · Action Plan</span></div>
+    <div class="sbody">
+      <p class="anim">برای شروع از همین امروز، نیازی به برنامه سنگین غیرواقعی نیست. این تقویم ۴ هفته‌ای را دنبال کنید:</p>
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">هفته اول: پایه‌ها</div>
+          <div class="card-desc">آرایه‌ها و جداول هش. حل ۵ مسئله Easy از Blind 75 شامل Two Sum و Contains Duplicate.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">هفته دوم: نشانگرها</div>
+          <div class="card-desc">الگوهای Two Pointers و Sliding Window. مرور مسائل هفته اول در روزهای فرد.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">هفته سوم: ساختارها</div>
+          <div class="card-desc">درخت‌ها، پشته (Stack) و پیمایش‌های DFS و BFS ساده. رسم مداوم روی کاغذ.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">هفته چهارم: چالش</div>
+          <div class="card-desc">ورود به اولین مسائل Medium و حل با تایمر ۳۰ دقیقه‌ای برای شبیه‌سازی شرایط ارزیابی واقعی.</div>
+        </div>
+      </div>
+      <div class="scenario anim">
+        <strong>شعار پایانی:</strong> روزی ۴۵ دقیقه تمرین عمیق و با تمرکز، معجزه‌ای خلق می‌کند که تست‌زدن‌های ۱۰ ساعته‌ی بی‌هدف آخر هفته هرگز خلق نخواهد کرد.
+      </div>
+    </div>
+    <span class="snum">۲۷ / ۲۷</span>
+  </div>
+
+  <!-- ══ SLIDE 26 — پایان و پرسش و پاسخ ══════════════════════ -->
+  <div class="slide" id="sthanks" data-slide="28">
+    <div class="tc">
+      <h1 class="tqmain">متشکرم از توجه شما</h1>
+      <p class="tqsub">پرسش و پاسخ (Q&A)</p>
+      <p class="tqauthor">Milad Faridnia</p>
+      <div class="ttags" style="margin-top:28px">
+        <span class="ttag tt1">LeetCode.com</span>
+        <span class="ttag tt2">NeetCode.io</span>
+        <span class="ttag tt3">Blind 75 Guide</span>
+      </div>
+    </div>
+    <p class="hint">برای مرور یادداشت‌ها کلید N را فشار دهید · ارائه مجدد با کلید Home</p>
+  </div>
+
+</div>
+
+<!-- ══ PROGRESS & CONTROLS ═════════════════════════════════ -->
+<div id="prog"></div>
+<div id="ctrl">
+  <button class="nb" id="theme-btn" title="تغییر تم روشن / تاریک">☀️</button>
+  <button class="nb" id="font-dn" title="کوچک‌تر کردن فونت (-)">A−</button>
+  <button class="nb" id="font-up" title="بزرگ‌تر کردن فونت (+)">A+</button>
+  <button class="nb" id="notes-btn" title="باز کردن یادداشت گوینده در پنجره جدا (N)">📝</button>
+  <button class="nb" id="bnext" title="بعدی →">→</button>
+  <span id="ctr">۱ / ۱۹</span>
+  <button class="nb" id="bprev" title="قبلی ←">←</button>
+</div>
+
+<script src="speaker-notes-data.js"></script>
+<script>
+// ── SLIDE ENGINE ───────────────────────────────────────────
+let cur = 0, busy = false;
+const FS_MIN = 0.85, FS_MAX = 1.35, FS_STEP = 0.05;
+let fsScale = 1;
+let notesWindow = null;
+let syncChannel = null;
+
+function getSyncChannel() {
+  if (!syncChannel) syncChannel = new BroadcastChannel(PRESENTATION_CHANNEL);
+  return syncChannel;
+}
+
+function broadcastState() {
+  getSyncChannel().postMessage({
+    type: 'state',
+    index: cur,
+    total: allSlides().length,
+    isLight: document.documentElement.classList.contains('light')
+  });
+}
+
+function openNotesWindow() {
+  if (notesWindow && !notesWindow.closed) {
+    notesWindow.focus();
+    broadcastState();
+    return;
+  }
+  notesWindow = window.open(
+    'speaker-notes.html',
+    'leetcode-speaker-notes',
+    'width=920,height=780,menubar=no,toolbar=no,location=no,status=no'
+  );
+  if (notesWindow) {
+    notesWindow.addEventListener('load', broadcastState, { once: true });
+    setTimeout(broadcastState, 500);
+  }
+}
+
+function allSlides() { return document.querySelectorAll('.slide'); }
+
+function toPersianNum(n) {
+  return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+}
+
+function updateUI(total) {
+  const label = toPersianNum(cur + 1) + ' / ' + toPersianNum(total);
+  document.getElementById('ctr').textContent = label;
+  allSlides().forEach((s, i) => {
+    const sn = s.querySelector('.snum');
+    if (sn) sn.textContent = toPersianNum(i) + ' / ' + toPersianNum(total - 2);
+  });
+  const pct = total > 1 ? (cur / (total - 1)) * 100 : 0;
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+function goTo(n) {
+  if (busy) return;
+  const slides = allSlides();
+  if (n < 0 || n >= slides.length || n === cur) return;
+  if (typeof stopSimAutoPlay === 'function') stopSimAutoPlay();
+  if (typeof stopBfAutoPlay === 'function') stopBfAutoPlay();
+  if (typeof stopT2AutoPlay === 'function') stopT2AutoPlay();
+  if (typeof stopS3AutoPlay === 'function') stopS3AutoPlay();
+  busy = true;
+  slides[cur].classList.add('exit');
+  slides[cur].classList.remove('active');
+  setTimeout(() => {
+    slides[cur].classList.remove('exit');
+    cur = n;
+    slides[cur].classList.add('active');
+    updateUI(slides.length);
+    broadcastState();
+    busy = false;
+  }, 280);
+}
+
+function applyFontScale() {
+  document.documentElement.style.setProperty('--fs-scale', fsScale);
+}
+
+function bumpFont(delta) {
+  fsScale = Math.min(FS_MAX, Math.max(FS_MIN, +(fsScale + delta).toFixed(2)));
+  applyFontScale();
+}
+
+// ── TWO SUM SIMULATOR LOGIC ────────────────────────────────
+const simSteps = [
+  {
+    step: 0,
+    currentIdx: -1,
+    foundIdx: -1,
+    activeLines: [1],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'در انتظار آغاز', desc: 'اشاره‌گر بیرون از حلقه آرایه است' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: 'target - currentNumber', desc: 'هدف الگوریتم: target = 1' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen = { } (خالی)', desc: 'هیچ خانه‌ای هنوز تخصیص نیافته است' }
+    },
+    slots: [
+      { state: 'idle', tag: 'آماده' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [],
+    codeState: 'ایجاد جدول حافظه خالی (خط ۱)',
+    summaryHtml: '<strong>گام ۰ · نقطه آغاز:</strong> آرایه ورودی با ۸ عضو و <code>target = 1</code> بارگذاری شد. هنوز هیچ عنصری پیمایش نشده و جدول حافظه <code>seen</code> خالی است. برای حرکت گام‌به‌گام روی <strong>«گام بعد ❯»</strong> کلیک کنید یا <strong>«پخش خودکار ⏵»</strong> را بزنید.'
+  },
+  {
+    step: 1,
+    currentIdx: 0,
+    foundIdx: -1,
+    activeLines: [2, 3, 4, 5, 9],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[0] = 4', desc: 'اندیس پیمایش: i = 0' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - 4 = -3', desc: 'به عدد ۳- به عنوان مکمل نیاز داریم' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(-3) ➔ خیر ❌', desc: 'اقدام: ثبت seen[4] = 0 در خانه ۱' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: true, isMatched: false }
+    ],
+    codeState: 'مکمل ۳- در حافظه نبود ➔ ذخیره عدد ۴ با اندیس ۰ در مپ (خط ۹)',
+    summaryHtml: '<strong>تکرار ۱ (اندیس ۰):</strong> مکمل عدد ۴ برابر با ۳- است (<code>1 - 4 = -3</code>). جدول حافظه خالی است؛ بنابراین عدد ۴ با اندیس ۰ در <strong>خانه اول حافظه</strong> ذخیره می‌شود: <code>seen[4] = 0</code>.'
+  },
+  {
+    step: 2,
+    currentIdx: 1,
+    foundIdx: -1,
+    activeLines: [2, 3, 4, 5, 9],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[1] = -2', desc: 'اندیس پیمایش: i = 1 (عدد منفی)' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - (-2) = 3', desc: 'تفاضل منفی: ۱ منهای ۲- می‌شود ۳ مثبت!' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(3) ➔ خیر ❌', desc: 'اقدام: ثبت seen[-2] = 1 در خانه ۲' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: false, isMatched: false },
+      { slot: 2, key: -2, val: 1, isNew: true, isMatched: false }
+    ],
+    codeState: 'مکمل ۳ در حافظه نبود ➔ ذخیره عدد ۲- با اندیس ۱ در مپ (خط ۹)',
+    summaryHtml: '<strong>تکرار ۲ (اندیس ۱):</strong> عدد منفی ۲- بررسی شد. مکمل آن ۳ مثبت است (<code>1 - (-2) = 3</code>). آیا ۳ در حافظه هست؟ خیر (تنها عدد ۴ ثبت است). عدد ۲- با اندیس ۱ در <strong>خانه دوم حافظه</strong> ثبت شد: <code>seen[-2] = 1</code>.'
+  },
+  {
+    step: 3,
+    currentIdx: 2,
+    foundIdx: -1,
+    activeLines: [2, 3, 4, 5, 9],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[2] = 5', desc: 'اندیس پیمایش: i = 2' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - 5 = -4', desc: 'به عدد ۴- به عنوان مکمل نیاز داریم' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(-4) ➔ خیر ❌', desc: 'اقدام: ثبت seen[5] = 2 در خانه ۳' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: false, isMatched: false },
+      { slot: 2, key: -2, val: 1, isNew: false, isMatched: false },
+      { slot: 3, key: 5, val: 2, isNew: true, isMatched: false }
+    ],
+    codeState: 'مکمل ۴- در حافظه نبود ➔ ذخیره عدد ۵ با اندیس ۲ در مپ (خط ۹)',
+    summaryHtml: '<strong>تکرار ۳ (اندیس ۲):</strong> عدد ۵ بررسی شد. مکمل مورد نیاز ۴- است. در حافظه استعلام می‌زنیم: آیا ۴- هست؟ خیر ❌. عدد ۵ با اندیس ۲ در <strong>خانه سوم حافظه</strong> ثبت می‌شود: <code>seen[5] = 2</code>.'
+  },
+  {
+    step: 4,
+    currentIdx: 3,
+    foundIdx: -1,
+    activeLines: [2, 3, 4, 5, 9],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[3] = 0', desc: 'اندیس پیمایش: i = 3 (عنصر صفر)' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - 0 = 1', desc: 'به عدد ۱ به عنوان مکمل نیاز داریم' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(1) ➔ خیر ❌', desc: 'اقدام: ثبت seen[0] = 3 در خانه ۴' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: false, isMatched: false },
+      { slot: 2, key: -2, val: 1, isNew: false, isMatched: false },
+      { slot: 3, key: 5, val: 2, isNew: false, isMatched: false },
+      { slot: 4, key: 0, val: 3, isNew: true, isMatched: false }
+    ],
+    codeState: 'مکمل ۱ در حافظه نبود ➔ ذخیره عدد ۰ با اندیس ۳ در مپ (خط ۹)',
+    summaryHtml: '<strong>تکرار ۴ (اندیس ۳):</strong> عدد صفر بررسی شد. مکمل: <code>1 - 0 = 1</code>. آیا ۱ در مپ هست؟ خیر ❌. عدد ۰ با اندیس ۳ در <strong>خانه چهارم حافظه</strong> ثبت می‌شود: <code>seen[0] = 3</code>.'
+  },
+  {
+    step: 5,
+    currentIdx: 4,
+    foundIdx: -1,
+    activeLines: [2, 3, 4, 5, 9],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[4] = 6', desc: 'اندیس پیمایش: i = 4' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - 6 = -5', desc: 'به عدد ۵- به عنوان مکمل نیاز داریم' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(-5) ➔ خیر ❌', desc: 'اقدام: ثبت seen[6] = 4 در خانه ۵' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' },
+      { state: 'idle', tag: 'در نوبت' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: false, isMatched: false },
+      { slot: 2, key: -2, val: 1, isNew: false, isMatched: false },
+      { slot: 3, key: 5, val: 2, isNew: false, isMatched: false },
+      { slot: 4, key: 0, val: 3, isNew: false, isMatched: false },
+      { slot: 5, key: 6, val: 4, isNew: true, isMatched: false }
+    ],
+    codeState: 'مکمل ۵- در حافظه نبود ➔ ذخیره عدد ۶ با اندیس ۴ در مپ (خط ۹)',
+    summaryHtml: '<strong>تکرار ۵ (اندیس ۴):</strong> عدد ۶ بررسی شد. مکمل آن ۵- است (<code>1 - 6 = -5</code>). در حافظه عدد ۵- نداریم (فقط عدد مثبت ۵ داریم). عدد ۶ با اندیس ۴ در <strong>خانه پنجم حافظه</strong> ثبت می‌شود: <code>seen[6] = 4</code>.'
+  },
+  {
+    step: 6,
+    currentIdx: 5,
+    foundIdx: 1,
+    activeLines: [2, 3, 4, 5, 6, 7],
+    hud: {
+      current: { title: 'عنصر جاری (currentNumber)', val: 'nums[5] = 3 🎯', desc: 'اندیس پیمایش: i = 5 (صید هدف!)' },
+      diff: { title: 'محاسبه مکمل (neededNumber)', val: '1 - 3 = -2 ⚡', desc: 'مکمل صید شد: عدد ۲-' },
+      query: { title: 'استعلام حافظه (seen)', val: 'seen.containsKey(-2) ➔ بله! ✅', desc: 'در خانه ۲ با اندیس ۱ شکار شد!' }
+    },
+    slots: [
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'found', tag: '🎯 مکمل (-۲)' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'visited', tag: '💾 در حافظه' },
+      { state: 'found', tag: '🎯 جفت هدف (۳)' },
+      { state: 'skipped', tag: '⏭️ Early Exit' },
+      { state: 'skipped', tag: '⏭️ Early Exit' }
+    ],
+    memory: [
+      { slot: 1, key: 4, val: 0, isNew: false, isMatched: false },
+      { slot: 2, key: -2, val: 1, isNew: false, isMatched: true },
+      { slot: 3, key: 5, val: 2, isNew: false, isMatched: false },
+      { slot: 4, key: 0, val: 3, isNew: false, isMatched: false },
+      { slot: 5, key: 6, val: 4, isNew: false, isMatched: false }
+    ],
+    codeState: '🎉 کشف مکمل! بازگرداندن فوری intArrayOf(1, 5) (خط ۶ و ۷)',
+    summaryHtml: '<strong>تکرار ۶ (شکار پیروزی 🎉):</strong> عدد ۳ بررسی شد؛ مکمل آن (عدد ۲-) با یک استعلام صاعقه‌ای <code>O(1)</code> مستقیماً در خانه دوم حافظه با اندیس ۱ پیدا شد! مجموع <code>nums[1] + nums[5] = (-2) + 3 = 1</code> محقق گردید و تابع بلافاصله <strong><code>intArrayOf(1, 5)</code></strong> را بازگرداند. <strong>توقف هوشمندانه (Early Exit):</strong> خانه‌های ۶ و ۷ (اعداد ۲ و ۷) هرگز پیمایش نشدند!'
+  }
+];
+let currentSimStep = 0;
+let simAutoPlayTimer = null;
+
+function stopSimAutoPlay() {
+  if (simAutoPlayTimer) {
+    clearInterval(simAutoPlayTimer);
+    simAutoPlayTimer = null;
+    const playBtn = document.getElementById('sim-play');
+    if (playBtn) {
+      playBtn.innerHTML = '⏵ پخش خودکار';
+      playBtn.classList.remove('playing');
+    }
+  }
+}
+
+function toggleSimAutoPlay() {
+  const playBtn = document.getElementById('sim-play');
+  if (simAutoPlayTimer) {
+    stopSimAutoPlay();
+  } else {
+    if (currentSimStep >= simSteps.length - 1) {
+      currentSimStep = 0;
+    }
+    renderSim();
+    if (playBtn) {
+      playBtn.innerHTML = '⏸ توقف';
+      playBtn.classList.add('playing');
+    }
+    simAutoPlayTimer = setInterval(() => {
+      if (currentSimStep < simSteps.length - 1) {
+        currentSimStep++;
+        renderSim();
+      } else {
+        stopSimAutoPlay();
+      }
+    }, 1900);
+  }
+}
+
+function renderSim() {
+  const data = simSteps[currentSimStep];
+  const isFinalStep = (currentSimStep === simSteps.length - 1);
+
+  // 1. Stepper dots
+  const stepDots = document.querySelectorAll('#sim-stepper .step-dot');
+  stepDots.forEach((dot, idx) => {
+    dot.classList.remove('active', 'passed');
+    if (idx === currentSimStep) dot.classList.add('active');
+    else if (idx < currentSimStep) dot.classList.add('passed');
+  });
+
+  // 2. Array slots
+  const slots = document.querySelectorAll('#sim-arr .arr-slot');
+  slots.forEach((slot, idx) => {
+    slot.className = 'arr-slot';
+    const cfg = data.slots[idx];
+    if (cfg) {
+      if (cfg.state !== 'idle') slot.classList.add(cfg.state);
+      const tagEl = slot.querySelector('.arr-tag');
+      if (tagEl) tagEl.textContent = cfg.tag;
+    }
+  });
+
+  // 3. Render all traced items into the unified single box
+  const traceBox = document.getElementById('sim-trace-box');
+  if (traceBox) {
+    const memStr = data.memory.length === 0
+      ? '<span style="color:var(--dim)">خالی (هنوز عددی در حافظه ذخیره نشده)</span>'
+      : data.memory.map(m => `<span style="display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(20,20,40,.8);border:1px solid ${m.isMatched ? 'var(--teal)' : 'var(--border)'};margin:0 3px;${m.isMatched ? 'color:var(--teal);font-weight:700;' : ''}">{ ${m.key}: ${m.val} }</span>`).join(' ');
+
+    traceBox.innerHTML = `
+      <div class="sub-head">
+        <div class="sub-step-title">
+          <span>🔄</span>
+          <span>گام ${toPersianNum(data.step)}: ${data.hud.current.val}</span>
+        </div>
+        <span class="sub-badge ${isFinalStep ? 'ok' : 'working'}">
+          ${isFinalStep ? '🎯 جفت هدف کشف شد!' : 'در حال پیمایش'}
+        </span>
+      </div>
+
+      <div class="sub-grid">
+        <div class="sub-pill">
+          <span class="sub-pill-lbl">📌 عنصر جاری:</span>
+          <span class="sub-pill-val">${data.hud.current.val}</span>
+        </div>
+        <div class="sub-pill">
+          <span class="sub-pill-lbl">🎯 مکمل مورد نیاز:</span>
+          <span class="sub-pill-val amber">${data.hud.diff.val}</span>
+        </div>
+        <div class="sub-pill">
+          <span class="sub-pill-lbl">⚡ استعلام حافظه:</span>
+          <span class="sub-pill-val ${isFinalStep ? '' : 'cyan'}">${data.hud.query.val}</span>
+        </div>
+        <div class="sub-pill" style="flex:1;min-width:200px;">
+          <span class="sub-pill-lbl">🧠 حافظه (Seen Map):</span>
+          <span style="font-family:monospace;font-size:calc(12px * var(--fs-scale));">${memStr}</span>
+        </div>
+      </div>
+
+      <div class="sub-desc">
+        ${data.summaryHtml}
+      </div>
+    `;
+  }
+
+  // 7. Buttons
+  const prevBtn = document.getElementById('sim-prev');
+  const nextBtn = document.getElementById('sim-next');
+  if (prevBtn) prevBtn.disabled = (currentSimStep === 0);
+  if (nextBtn) nextBtn.disabled = (currentSimStep === simSteps.length - 1);
+}
+
+// ── SLIDE 11 BRUTE FORCE TRACE SIMULATOR LOGIC ────────────
+const bfSteps = [
+  {
+    step: 0,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i)', val: 'در انتظار آغاز', desc: 'هنوز حلقه‌ای اجرا نشده است' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j)', val: 'در انتظار آغاز', desc: 'پیمایش جفت‌ها هنوز شروع نشده' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: 'nums[i] + nums[j] == 1 ?', desc: 'هدف: target = 1 · مقایسه‌ها: ۰' }
+    },
+    slots: [
+      { state: 'idle', tag: 'آماده', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' }
+    ],
+    summaryHtml: '<strong>گام ۰ · نقطه آغاز تریس Brute Force:</strong> آرایه ورودی با ۸ عضو و <code>target = 1</code> آماده است. در روش مستقیم O(n²) هیچ حافظه کمکی در کار نیست؛ دو حلقه تو در تو همه جفت‌ها را یکی‌یکی با هم جمع می‌زنند تا به هدف ۱ برسند. روی <strong>«گام بعد ❯»</strong> کلیک کنید یا <strong>«پخش خودکار ⏵»</strong> را بزنید.'
+  },
+  {
+    step: 1,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i=0)', val: 'nums[0] = 4', desc: 'انتخاب عدد اول برای جفت‌سازی' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j=1)', val: 'nums[1] = -2', desc: 'بررسی اولین عضو بعدی (j = i + 1)' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: '4 + (-2) = 2  ≠  1 ❌', desc: 'مقایسه ۱: مجموع برابر هدف نشد!' }
+    },
+    slots: [
+      { state: 'ptr-i', tag: 'عدد اول (i=0)', ptrText: 'i = 0' },
+      { state: 'ptr-j', tag: 'عدد دوم (j=1)', ptrText: 'j = 1' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۱ (مقایسه اول):</strong> حلقه اول عدد اول را روی اندیس ۰ (<code>nums[0] = 4</code>) برمی‌دارد. حلقه دوم بلافاصله از خانه بعد (<code>j = 1</code>) عدد ۲- را برمی‌دارد. حاصل‌جمع: <code>4 + (-2) = 2</code>. آیا ۲ برابر هدف (۱) است؟ خیر ❌. مقایسه اول شکست خورد؛ اشاره‌گر <code>j</code> باید به خانه بعدی برود.'
+  },
+  {
+    step: 2,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i=0)', val: 'nums[0] = 4 (سوخت!)', desc: 'پایان بررسی تمام جفت‌های عدد ۴' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j=2..7)', val: 'پیمایش تا انتهای آرایه', desc: 'مقایسه با ۵، ۰، ۶، ۳، ۲، ۷' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: 'هیچ جفتی به ۱ نرسید! ❌', desc: '۷ مقایسه سوخته و هدررفت توان پردازشی' }
+    },
+    slots: [
+      { state: 'tested', tag: 'بدون جفت', ptrText: 'i = 0' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۲ (پایان دور اول حلقه بیرونی):</strong> حلقه دوم تمام خانه‌های بعدی را با عدد ۴ جمع زد: <code>4+5=9</code>، <code>4+0=4</code>، <code>4+6=10</code>، <code>4+3=7</code>، <code>4+2=6</code>، <code>4+7=11</code>. هیچ‌کدام برابر ۱ نشدند! نتیجه: <strong>۷ مقایسه پشت سر هم سوخت.</strong> حالا حلقه اول باید یک گام جلو برود تا عدد بعدی را امتحان کند.'
+  },
+  {
+    step: 3,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i=1)', val: 'nums[1] = -2', desc: 'حرکت i به خانه دوم آرایه' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j=2)', val: 'nums[2] = 5', desc: 'آغاز حلقه دوم از j = i + 1' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: '(-2) + 5 = 3  ≠  1 ❌', desc: 'مقایسه ۸: حاصل برابر ۳ شد، نه ۱!' }
+    },
+    slots: [
+      { state: 'tested', tag: 'قبلی', ptrText: '' },
+      { state: 'ptr-i', tag: 'عدد اول (i=1)', ptrText: 'i = 1' },
+      { state: 'ptr-j', tag: 'عدد دوم (j=2)', ptrText: 'j = 2' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۳ (مقایسه هشتم):</strong> اشاره‌گر <code>i</code> یک خانه جلو رفت و روی عدد منفی ۲- نشست (<code>nums[1] = -2</code>). حلقه دوم دوباره از خانه بلافاصله بعد (<code>j = 2</code>، عدد ۵) شروع می‌کند: <code>(-2) + 5 = 3</code>. حاصل‌جمع ۳ است و با تارگت ۱ فاصله دارد ❌. مقایسه هشتم هم شکست خورد.'
+  },
+  {
+    step: 4,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i=1)', val: 'nums[1] = -2', desc: 'عدد پایه همچنان ۲- است' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j=3)', val: 'nums[3] = 0', desc: 'بررسی خانه بعدی آرایه' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: '(-2) + 0 = -2  ≠  1 ❌', desc: 'مقایسه ۹: مجموع برابر ۲- شد!' }
+    },
+    slots: [
+      { state: 'tested', tag: 'قبلی', ptrText: '' },
+      { state: 'ptr-i', tag: 'عدد اول (i=1)', ptrText: 'i = 1' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'ptr-j', tag: 'عدد دوم (j=3)', ptrText: 'j = 3' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۴ (مقایسه نهم):</strong> اشاره‌گر <code>j</code> یک گام جلو می‌رود و روی اندیس ۳ (عدد ۰) قرار می‌گیرد: <code>(-2) + 0 = -2</code>. مجموع ۲- است و برابر هدف ۱ نیست ❌. الگوریتم کورکورانه به خانه بعدی می‌رود.'
+  },
+  {
+    step: 5,
+    hud: {
+      first: { title: '📌 اشاره‌گر حلقه اول (i=1)', val: 'nums[1] = -2', desc: 'عدد پایه همچنان ۲- است' },
+      second: { title: '🔍 اشاره‌گر حلقه دوم (j=4)', val: 'nums[4] = 6', desc: 'بررسی خانه پنجم آرایه' },
+      check: { title: '⚡ آزمون جمع و شمارش مقایسه‌ها', val: '(-2) + 6 = 4  ≠  1 ❌', desc: 'مقایسه ۱۰: مجموع برابر ۴ شد!' }
+    },
+    slots: [
+      { state: 'tested', tag: 'قبلی', ptrText: '' },
+      { state: 'ptr-i', tag: 'عدد اول (i=1)', ptrText: 'i = 1' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'ptr-j', tag: 'عدد دوم (j=4)', ptrText: 'j = 4' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' },
+      { state: 'idle', tag: 'در نوبت', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۵ (مقایسه دهم):</strong> اشاره‌گر <code>j</code> به اندیس ۴ (عدد ۶) می‌رسد: <code>(-2) + 6 = 4</code>. آیا ۴ برابر ۱ است؟ خیر ❌. دهمین مقایسه نیز بی‌نتیجه به پایان رسید.'
+  },
+  {
+    step: 6,
+    hud: {
+      first: { title: '📌 اشاره‌گر اول: صید هدف!', val: 'nums[1] = -2 🎯', desc: 'اندیس اول پاسخ: i = 1' },
+      second: { title: '🔍 اشاره‌گر دوم: صید هدف!', val: 'nums[5] = 3 🎯', desc: 'اندیس دوم پاسخ: j = 5' },
+      check: { title: '⚡ آزمون جمع: موفقیت قطعی ✅', val: '(-2) + 3 = 1 == target 🎉', desc: 'پاسخ کشف شد: [1, 5] در مقایسه ۱۱' }
+    },
+    slots: [
+      { state: 'tested', tag: 'قبلی', ptrText: '' },
+      { state: 'found', tag: '🎯 جفت هدف (-۲)', ptrText: 'i = 1' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'tested', tag: '❌ رد شد', ptrText: '' },
+      { state: 'found', tag: '🎯 جفت هدف (۳)', ptrText: 'j = 5' },
+      { state: 'skipped', tag: '⏭️ بررسی‌نشده', ptrText: '' },
+      { state: 'skipped', tag: '⏭️ بررسی‌نشده', ptrText: '' }
+    ],
+    summaryHtml: '<strong>تکرار ۶ (شکار پاسخ در مقایسه یازدهم 🎉):</strong> اشاره‌گر <code>j</code> روی اندیس ۵ (عدد ۳) قرار گرفت: <code>(-2) + 3 = 1</code>! شرط برابری با هدف محقق شد و بلافاصله <strong><code>intArrayOf(1, 5)</code></strong> بازگردانده می‌شود.<br><strong>تحلیل هزینه:</strong> در این آرایه ۸ عضوی، تا رسیدن به پاسخ <strong>۱۱ مقایسه</strong> انجام شد. اگر پاسخ در انتهای آرایه بود یا اصلاً وجود نداشت، ۲۸ مقایسه سوخته انجام می‌شد. این تریس عینی دقیقاً به ما نشان می‌دهد چرا نیاز به یک روش بهینه‌تر داریم!'
+  }
+];
+
+let currentBfStep = 0;
+let bfAutoPlayTimer = null;
+
+function renderBfTrace() {
+  const data = bfSteps[currentBfStep];
+  if (!data) return;
+
+  // 1. Stepper dots
+  const dots = document.querySelectorAll('#bf-stepper .step-dot');
+  dots.forEach(d => {
+    const s = parseInt(d.getAttribute('data-bf-step'), 10);
+    d.classList.toggle('active', s === currentBfStep);
+  });
+
+  // 2. Slots
+  const slots = document.querySelectorAll('#bf-arr .arr-slot');
+  slots.forEach((slotEl, idx) => {
+    const slotData = data.slots[idx];
+    slotEl.classList.remove('current', 'found', 'visited', 'skipped', 'ptr-i', 'ptr-j', 'tested');
+    if (slotData) {
+      if (slotData.state !== 'idle') {
+        slotEl.classList.add(slotData.state);
+      }
+      const tagEl = slotEl.querySelector('.arr-tag');
+      if (tagEl) tagEl.textContent = slotData.tag;
+      const ptrTxtEl = slotEl.querySelector('.ptr-txt');
+      if (ptrTxtEl) ptrTxtEl.textContent = slotData.ptrText || '';
+    }
+  });
+
+  // 3. HUD Cards
+  const hudEl = document.getElementById('bf-hud');
+  if (hudEl) {
+    hudEl.innerHTML = `
+      <div class="hud-card">
+        <div class="hud-title"><span>📌</span><span>${data.hud.first.title}</span></div>
+        <div class="hud-val" style="color:var(--purple);">${data.hud.first.val}</div>
+        <div class="hud-desc">${data.hud.first.desc}</div>
+      </div>
+      <div class="hud-card hud-card-diff">
+        <div class="hud-title"><span>🔍</span><span>${data.hud.second.title}</span></div>
+        <div class="hud-val" style="color:var(--amber);">${data.hud.second.val}</div>
+        <div class="hud-desc">${data.hud.second.desc}</div>
+      </div>
+      <div class="hud-card hud-card-query">
+        <div class="hud-title"><span>⚡</span><span>${data.hud.check.title}</span></div>
+        <div class="hud-val" style="color:${currentBfStep === 6 ? 'var(--teal)' : 'var(--text)'};">${data.hud.check.val}</div>
+        <div class="hud-desc">${data.hud.check.desc}</div>
+      </div>
+    `;
+  }
+
+  // 4. Summary box
+  const summaryBox = document.getElementById('bf-summary-box');
+  if (summaryBox) summaryBox.innerHTML = data.summaryHtml;
+
+  // 5. Buttons disabled state
+  const prevBtn = document.getElementById('bf-prev');
+  const nextBtn = document.getElementById('bf-next');
+  if (prevBtn) prevBtn.disabled = (currentBfStep === 0);
+  if (nextBtn) nextBtn.disabled = (currentBfStep === bfSteps.length - 1);
+}
+
+function stopBfAutoPlay() {
+  if (bfAutoPlayTimer) {
+    clearInterval(bfAutoPlayTimer);
+    bfAutoPlayTimer = null;
+    const playBtn = document.getElementById('bf-play');
+    if (playBtn) playBtn.textContent = '⏵ پخش خودکار';
+  }
+}
+
+function toggleBfAutoPlay() {
+  const playBtn = document.getElementById('bf-play');
+  if (bfAutoPlayTimer) {
+    stopBfAutoPlay();
+  } else {
+    if (currentBfStep >= bfSteps.length - 1) {
+      currentBfStep = 0;
+      renderBfTrace();
+    }
+    if (playBtn) playBtn.textContent = '⏸ توقف';
+    bfAutoPlayTimer = setInterval(() => {
+      if (currentBfStep < bfSteps.length - 1) {
+        currentBfStep++;
+        renderBfTrace();
+      } else {
+        stopBfAutoPlay();
+      }
+    }, 2200);
+  }
+}
+
+// ── SLIDE 20 TWO SUM II SIMULATOR LOGIC ───────────────────
+const t2Steps = [
+  {
+    step: 0,
+    left: 0,
+    right: 6,
+    statusBadge: { text: 'آماده‌سازی', cls: 'working' },
+    pills: [
+      { lbl: 'نشانگر چپ (L):', val: 'numbers[0] = 1', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'numbers[6] = 15', cls: 'cyan' },
+      { lbl: 'مجموع فعلی:', val: 'در انتظار آغاز', cls: 'amber' },
+      { lbl: 'تصمیم:', val: 'شروع پیمایش همگرا', cls: '' }
+    ],
+    slots: [
+      { ptrText: 'L', tag: 'L=0', state: 'ptr-left' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: 'R', tag: 'R=6', state: 'ptr-right' }
+    ],
+    desc: '<strong>گام ۰ · استقرار اولیه:</strong> آرایه ورودی با ۷ عضو از قبل مرتب است. نشانگر <code>left = 0</code> روی کوچک‌ترین عضو (۱) و <code>right = 6</code> روی بزرگ‌ترین عضو (۱۵) قرار می‌گیرند. هدف ما رسیدن به جمع <code>target = 10</code> است.'
+  },
+  {
+    step: 1,
+    left: 0,
+    right: 6,
+    statusBadge: { text: '۱۶ > ۱۰ ➔ کاهش راست', cls: 'warn' },
+    pills: [
+      { lbl: 'نشانگر چپ (L):', val: 'numbers[0] = 1', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'numbers[6] = 15', cls: 'cyan' },
+      { lbl: 'مجموع فعلی:', val: '1 + 15 = 16', cls: 'amber' },
+      { lbl: 'تصمیم:', val: '16 > 10 ➔ rightIndex--', cls: 'red' }
+    ],
+    slots: [
+      { ptrText: 'L', tag: 'L=0', state: 'ptr-left' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '❌', tag: 'بزرگ است (حذف)', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۱ (مقایسه اول):</strong> جمع دو سر آرایه برابر است با <code>1 + 15 = 16</code>. چون ۱۶ بزرگتر از ۱۰ است و ۱ کوچک‌ترین عضو آرایه است، عدد ۱۵ حتی با کوچک‌ترین عضو هم بیش از حد بزرگ شد؛ بنابراین عدد ۱۵ هرگز نمی‌تواند بخشی از پاسخ باشد ➔ <strong><code>rightIndex--</code> (حذف ۱۵)</strong>.'
+  },
+  {
+    step: 2,
+    left: 0,
+    right: 5,
+    statusBadge: { text: '۱۲ > ۱۰ ➔ کاهش راست', cls: 'warn' },
+    pills: [
+      { lbl: 'نشانگر چپ (L):', val: 'numbers[0] = 1', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'numbers[5] = 11', cls: 'cyan' },
+      { lbl: 'مجموع فعلی:', val: '1 + 11 = 12', cls: 'amber' },
+      { lbl: 'تصمیم:', val: '12 > 10 ➔ rightIndex--', cls: 'red' }
+    ],
+    slots: [
+      { ptrText: 'L', tag: 'L=0', state: 'ptr-left' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '❌', tag: 'بزرگ است (حذف)', state: 'tested' },
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۲ (بررسی عدد ۱۱):</strong> نشانگر راست یک خانه به عقب آمد (اندیس ۵). حاصل‌جمع: <code>1 + 11 = 12</code>. باز هم مجموع از ۱۰ بزرگتر است! عدد ۱۱ نیز از فضای جستجو برای همیشه حذف می‌شود ➔ <strong><code>rightIndex--</code> (حذف ۱۱)</strong>.'
+  },
+  {
+    step: 3,
+    left: 0,
+    right: 4,
+    statusBadge: { text: '۹ < ۱۰ ➔ افزایش چپ', cls: 'working' },
+    pills: [
+      { lbl: 'نشانگر چپ (L):', val: 'numbers[0] = 1', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'numbers[4] = 8', cls: 'cyan' },
+      { lbl: 'مجموع فعلی:', val: '1 + 8 = 9', cls: 'amber' },
+      { lbl: 'تصمیم:', val: '9 < 10 ➔ leftIndex++', cls: 'purple' }
+    ],
+    slots: [
+      { ptrText: '❌', tag: 'کوچک است (حذف)', state: 'tested' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: 'R', tag: 'R=4 (۸)', state: 'ptr-right' },
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' },
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۳ (تغییر جهت نشانگر چپ):</strong> اکنون نشانگر راست روی عدد ۸ است (اندیس ۴). مجموع: <code>1 + 8 = 9</code>. این بار مجموع از ۱۰ کوچکتر شد! چون عدد ۸ بزرگترین عضو در دسترس است، عدد ۱ با هیچ عدد دیگری به ۱۰ نخواهد رسید؛ پس عدد ۱ حذف می‌شود ➔ <strong><code>leftIndex++</code> (حرکت به راست)</strong>.'
+  },
+  {
+    step: 4,
+    left: 1,
+    right: 4,
+    statusBadge: { text: '🎯 صید هدف! ۱۰ == ۱۰', cls: 'ok' },
+    pills: [
+      { lbl: 'نشانگر چپ (L):', val: 'numbers[1] = 2', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'numbers[4] = 8', cls: 'cyan' },
+      { lbl: 'مجموع فعلی:', val: '2 + 8 = 10 🎯', cls: '' },
+      { lbl: 'خروجی ۱-محور:', val: 'intArrayOf(2, 5) 🎉', cls: '' }
+    ],
+    slots: [
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' },
+      { ptrText: '🎯', tag: 'L=1 (۲)', state: 'found' },
+      { ptrText: '', tag: 'بررسی‌نشده', state: 'idle' },
+      { ptrText: '', tag: 'بررسی‌نشده', state: 'idle' },
+      { ptrText: '🎯', tag: 'R=4 (۸)', state: 'found' },
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' },
+      { ptrText: '', tag: 'حذف‌شده', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۴ (پایان پیروزمندانه 🎉):</strong> نشانگر چپ روی عدد ۲ و نشانگر راست روی عدد ۸ مستقر شدند: <code>2 + 8 = 10</code>. مجموع دقیقاً برابر با target شد! با توجه به ۱-محور بودن خروجی، تابع بلافاصله <strong><code>intArrayOf(2, 5)</code></strong> را بازمی‌گرداند. تنها در ۴ گام بدون ذره‌ای حافظه اضافی!'
+  }
+];
+
+let currentT2Step = 0;
+let t2AutoPlayTimer = null;
+
+function stopT2AutoPlay() {
+  if (t2AutoPlayTimer) {
+    clearInterval(t2AutoPlayTimer);
+    t2AutoPlayTimer = null;
+    const btn = document.getElementById('t2-play');
+    if (btn) btn.textContent = '⏵ پخش خودکار';
+  }
+}
+
+function toggleT2AutoPlay() {
+  const btn = document.getElementById('t2-play');
+  if (t2AutoPlayTimer) {
+    stopT2AutoPlay();
+  } else {
+    if (currentT2Step >= t2Steps.length - 1) {
+      currentT2Step = 0;
+      renderT2Trace();
+    }
+    if (btn) btn.textContent = '⏸ توقف';
+    t2AutoPlayTimer = setInterval(() => {
+      if (currentT2Step < t2Steps.length - 1) {
+        currentT2Step++;
+        renderT2Trace();
+      } else {
+        stopT2AutoPlay();
+      }
+    }, 2000);
+  }
+}
+
+function renderT2Trace() {
+  const data = t2Steps[currentT2Step];
+  if (!data) return;
+
+  // 1. Stepper dots
+  document.querySelectorAll('#t2-stepper .step-dot').forEach(d => {
+    const s = parseInt(d.getAttribute('data-t2-step'), 10);
+    d.classList.toggle('active', s === currentT2Step);
+  });
+
+  // 2. Slots
+  const slots = document.querySelectorAll('#t2-arr .arr-slot');
+  slots.forEach((slotEl, idx) => {
+    const slotData = data.slots[idx];
+    slotEl.classList.remove('current', 'found', 'visited', 'skipped', 'ptr-left', 'ptr-right', 'tested');
+    if (slotData) {
+      if (slotData.state !== 'idle') slotEl.classList.add(slotData.state);
+      const tagEl = slotEl.querySelector('.arr-tag');
+      if (tagEl) tagEl.textContent = slotData.tag;
+      const ptrTxt = slotEl.querySelector('.ptr-txt');
+      if (ptrTxt) ptrTxt.textContent = slotData.ptrText;
+    }
+  });
+
+  // 3. Unified Trace Box
+  const traceBox = document.getElementById('t2-trace-box');
+  if (traceBox) {
+    const pillsHtml = data.pills.map(p => `
+      <div class="sub-pill">
+        <span class="sub-pill-lbl">${p.lbl}</span>
+        <span class="sub-pill-val ${p.cls || ''}">${p.val}</span>
+      </div>
+    `).join('');
+
+    traceBox.innerHTML = `
+      <div class="sub-head">
+        <div class="sub-step-title">
+          <span>⚖️</span>
+          <span>گام ${toPersianNum(data.step)}: وضعیت نشانگرهای همگرا</span>
+        </div>
+        <span class="sub-badge ${data.statusBadge.cls}">
+          ${data.statusBadge.text}
+        </span>
+      </div>
+      <div class="sub-grid">
+        ${pillsHtml}
+      </div>
+      <div class="sub-desc">
+        ${data.desc}
+      </div>
+    `;
+  }
+
+  // 4. Buttons
+  const prevBtn = document.getElementById('t2-prev');
+  const nextBtn = document.getElementById('t2-next');
+  if (prevBtn) prevBtn.disabled = (currentT2Step === 0);
+  if (nextBtn) nextBtn.disabled = (currentT2Step === t2Steps.length - 1);
+}
+
+// ── SLIDE 24 3SUM SIMULATOR LOGIC ─────────────────────────
+const s3Steps = [
+  {
+    step: 0,
+    statusBadge: { text: 'آماده‌سازی', cls: 'working' },
+    pills: [
+      { lbl: 'عنصر اول (i):', val: 'در انتظار آغاز', cls: 'amber' },
+      { lbl: 'نشانگر چپ (L):', val: 'در انتظار', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'در انتظار', cls: 'cyan' },
+      { lbl: 'سه‌تایی‌های کشف‌شده:', val: 'result = []', cls: '' }
+    ],
+    slots: [
+      { ptrText: 'i', tag: 'عنصر اول', state: 'ptr-i' },
+      { ptrText: 'L', tag: 'چپ', state: 'ptr-left' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: 'R', tag: 'راست', state: 'ptr-right' }
+    ],
+    desc: '<strong>گام ۰ · مرتب‌سازی اولیه:</strong> آرایه در زمان <code>O(n log n)</code> مرتب شده است: <code>nums = [-4, -1, -1, 0, 1, 2]</code>. اکنون آماده‌ایم عنصر اول را در حلقه تثبیت کرده و باقی‌مانده را با Two Pointers جستجو کنیم.'
+  },
+  {
+    step: 1,
+    statusBadge: { text: 'دور اول: بدون سه‌تایی معتبر', cls: 'warn' },
+    pills: [
+      { lbl: 'تثبیت عنصر اول:', val: 'firstNum = nums[0] = -4', cls: 'amber' },
+      { lbl: 'هدف دو نشانگر:', val: 'b + c = -(-4) = 4', cls: 'cyan' },
+      { lbl: 'پیمایش L و R:', val: 'بزرگترین جمع: (-1) + 2 = 1 < 4', cls: 'red' },
+      { lbl: 'سه‌تایی‌های کشف‌شده:', val: 'result = []', cls: '' }
+    ],
+    slots: [
+      { ptrText: 'i', tag: 'i=0 (۴-)', state: 'ptr-i' },
+      { ptrText: '❌', tag: 'رد شد', state: 'tested' },
+      { ptrText: '❌', tag: 'رد شد', state: 'tested' },
+      { ptrText: '❌', tag: 'رد شد', state: 'tested' },
+      { ptrText: '❌', tag: 'رد شد', state: 'tested' },
+      { ptrText: 'R', tag: 'پایان دور', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۱ (بررسی عنصر اول ۴-):</strong> برای اینکه جمع سه عدد صفر شود، باید جمع دو عدد بعدی برابر با ۴ شود (<code>b + c = 4</code>). اما حتی بزرگترین عضو (۲) با اعضای دیگر نهایتاً جمع ۱ تولید می‌کند و هرگز به ۴ نمی‌رسد. هیچ سه‌تایی برای ۴- کشف نشد.'
+  },
+  {
+    step: 2,
+    statusBadge: { text: '🎯 صید اولین سه‌تایی!', cls: 'ok' },
+    pills: [
+      { lbl: 'تثبیت عنصر اول:', val: 'firstNum = nums[1] = -1', cls: 'amber' },
+      { lbl: 'نشانگر چپ (L):', val: 'nums[2] = -1', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'nums[5] = 2', cls: 'cyan' },
+      { lbl: 'مجموع سه عدد:', val: '(-1) + (-1) + 2 = 0 🎯', cls: '' },
+      { lbl: 'سه‌تایی‌های کشف‌شده:', val: 'result = [ [-1, -1, 2] ]', cls: '' }
+    ],
+    slots: [
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: 'i', tag: 'i=1 (۱-)', state: 'ptr-i' },
+      { ptrText: '🎯 L', tag: 'L=2 (۱-)', state: 'found' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '🎯 R', tag: 'R=5 (۲)', state: 'found' }
+    ],
+    desc: '<strong>تکرار ۲ (شکار اولین سه‌تایی 🎉):</strong> عدد اول را <code>nums[1] = -1</code> می‌گذاریم. نشانگر چپ روی اندیس ۲ (مقدار ۱-) و راست روی اندیس ۵ (مقدار ۲) است: <code>(-1) + (-1) + 2 = 0</code>! اولین سه‌تایی کشف و در <code>result</code> ثبت می‌شود: <strong><code>[-1, -1, 2]</code></strong>.'
+  },
+  {
+    step: 3,
+    statusBadge: { text: '🎯 صید دومین سه‌تایی!', cls: 'ok' },
+    pills: [
+      { lbl: 'تثبیت عنصر اول:', val: 'firstNum = nums[1] = -1', cls: 'amber' },
+      { lbl: 'نشانگر چپ (L):', val: 'nums[3] = 0', cls: 'purple' },
+      { lbl: 'نشانگر راست (R):', val: 'nums[4] = 1', cls: 'cyan' },
+      { lbl: 'مجموع سه عدد:', val: '(-1) + 0 + 1 = 0 🎯', cls: '' },
+      { lbl: 'سه‌تایی‌های کشف‌شده:', val: '[ [-1, -1, 2], [-1, 0, 1] ]', cls: '' }
+    ],
+    slots: [
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: 'i', tag: 'i=1 (۱-)', state: 'ptr-i' },
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: '🎯 L', tag: 'L=3 (۰)', state: 'found' },
+      { ptrText: '🎯 R', tag: 'R=4 (۱)', state: 'found' },
+      { ptrText: '', tag: 'قبلی', state: 'tested' }
+    ],
+    desc: '<strong>تکرار ۳ (شکار دومین سه‌تایی 🎉):</strong> نشانگرها با <code>L++</code> و <code>R--</code> جابجا می‌شوند تا خانه ۳ (عدد ۰) و خانه ۴ (عدد ۱) را بسنجند: <code>(-1) + 0 + 1 = 0</code>! دومین سه‌تایی معتبر کشف و ثبت می‌شود: <strong><code>[-1, 0, 1]</code></strong>.'
+  },
+  {
+    step: 4,
+    statusBadge: { text: '⏭️ پرش هوشمند از تکراری', cls: 'skip' },
+    pills: [
+      { lbl: 'بررسی حلقه بیرونی:', val: 'i = 2 (مقدار ۱-)', cls: 'amber' },
+      { lbl: 'شرط تکرار:', val: 'nums[2] == nums[1] ➔ برابرند!', cls: 'red' },
+      { lbl: 'اقدام الگوریتم:', val: 'continue (پرش فوری)', cls: 'warn' },
+      { lbl: 'سربار پردازشی:', val: '۰ عملیات (بدون Set)', cls: '' }
+    ],
+    slots: [
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: '', tag: 'بررسی‌شده', state: 'tested' },
+      { ptrText: '⏭️', tag: 'تکراری! (رد شد)', state: 'skipped' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' },
+      { ptrText: '', tag: 'آماده', state: 'idle' }
+    ],
+    desc: '<strong>تکرار ۴ (هنر جلوگیری از تکرار):</strong> حلقه بیرونی به اندیس ۲ می‌رسد (<code>nums[2] = -1</code>). شرط <code>nums[i] == nums[i-1]</code> فعال می‌شود! چون تمام سه‌تایی‌های ممکن با عدد ۱- قبلاً کشف شده‌اند، با یک <strong><code>continue</code></strong> از آن عبور می‌کنیم تا از تولید سه‌تایی‌های تکراری کاملاً پیشگیری شود.'
+  },
+  {
+    step: 5,
+    statusBadge: { text: '🛑 خروج زودهنگام و پایان', cls: 'ok' },
+    pills: [
+      { lbl: 'بررسی حلقه بیرونی:', val: 'i = 3 (مقدار ۰)', cls: 'amber' },
+      { lbl: 'شرط توقف سریع:', val: 'firstNum > 0 در خانه ۴ ➔ break', cls: 'red' },
+      { lbl: 'پیچیدگی کل:', val: 'زمان O(n²) · حافظه O(1)', cls: '' },
+      { lbl: 'خروجی نهایی یکتا:', val: '[ [-1, -1, 2], [-1, 0, 1] ] 🎉', cls: '' }
+    ],
+    slots: [
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: '', tag: 'قبلی', state: 'tested' },
+      { ptrText: '🛑', tag: 'پایان', state: 'found' },
+      { ptrText: '', tag: 'توقف سریع', state: 'skipped' },
+      { ptrText: '', tag: 'توقف سریع', state: 'skipped' }
+    ],
+    desc: '<strong>تکرار ۵ (پایان با Early Exit):</strong> پس از بررسی خانه ۳، در خانه ۴ با عدد مثبت ۱ روبرو می‌شویم؛ شرط <code>if (firstNum > 0) break</code> الگوریتم را فوراً متوقف می‌کند، چون جمع ۳ عدد مثبت هرگز صفر نخواهد شد. نتیجه نهایی بدون هیچ سه‌تایی تکراری با موفقیت تحویل داده شد.'
+  }
+];
+
+let currentS3Step = 0;
+let s3AutoPlayTimer = null;
+
+function stopS3AutoPlay() {
+  if (s3AutoPlayTimer) {
+    clearInterval(s3AutoPlayTimer);
+    s3AutoPlayTimer = null;
+    const btn = document.getElementById('s3-play');
+    if (btn) btn.textContent = '⏵ پخش خودکار';
+  }
+}
+
+function toggleS3AutoPlay() {
+  const btn = document.getElementById('s3-play');
+  if (s3AutoPlayTimer) {
+    stopS3AutoPlay();
+  } else {
+    if (currentS3Step >= s3Steps.length - 1) {
+      currentS3Step = 0;
+      renderS3Trace();
+    }
+    if (btn) btn.textContent = '⏸ توقف';
+    s3AutoPlayTimer = setInterval(() => {
+      if (currentS3Step < s3Steps.length - 1) {
+        currentS3Step++;
+        renderS3Trace();
+      } else {
+        stopS3AutoPlay();
+      }
+    }, 2000);
+  }
+}
+
+function renderS3Trace() {
+  const data = s3Steps[currentS3Step];
+  if (!data) return;
+
+  // 1. Stepper dots
+  document.querySelectorAll('#s3-stepper .step-dot').forEach(d => {
+    const s = parseInt(d.getAttribute('data-s3-step'), 10);
+    d.classList.toggle('active', s === currentS3Step);
+  });
+
+  // 2. Slots
+  const slots = document.querySelectorAll('#s3-arr .arr-slot');
+  slots.forEach((slotEl, idx) => {
+    const slotData = data.slots[idx];
+    slotEl.classList.remove('current', 'found', 'visited', 'skipped', 'ptr-i', 'ptr-left', 'ptr-right', 'tested');
+    if (slotData) {
+      if (slotData.state !== 'idle') slotEl.classList.add(slotData.state);
+      const tagEl = slotEl.querySelector('.arr-tag');
+      if (tagEl) tagEl.textContent = slotData.tag;
+      const ptrTxt = slotEl.querySelector('.ptr-txt');
+      if (ptrTxt) ptrTxt.textContent = slotData.ptrText;
+    }
+  });
+
+  // 3. Unified Trace Box
+  const traceBox = document.getElementById('s3-trace-box');
+  if (traceBox) {
+    const pillsHtml = data.pills.map(p => `
+      <div class="sub-pill">
+        <span class="sub-pill-lbl">${p.lbl}</span>
+        <span class="sub-pill-val ${p.cls || ''}">${p.val}</span>
+      </div>
+    `).join('');
+
+    traceBox.innerHTML = `
+      <div class="sub-head">
+        <div class="sub-step-title">
+          <span>🔺</span>
+          <span>گام ${toPersianNum(data.step)}: وضعیت سه‌تایی و پرش از تکرارها</span>
+        </div>
+        <span class="sub-badge ${data.statusBadge.cls}">
+          ${data.statusBadge.text}
+        </span>
+      </div>
+      <div class="sub-grid">
+        ${pillsHtml}
+      </div>
+      <div class="sub-desc">
+        ${data.desc}
+      </div>
+    `;
+  }
+
+  // 4. Buttons
+  const prevBtn = document.getElementById('s3-prev');
+  const nextBtn = document.getElementById('s3-next');
+  if (prevBtn) prevBtn.disabled = (currentS3Step === 0);
+  if (nextBtn) nextBtn.disabled = (currentS3Step === s3Steps.length - 1);
+}
+
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const total = allSlides().length;
+
+  getSyncChannel().onmessage = e => {
+    if (e.data?.type === 'request-sync') broadcastState();
+  };
+
+  document.getElementById('bnext').addEventListener('click', () => goTo(cur + 1));
+  document.getElementById('bprev').addEventListener('click', () => goTo(cur - 1));
+  document.getElementById('notes-btn').addEventListener('click', openNotesWindow);
+  document.getElementById('font-up').addEventListener('click', () => bumpFont(FS_STEP));
+  document.getElementById('font-dn').addEventListener('click', () => bumpFont(-FS_STEP));
+
+  const themeBtn = document.getElementById('theme-btn');
+  themeBtn.addEventListener('click', () => {
+    const isNowLight = document.documentElement.classList.toggle('light');
+    themeBtn.textContent = isNowLight ? '🌙' : '☀️';
+    themeBtn.title = isNowLight ? 'تغییر به تم تاریک' : 'تغییر به تم روشن';
+    broadcastState();
+  });
+
+  // Slide 11 Brute Force Trace Simulator Events
+  const bfNextBtn = document.getElementById('bf-next');
+  const bfPrevBtn = document.getElementById('bf-prev');
+  const bfPlayBtn = document.getElementById('bf-play');
+  const bfResetBtn = document.getElementById('bf-reset');
+
+  if (bfNextBtn) {
+    bfNextBtn.addEventListener('click', () => {
+      stopBfAutoPlay();
+      if (currentBfStep < bfSteps.length - 1) {
+        currentBfStep++;
+        renderBfTrace();
+      }
+    });
+  }
+  if (bfPrevBtn) {
+    bfPrevBtn.addEventListener('click', () => {
+      stopBfAutoPlay();
+      if (currentBfStep > 0) {
+        currentBfStep--;
+        renderBfTrace();
+      }
+    });
+  }
+  if (bfPlayBtn) {
+    bfPlayBtn.addEventListener('click', toggleBfAutoPlay);
+  }
+  if (bfResetBtn) {
+    bfResetBtn.addEventListener('click', () => {
+      stopBfAutoPlay();
+      currentBfStep = 0;
+      renderBfTrace();
+    });
+  }
+
+  document.querySelectorAll('#bf-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-bf-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopBfAutoPlay();
+        currentBfStep = stepIdx;
+        renderBfTrace();
+      }
+    });
+  });
+
+  renderBfTrace();
+
+
+  // Simulator Events
+  const nextBtn = document.getElementById('sim-next');
+  const prevBtn = document.getElementById('sim-prev');
+  const playBtn = document.getElementById('sim-play');
+  const resetBtn = document.getElementById('sim-reset');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      stopSimAutoPlay();
+      if (currentSimStep < simSteps.length - 1) {
+        currentSimStep++;
+        renderSim();
+      }
+    });
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      stopSimAutoPlay();
+      if (currentSimStep > 0) {
+        currentSimStep--;
+        renderSim();
+      }
+    });
+  }
+  if (playBtn) {
+    playBtn.addEventListener('click', toggleSimAutoPlay);
+  }
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      stopSimAutoPlay();
+      currentSimStep = 0;
+      renderSim();
+    });
+  }
+
+  // Stepper dots click
+  document.querySelectorAll('#sim-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopSimAutoPlay();
+        currentSimStep = stepIdx;
+        renderSim();
+      }
+    });
+  });
+
+  renderSim();
+
+  // Two Sum II Simulator Events
+  const t2NextBtn = document.getElementById('t2-next');
+  const t2PrevBtn = document.getElementById('t2-prev');
+  const t2PlayBtn = document.getElementById('t2-play');
+  const t2ResetBtn = document.getElementById('t2-reset');
+
+  if (t2NextBtn) {
+    t2NextBtn.addEventListener('click', () => {
+      stopT2AutoPlay();
+      if (currentT2Step < t2Steps.length - 1) {
+        currentT2Step++;
+        renderT2Trace();
+      }
+    });
+  }
+  if (t2PrevBtn) {
+    t2PrevBtn.addEventListener('click', () => {
+      stopT2AutoPlay();
+      if (currentT2Step > 0) {
+        currentT2Step--;
+        renderT2Trace();
+      }
+    });
+  }
+  if (t2PlayBtn) {
+    t2PlayBtn.addEventListener('click', toggleT2AutoPlay);
+  }
+  if (t2ResetBtn) {
+    t2ResetBtn.addEventListener('click', () => {
+      stopT2AutoPlay();
+      currentT2Step = 0;
+      renderT2Trace();
+    });
+  }
+
+  document.querySelectorAll('#t2-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-t2-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopT2AutoPlay();
+        currentT2Step = stepIdx;
+        renderT2Trace();
+      }
+    });
+  });
+
+  renderT2Trace();
+
+  // 3Sum Simulator Events
+  const s3NextBtn = document.getElementById('s3-next');
+  const s3PrevBtn = document.getElementById('s3-prev');
+  const s3PlayBtn = document.getElementById('s3-play');
+  const s3ResetBtn = document.getElementById('s3-reset');
+
+  if (s3NextBtn) {
+    s3NextBtn.addEventListener('click', () => {
+      stopS3AutoPlay();
+      if (currentS3Step < s3Steps.length - 1) {
+        currentS3Step++;
+        renderS3Trace();
+      }
+    });
+  }
+  if (s3PrevBtn) {
+    s3PrevBtn.addEventListener('click', () => {
+      stopS3AutoPlay();
+      if (currentS3Step > 0) {
+        currentS3Step--;
+        renderS3Trace();
+      }
+    });
+  }
+  if (s3PlayBtn) {
+    s3PlayBtn.addEventListener('click', toggleS3AutoPlay);
+  }
+  if (s3ResetBtn) {
+    s3ResetBtn.addEventListener('click', () => {
+      stopS3AutoPlay();
+      currentS3Step = 0;
+      renderS3Trace();
+    });
+  }
+
+  document.querySelectorAll('#s3-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-s3-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopS3AutoPlay();
+        currentS3Step = stepIdx;
+        renderS3Trace();
+      }
+    });
+  });
+
+  renderS3Trace();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); goTo(cur + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(cur - 1);
+    }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+    if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openNotesWindow(); }
+    if (e.key === '+' || e.key === '=') { e.preventDefault(); bumpFont(FS_STEP); }
+    if (e.key === '-' || e.key === '_') { e.preventDefault(); bumpFont(-FS_STEP); }
+  });
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) goTo(dx < 0 ? cur + 1 : cur - 1);
+  });
+
+  updateUI(total);
+});
+</script>
+</body>
+</html>
