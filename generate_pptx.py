@@ -449,6 +449,60 @@ def create_deck():
             "notes": "لینک مسئله: https://leetcode.com/problems/3sum/description/  -- شبیه‌سازی گام‌به‌گام کاهش مسئله 3Sum و نحوه خروج زودهنگام و پرش‌های بدون هزینه حافظه."
         },
         {
+            "title": "مطالعه موردی در پروداکشن: چالش CardStack در سپینو",
+            "badge": "تجربه عملی مهندسی · REAL-WORLD CASE STUDY",
+            "subtitle": "الگوریتم‌ها فقط برای مصاحبه نیستند؛ انتخاب درست داده ضامن روانی رابط کاربری است:",
+            "cards": [
+                ("۱. داده‌های ورودی", "دو لیست currentItems (در حال نمایش) و newCardsList (تازه از سرور).", PURPLE),
+                ("۲. رفتار مورد انتظار", "حفظ کارت‌های مشترک بدون فلیکر، حذف قدیمی‌ها، و اضافه کردن جدیدها به انتها.", TEAL)
+            ],
+            "points": [
+                "چالش در کامپوز: پاک‌کردن و ساخت مجدد لیست باعث Recomposition سنگین و نابودی انیمیشن کارت‌ها (Jank) می‌شود.",
+                "نیاز به تابع خالص: پیاده‌سازی syncCardStackState برای هماهنگ‌سازی بهینه پشته کارت‌ها."
+            ],
+            "quote": "«تفاوت مهندس ارشد با کدنویس معمولی در توانایی شناسایی پیچیدگی الگوریتمی کدهای به ظاهر ساده کاتلین است.»",
+            "notes": "بیان مسئله همگام‌سازی State در CardStack از پروژه سپینو با Jetpack Compose."
+        },
+        {
+            "title": "راه‌حل اول (غیربهینه): فیلتر مستقیم روی List",
+            "badge": "کد غیربهینه · BRUTE FORCE O(N²)",
+            "subtitle": "استفاده فریبنده از ابزارهای اعلانی کاتلین بدون توجه به پیچیدگی زیر کاپوت:",
+            "code": "// ❌ رویکرد کُند: جستجوی مستقیم در List با O(N²)\ninternal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val remainingOldItems = currentItems.filter { it in newCardsList }\n    val newItems = newCardsList.filter { it !in currentItems }\n    return remainingOldItems + newItems\n}",
+            "cards": [
+                ("ظاهر فریبنده کاتلین", "کد فقط ۲ خط و بسیار خواناست و تست‌های کوچک را به راحتی پاس می‌کند.", AMBER),
+                ("زیر کاپوت عملگر in", "در List، عملگر in معادل contains() با پیمایش خطی O(M) است.", RED),
+                ("پیچیدگی نمایی", "برای دو لیست با اندازه N و M، کل مقایسه‌ها O(N × M) یعنی O(N²) است!", RED)
+            ],
+            "notes": "کد غیربهینه اولیه که در نگاه اول شیک است اما در پس‌زمینه جستجوی خطی تودرتو انجام می‌دهد."
+        },
+        {
+            "title": "کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI",
+            "badge": "تحلیل گلوگاه · BOTTLENECK ANALYSIS",
+            "subtitle": "چرا این کد در محیط پروداکشن باعث لگ و مصرف غیرعادی باتری می‌شود؟",
+            "cards": [
+                ("❌ پیمایش خطی مداوم (Linear Scan)", "ساختار List ترتیبی است؛ ترکیب آن با filter یک حلقه تو در تو (Nested Loop) پنهان است.", RED),
+                ("⚠️ افت فریم و لگ در کامپوز (Jank)", "در Compose محاسبه State روی Main Thread است؛ هزاران مقایسه باعث گذر از بودجه ۱۶ میلی‌ثانیه‌ای فریم می‌شود.", AMBER)
+            ],
+            "points": [
+                "پنهان از چشم لینترها: Detekt و کامپایلر ایراد سینتکسی نمی‌گیرند؛ اما Profiler فریز فریم‌ها را ثبت می‌کند.",
+                "در مقیاس ۵۰ تا ۱۰۰ کارت: ۲۰,۰۰۰ عملیات مقایسه سنگین شیء رخ می‌دهد."
+            ],
+            "quote": "«در ۶۰ فریم بر ثانیه، هر فریم فقط ۱۶ میلی‌ثانیه زمان دارد؛ حلقه‌های O(N²) اولین قاتل روانی UI هستند.»",
+            "notes": "بررسی فنی علت افت فریم و نقض بودجه ۱۶ میلی‌ثانیه‌ای در اثر اجرای الگوریتم O(N²)."
+        },
+        {
+            "title": "راه‌حل بهینه: جهش به O(N) با HashSet و تحلیل چرایی",
+            "badge": "کدنویسی تمیز · OPTIMAL O(N)",
+            "subtitle": "به‌کارگیری جدول هش برای جستجوی آنی O(1) و کاهش زمان کل به خطی O(N + M):",
+            "code": "// ✅ رویکرد بهینه: تبدیل به Set و جستجوی آنی O(1)\ninternal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val newCardsSet = newCardsList.toSet()\n    val currentItemsSet = currentItems.toSet()\n    val remainingOldItems = currentItems.filter { it in newCardsSet }\n    val newItems = newCardsList.filter { it !in currentItemsSet }\n    return remainingOldItems + newItems\n}",
+            "cards": [
+                ("⚡ جستجوی آنی O(1)", "با toSet() جدول هش ساخته می‌شود و جستجو با تابع هش در زمان ثابت انجام می‌گیرد.", TEAL),
+                ("🚀 کاهش به خطی O(N + M)", "کل هزینه به O(N + M) تبدیل شده و حتی برای ۱۰,۰۰۰ کارت در کسری از میلی‌ثانیه اجرا می‌شود.", TEAL)
+            ],
+            "quote": "«قاعده طلایی: همیشه پیش از فیلتر یا مقایسه اشتراک دو لیست در کاتلین، لیست مرجع را به Set تبدیل کنید.»",
+            "notes": "پیاده‌سازی بهینه با toSet() و توضیح تفاوت جستجوی O(1) در جدول هش با جستجوی خطی در لیست."
+        },
+        {
             "title": "جمع‌بندی و برنامه ۳۰ روزه آینده",
             "badge": "برنامه اقدام · ACTION PLAN",
             "subtitle": "نقشه راه ۴ هفته‌ای برای رسیدن به آمادگی در جلسات ارزیابی:",

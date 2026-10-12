@@ -1944,8 +1944,166 @@
     <span class="snum">۲۶ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 25 — برنامه ۳۰ روزه ═══════════════════════════ -->
+  <!-- ══ SLIDE 27 — مطالعه موردی پروداکشن: چالش CardStack در سپینو ═════ -->
   <div class="slide" data-slide="27">
+    <div class="sh">
+      <span class="shtitle">مطالعه موردی در پروداکشن: چالش همگام‌سازی State در CardStack</span>
+      <span class="sp"></span>
+      <span class="badge bs">تجربه عملی مهندسی · Real-World Case Study</span>
+      <span class="badge bc">پروژه سپینو · KMP & Compose</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">الگوریتم‌های لیت‌کد فقط برای مصاحبه نیستند؛ در مهندسی نرم‌افزار روزمره، انتخاب هوشمندانه ساختار داده ضامن روانی رابط کاربری است:</p>
+
+      <div class="card-grid-2 anim">
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۱. صورت مسئله و داده‌های ورودی</div>
+          <div class="card-desc">
+            در کامپوننت پشته کارت‌ها (CardStack)، دو لیست مجزا وجود دارد:<br>
+            • <code>currentItems</code>: کارت‌های فعلی در حال رندر در UI (دارای وضعیت انیمیشن و فوکوس).<br>
+            • <code>newCardsList</code>: لیست تازه‌نفس دریافت شده از سرور یا رفرش دیتا.
+          </div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۲. رفتار مورد انتظار معماری (State Sync)</div>
+          <div class="card-desc">
+            • <strong>کارت‌های مشترک:</strong> باید بدون بازسازی مجدد یا فلیکر حفظ شوند.<br>
+            • <strong>کارت‌های حذف‌شده:</strong> از پشته پاکسازی گردند.<br>
+            • <strong>کارت‌های کاملاً جدید:</strong> به انتهای پشته الصاق شوند (Append).
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario anim">
+        <strong>چرا پاک‌کردن و ساخت مجدد لیست (Re-create) فاجعه است؟</strong> در Jetpack Compose اگر لیست را از ابتدا بسازیم (مثلاً <code>clear()</code> و <code>addAll()</code>)، کل وضعیت داخلی Recompose شده، اسکرول و انیمیشن سوایپ کارت‌ها ریست می‌شود و لگ شدیدی ایجاد می‌گردد. ما نیاز به یک تابع خالص (Pure Function) به نام <code>syncCardStackState</code> داریم.
+      </div>
+
+      <div class="quote anim">
+        «تفاوت مهندس ارشد با کدنویس معمولی در توانایی شناسایی پیچیدگی الگوریتمی کدهای به ظاهر ساده کاتلین است.»
+      </div>
+    </div>
+    <span class="snum">۲۷ / ۳۱</span>
+  </div>
+
+  <!-- ══ SLIDE 28 — راه‌حل اول (غیربهینه): فیلتر مستقیم روی List ═════════ -->
+  <div class="slide" data-slide="28">
+    <div class="sh">
+      <span class="shtitle">راه‌حل اول (ساده اما غیربهینه): فیلتر مستقیم روی List</span>
+      <span class="sp"></span>
+      <span class="badge bb">کد غیربهینه · Brute Force O(N²)</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">در نگاه اول، کاتلین ابزارهای تمیز و اعلانی مثل <code>filter</code> و <code>in</code> را فراهم کرده و کد به ظاهر بسیار شیک و مختصر است:</p>
+
+      <pre class="code-box anim"><code><span class="cm">// ❌ رویکرد کُند: جستجوی مستقیم در List با مرتبه زمانی O(N²)</span>
+<span class="kw">internal fun</span> &lt;<span class="ty">T</span>&gt; <span class="fn">syncCardStackState</span>(
+    currentItems: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+    newCardsList: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+): <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; {
+    <span class="cm">// برای هر کارت در currentItems، کل newCardsList از ابتدا تا انتها پویش می‌شود</span>
+    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsList }
+
+    <span class="cm">// برای هر کارت جدید، مجدداً کل currentItems پیمایش خطی می‌شود</span>
+    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItems }
+
+    <span class="kw">return</span> remainingOldItems + newItems
+}</code></pre>
+
+      <div class="card-grid-3 anim">
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">ظاهر فریبنده کاتلین</div>
+          <div class="card-desc">کد فقط ۲ خط است، هیچ خطای کامپایلری ندارد و تست‌های واحد با ۲ یا ۳ آیتم سریعاً پاس می‌شوند.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">زیر کاپوت عملگر in</div>
+          <div class="card-desc">در کاتلین وقتی عملگر <code>in</code> روی یک <code>List</code> صدا زده می‌شود، معادل <code>Iterable.contains()</code> خطی است.</div>
+        </div>
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">تعداد کل مقایسه‌ها</div>
+          <div class="card-desc">برای دو لیست با اندازه N و M، تعداد مقایسه‌ها برابر $2 \times N \times M$ یعنی نمایی $O(N^2)$ است!</div>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۸ / ۳۱</span>
+  </div>
+
+  <!-- ══ SLIDE 29 — کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI ═════ -->
+  <div class="slide" data-slide="29">
+    <div class="sh">
+      <span class="shtitle">کالبدشکافی ایراد: هزینه پنهان List.contains() و افت فریم در UI</span>
+      <span class="sp"></span>
+      <span class="badge bk">تحلیل گلوگاه · Bottleneck Analysis</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">چرا این کد در کد ریویوهای حساس و بررسی‌های کارایی رد می‌شود و خطری جدی برای پروداکشن است؟</p>
+
+      <div class="compare anim">
+        <div class="bad">
+          <div class="label">❌ ایراد ساختاری: پیمایش خطی مداوم (Linear Scan O(M))</div>
+          <p>ساختار داده <code>List</code> به ترتیب اندیس ذخیره می‌شود. بررسی وجود یک آیتم در لیست نیازمند جستجوی تک‌به‌تک عناصر از ابتدا تا انتها با هزینه $O(M)$ است.</p>
+          <p>ترکیب آن با <code>filter</code> یعنی یک <strong>حلقه تو در تو (Nested Loop) پنهان</strong> که بدون اینکه متوجه شوید در کد تزریق شده است.</p>
+        </div>
+        <div class="bad">
+          <div class="label">⚠️ اثر فاجعه‌بار در چرخه رندر Compose (Frame Drop & Jank)</div>
+          <p>در فریم‌ورک‌های مدرن نظیر Jetpack Compose، تغییرات State مستقیماً روی ترد اصلی (Main Thread / UI Thread) اثر می‌گذارند.</p>
+          <p>با افزایش آیتم‌ها به ۵۰ یا ۱۰۰ کارت، در هر فریم هزاران مقایسه سنگین شیء رخ داده و بودجه زمانی ۱۶ میلی‌ثانیه‌ای هر فریم از دست می‌رود و کاربر لگ لمسی حس می‌کند.</p>
+        </div>
+      </div>
+
+      <div class="scenario anim">
+        <strong>درس عبرت مهندسی:</strong> موتورهای تحلیل استاتیک مثل Detekt یا Linterها ممکن است خطای گرامری از این کد نگیرند؛ اما Profiler و ابزارهای مانیتورینگ عملکرد، این حلقه $O(N^2)$ را به عنوان مقصر اصلی مصرف باتری و لگ معرفی می‌کنند.
+      </div>
+    </div>
+    <span class="snum">۲۹ / ۳۱</span>
+  </div>
+
+  <!-- ══ SLIDE 30 — راه‌حل بهینه: قدرت جدول هش و Set ═══════════════════ -->
+  <div class="slide" data-slide="30">
+    <div class="sh">
+      <span class="shtitle">راه‌حل بهینه: جهش به O(N) با HashSet و تحلیل چرایی بهینگی</span>
+      <span class="sp"></span>
+      <span class="badge bc">کدنویسی تمیز · Optimal O(N)</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">همان اصل طلایی مسئله Two Sum (استفاده از جدول هش برای جستجوی آنی) اینجا نیز مستقیماً مسئله را حل می‌کند:</p>
+
+      <pre class="code-box anim"><code><span class="cm">// ✅ رویکرد بهینه: تبدیل لیست‌ها به Set و جستجوی آنی در زمان ثابت O(1)</span>
+<span class="kw">internal fun</span> &lt;<span class="ty">T</span>&gt; <span class="fn">syncCardStackState</span>(
+    currentItems: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+    newCardsList: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+): <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; {
+    <span class="cm">// ۱. تبدیل لیست‌ها به HashSet در زمان خطی O(N + M)</span>
+    <span class="kw">val</span> newCardsSet = newCardsList.<span class="fn">toSet</span>()
+    <span class="kw">val</span> currentItemsSet = currentItems.<span class="fn">toSet</span>()
+
+    <span class="cm">// ۲. جستجوی فوق‌العاده سریع با زمان O(1) به کمک جدول هش</span>
+    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsSet }
+    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItemsSet }
+
+    <span class="kw">return</span> remainingOldItems + newItems
+}</code></pre>
+
+      <h3 class="anim">چرا این راه‌حل فوق‌العاده بهینه است؟</h3>
+      <div class="compare anim">
+        <div class="good">
+          <div class="label">⚡ جستجوی آنی O(1) با Hash Table Lookup</div>
+          <p>متد <code>toSet()</code> در پشت صحنه یک <code>HashSet</code> می‌سازد. در این ساختار، بررسی عضویت با محاسبه هش‌کد در <strong>زمان ثابت $O(1)$</strong> انجام می‌شود، نه با پیمایش اعضا.</p>
+        </div>
+        <div class="good">
+          <div class="label">🚀 کاهش پیچیدگی از نمایی به کاملاً خطی O(N + M)</div>
+          <p>هزینه ساخت ست‌ها: $O(N) + O(M)$. هزینه دو فیلتر: $N \times O(1) + M \times O(1)$. مجموع کل زمان اجرا $O(N + M)$ است؛ حتی با ۱۰,۰۰۰ کارت اجرا در کسری از میلی‌ثانیه تمام می‌شود.</p>
+        </div>
+      </div>
+
+      <div class="quote anim">
+        <strong>قاعده طلایی (Golden Takeaway):</strong> هر زمان در کاتلین قصد فیلتر کردن یک کالکشن بر مبنای اشتراک یا تفاضل با کالکشن دیگر را دارید، <strong>همیشه کالکشن مرجع را به <code>Set</code> تبدیل کنید</strong>. یک خط <code>toSet()</code> تفاوت میان کد کند و کد استاندارد پروداکشن است.
+      </div>
+    </div>
+    <span class="snum">۳۰ / ۳۱</span>
+  </div>
+
+  <!-- ══ SLIDE 31 — برنامه ۳۰ روزه ═══════════════════════════ -->
+  <div class="slide" data-slide="31">
     <div class="sh"><span class="shtitle">جمع‌بندی و برنامه ۳۰ روزه آینده</span><span class="sp"></span><span class="badge bc">برنامه اقدام · Action Plan</span></div>
     <div class="sbody">
       <p class="anim">برای شروع از همین امروز، نیازی به برنامه سنگین غیرواقعی نیست. این تقویم ۴ هفته‌ای را دنبال کنید:</p>
@@ -1971,11 +2129,11 @@
         <strong>شعار پایانی:</strong> روزی ۴۵ دقیقه تمرین عمیق و با تمرکز، معجزه‌ای خلق می‌کند که تست‌زدن‌های ۱۰ ساعته‌ی بی‌هدف آخر هفته هرگز خلق نخواهد کرد.
       </div>
     </div>
-    <span class="snum">۲۷ / ۲۷</span>
+    <span class="snum">۳۱ / ۳۱</span>
   </div>
 
-  <!-- ══ SLIDE 26 — پایان و پرسش و پاسخ ══════════════════════ -->
-  <div class="slide" id="sthanks" data-slide="28">
+  <!-- ══ SLIDE 32 — پایان و پرسش و پاسخ ══════════════════════ -->
+  <div class="slide" id="sthanks" data-slide="32">
     <div class="tc">
       <h1 class="tqmain">متشکرم از توجه شما</h1>
       <p class="tqsub">پرسش و پاسخ (Q&A)</p>
@@ -1999,7 +2157,7 @@
   <button class="nb" id="font-up" title="بزرگ‌تر کردن فونت (+)">A+</button>
   <button class="nb" id="notes-btn" title="باز کردن یادداشت گوینده در پنجره جدا (N)">📝</button>
   <button class="nb" id="bnext" title="بعدی →">→</button>
-  <span id="ctr">۱ / ۱۹</span>
+  <span id="ctr">۱ / ۳۳</span>
   <button class="nb" id="bprev" title="قبلی ←">←</button>
 </div>
 
