@@ -47,9 +47,10 @@ def create_deck():
                 ("🔥 ۳. مسئله اول: جمع دو تایی (Two Sum)", "گذر از Brute Force با O(n²) به کشف Hash Map با O(n) · تریس آنالوگ و شبیه‌ساز", TEAL, "اسلایدهای ۱۳ تا ۱۷", True),
                 ("⚡ ۴. مسئله دوم: جمع دو تایی ۲ (Two Sum II)", "آرایه مرتب و قید حافظه O(1)؛ حذف هش‌مپ و استقرار دو نشانگر Two Pointers", PURPLE, "اسلایدهای ۱۸ تا ۲۲", True),
                 ("💥 ۵. مسئله سوم: جمع سه تایی (3Sum)", "شکستن O(n³)؛ کاهش الگو به جمع دو تایی ۲ و چالش هوشمندانه حذف تکرارها", AMBER, "اسلایدهای ۲۳ تا ۲۷", True),
-                ("🚀 ۶. چالش پروداکشن: CardStack سپینو", "افت فریم UI در انیمیشن؛ گلوگاه O(N×M) در List و تثبیت ۶۰fps با HashSet", CYAN, "اسلایدهای ۲۸ تا ۳۱", True),
+                ("🌊 ۶. مسئله چهارم: ظرف با بیشترین آب", "اثبات حریصانه Two Pointers · چرا ستون کوتاه حرکت می‌کند؟ O(n) زمان", TEAL, "اسلایدهای ۲۸ تا ۳۲", True),
+                ("🚀 ۷. چالش پروداکشن: CardStack سپینو", "افت فریم UI در انیمیشن؛ گلوگاه O(N×M) در List و تثبیت ۶۰fps با HashSet", CYAN, "اسلایدهای ۳۳ تا ۳۶", True),
+                ("🎯 ۸. نقشه راه ۳۰ روزه و پرسش و پاسخ", "برنامه تمرین هفتگی · معرفی Blind 75 و NeetCode · جمع‌بندی نهایی", PURPLE, "اسلایدهای ۳۷ تا ۳۹", False),
             ],
-            "footer_note": "🎯 بخش پایانی: نقشه راه ۳۰ روزه مطالعه هدفمند، منابع طلایی (Blind 75 & NeetCode) و پرسش و پاسخ (اسلایدهای ۳۲ تا ۳۴)",
             "notes": "در این اسلاید ساختار کلی ارائه را شرح دهید: ارائه شامل سه بخش اصلی است: متدولوژی و اصول یادگیری، حل گام‌به‌گام سه مسئله شاخص، و در نهایت یک نمونه واقعی از ارزش این مفاهیم در پروداکشن واقعی پروژه سپینو."
         },
         {
@@ -254,7 +255,7 @@ def create_deck():
             "title": "روش اول: راه‌حل ساده و مستقیم (Brute Force)",
             "badge": "روش ۱ · BRUTE FORCE",
             "subtitle": "جستجوی جفت‌ها با دو حلقه تو در تو در زبان Kotlin:",
-            "code": "fun twoSumBruteForce(nums: IntArray, target: Int): IntArray {\n    val size = nums.size\n\n    // حلقه اول: عدد اول را برمی‌داریم\n    for (i in 0 until size) {\n        val firstNumber = nums[i]\n\n        // حلقه دوم: در خانه‌های بعدی به دنبال عدد دوم می‌گردیم\n        for (j in (i + 1) until size) {\n            val secondNumber = nums[j]\n\n            // آیا جمع این دو عدد برابر هدف است؟\n            val sum = firstNumber + secondNumber\n            if (sum == target) {\n                return intArrayOf(i, j) // پاسخ پیدا شد!\n            }\n        }\n    }\n\n    return intArrayOf() // اگر هیچ جفتی پیدا نشد\n}",
+            "code": "fun twoSumBruteForce(nums: IntArray, target: Int): IntArray {\n    val size = nums.size // Time: O(1), Space: O(1)\n    for (i in 0 until size) { // O(n) outer iterations\n        val firstNumber = nums[i] // O(1)\n        for (j in (i + 1) until size) { // O(n) inner iterations\n            val sum = firstNumber + nums[j] // O(1)\n            if (sum == target) return intArrayOf(i, j) // Time: O(1), Space: O(1)\n        }\n    }\n    return intArrayOf() // Time: O(1), Space: O(1)\n}\n// Overall Time: O(n²) | Auxiliary Space: O(1) | Overall Space: O(1)",
             "points": [
                 "پیچیدگی زمانی: O(n²) به دلیل انجام n*(n-1)/2 مقایسه.",
                 "پیچیدگی فضایی: O(1) چون حافظه کمکی مصرف نمی‌شود.",
@@ -266,7 +267,7 @@ def create_deck():
             "title": "پیاده‌سازی تمیز و خط‌به‌خط کد بهینه (Kotlin)",
             "badge": "کدنویسی تمیز · CLEAN CODE",
             "subtitle": "پیاده‌سازی تک‌پیمایشی (One-Pass Hash Table) با زبان Kotlin و پیچیدگی O(n):",
-            "code": "fun twoSum(nums: IntArray, target: Int): IntArray {\n    // دفترچه یادداشت: کلید = عدد، مقدار = اندیس\n    val seen = mutableMapOf<Int, Int>()\n\n    // پیمایش تک‌تک خانه‌های آرایه\n    for (i in 0 until nums.size) {\n        val currentNumber = nums[i]\n        val neededNumber = target - currentNumber\n\n        // آیا مکمل را قبلاً دیده‌ایم و در حافظه داریم؟\n        if (seen.containsKey(neededNumber)) {\n            val complementIndex = seen[neededNumber]!!\n            return intArrayOf(complementIndex, i) // جفت هدف پیدا شد!\n        }\n\n        seen[currentNumber] = i // ذخیره در حافظه\n    }\n\n    return intArrayOf() // اگر هیچ جفتی پیدا نشد\n}",
+            "code": "fun twoSum(nums: IntArray, target: Int): IntArray {\n    val seen = mutableMapOf<Int, Int>() // Space: O(n) auxiliary in worst case\n    for (i in 0 until nums.size) { // O(n) iterations\n        val neededNumber = target - nums[i] // O(1)\n        if (seen.containsKey(neededNumber)) { // Time: O(1) avg lookup\n            return intArrayOf(seen[neededNumber]!, i) // Time: O(1), Space: O(1) output\n        }\n        seen[nums[i]] = i // Time: O(1) avg insertion\n    }\n    return intArrayOf() // Time: O(1), Space: O(1)\n}\n// Overall Time: O(n) | Auxiliary Space: O(n) | Overall Space: O(n)",
             "points": [
                 "تفکیک صریح متغیرها: استخراج currentNumber، محاسبه neededNumber، و بازیابی complementIndex برای درک بلادرنگ.",
                 "جستجوی O(1) با containsKey: بررسی وجود کلید در جدول هش در زمان ثابت (معادل neededNumber in seen).",
@@ -355,7 +356,7 @@ def create_deck():
             "title": "پیاده‌سازی تمیز در کاتلین: جمع دو تایی ۲",
             "badge": "کدنویسی تمیز · CLEAN KOTLIN",
             "subtitle": "الگوریتم دو نشانگر با تفکیک صریح متغیرها و زمان O(n) و حافظه O(1)",
-            "code": "fun twoSum(numbers: IntArray, target: Int): IntArray {\n    var leftIndex = 0\n    var rightIndex = numbers.size - 1\n\n    while (leftIndex < rightIndex) {\n        val currentSum = numbers[leftIndex] + numbers[rightIndex]\n\n        when {\n            currentSum == target -> {\n                // مسئله ۱-محور است؛ ۱ واحد اضافه می‌کنیم\n                return intArrayOf(leftIndex + 1, rightIndex + 1)\n            }\n            currentSum < target -> {\n                // جمع کوچک است؛ حرکت به سمت اعداد بزرگ‌تر\n                leftIndex++\n            }\n            else -> {\n                // جمع بزرگ است؛ حرکت به سمت اعداد کوچک‌تر\n                rightIndex--\n            }\n        }\n    }\n\n    return intArrayOf()\n}",
+            "code": "fun twoSum(numbers: IntArray, target: Int): IntArray {\n    var leftIndex = 0; var rightIndex = numbers.lastIndex // Time: O(1), Space: O(1)\n    while (leftIndex < rightIndex) { // O(n) iterations\n        val currentSum = numbers[leftIndex] + numbers[rightIndex] // O(1)\n        when {\n            currentSum == target -> return intArrayOf(leftIndex + 1, rightIndex + 1) // O(1)\n            currentSum < target -> leftIndex++ // O(1)\n            else -> rightIndex-- // O(1)\n        }\n    }\n    return intArrayOf() // Time: O(1), Space: O(1)\n}\n// Overall Time: O(n) | Auxiliary Space: O(1) | Overall Space: O(1)",
             "points": [
                 "تفکیک شفاف نام‌ها: leftIndex، rightIndex و currentSum برای وضوح حداکثری منطق.",
                 "ساختار ۳ وضعیتی when: خوانایی بالا برای سنجش برابری، کوچکتری و بزرگتری مجموع.",
@@ -445,7 +446,7 @@ def create_deck():
             "title": "پیاده‌سازی تمیز در کاتلین: جمع سه تایی",
             "badge": "کدنویسی تمیز · CLEAN KOTLIN",
             "subtitle": "مرتب‌سازی + حلقه بیرونی + الگوی Two Pointers با پرش کامل از عناصر تکراری",
-            "code": "fun threeSum(nums: IntArray): List<List<Int>> {\n    val result = mutableListOf<List<Int>>()\n    nums.sort() // مرتب‌سازی O(n log n)\n\n    for (i in 0 until nums.size - 2) {\n        val firstNum = nums[i]\n        if (firstNum > 0) break // توقف زودهنگام\n        if (i > 0 && firstNum == nums[i - 1]) continue // پرش تکراری بیرونی\n\n        var leftIndex = i + 1\n        var rightIndex = nums.size - 1\n\n        while (leftIndex < rightIndex) {\n            val currentSum = firstNum + nums[leftIndex] + nums[rightIndex]\n            when {\n                currentSum == 0 -> {\n                    result.add(listOf(firstNum, nums[leftIndex], nums[rightIndex]))\n                    while (leftIndex < rightIndex && nums[leftIndex] == nums[leftIndex + 1]) leftIndex++\n                    while (leftIndex < rightIndex && nums[rightIndex] == nums[rightIndex - 1]) rightIndex--\n                    leftIndex++\n                    rightIndex--\n                }\n                currentSum < 0 -> leftIndex++\n                else -> rightIndex--\n            }\n        }\n    }\n    return result\n}",
+            "code": "fun threeSum(nums: IntArray): List<List<Int>> {\n    nums.sort() // Time: O(n log n), Space: O(1) auxiliary*\n    val triplets = mutableListOf<List<Int>>() // Space: O(k) output\n    for (firstIndex in 0 until nums.size - 2) { // O(n) iterations\n        if (nums[firstIndex] > 0) break // Early exit: sum > 0\n        if (firstIndex > 0 && nums[firstIndex] == nums[firstIndex - 1]) continue // O(1)\n        val targetSum = -nums[firstIndex] // O(1)\n        var left = firstIndex + 1; var right = nums.size - 1\n        while (left < right) { // O(n) per outer loop\n            val pairSum = nums[left] + nums[right] // O(1)\n            when {\n                pairSum == targetSum -> {\n                    triplets.add(listOf(nums[firstIndex], nums[left], nums[right])) // O(1)\n                    while (left < right && nums[left] == nums[left + 1]) left++ // O(n) scan\n                    while (left < right && nums[right] == nums[right - 1]) right-- // O(n) scan\n                    left++; right-- // O(1)\n                }\n                pairSum < targetSum -> left++ // O(1)\n                else -> right-- // O(1)\n            }\n        }\n    }\n    return triplets // O(1)\n}\n// Overall Time: O(n²) | Auxiliary Space: O(log n) | Output Space: O(k) | Overall Space: O(n + k)",
             "points": [
                 "بهینه‌سازی firstNum > 0: جلوگیری فوری از محاسبات بی‌فایده در اعداد مثبت.",
                 "مدیریت دوگانه تکرار: شرط continue در حلقه بیرونی و دو حلقه while درونی.",
@@ -476,32 +477,111 @@ def create_deck():
         {
             "is_problem_hero": True,
             "hero_color": CYAN,
+            "hero_badge": "🌊 مسئله چهارم · TWO POINTERS GREEDY",
+            "title": "مسئله چهارم: ظرف با بیشترین آب (LeetCode #11)",
+            "badge": "مسئله چهارم · LEETCODE #11",
+            "subtitle": "یافتن دو خط عمودی با بیشترین حجم آب محصورشده | LeetCode 75",
+            "cards": [
+                ("۱. عامل محدودکننده ارتفاع", "آب از دیواره کوتاه‌تر سرریز می‌کند؛ ارتفاع موثر منحصراً با min(hL, hR) تعیین می‌شود.", TEAL),
+                ("۲. معضل کاهش پیوسته عرض", "با نزدیک شدن نشانگرها عرض (R - L) کم می‌شود؛ تنها راه جبران، یافتن دیوارهای بلندتر است.", PURPLE),
+                ("۳. مقیاس بزرگ ورودی (10⁵)", "طول آرایه تا ۱۰۰ هزار است؛ پس الگوریتم O(n²) با ۵ میلیارد عملیات قطعاً TLE می‌دهد.", RED),
+                ("۴. قید حافظه O(1) کمکی", "حل کامل مسئله تنها با دو نشانگر همگرا روی پشته، بدون حتی یک بایت حافظه اضافه.", CYAN)
+            ],
+            "compare": {
+                "bad_title": "تله رایج مصاحبه",
+                "bad_text": "سورت کردن آرایه باعث نابودی اندیس‌ها و عرض هندسی بین دیوارها می‌شود! نباید آرایه را مرتب کرد.",
+                "good_title": "تفکر حریصانه (Greedy Choice)",
+                "good_text": "در هر گام با اثبات ریاضی نشانگر ستون کوتاه‌تر را حرکت می‌دهیم تا شانس کشف ارتفاع بلندتر حفظ شود."
+            },
+            "notes": "مسئله ۱۱ لیت‌کد از استادی پلن LeetCode 75. توضیح دهید که چرا این مسئله آزمون مهم تفکر حریصانه است."
+        },
+        {
+            "title": "راه‌حل ساده و غیربهینه: بررسی تمام جفت‌ها با Brute Force O(n²)",
+            "badge": "روش غیربهینه · O(n²) TLE",
+            "subtitle": "چرا تست تمام جفت‌های دو دیواره در مقیاس ۱۰⁵ به شکست قطعی می‌انجامد؟ | LeetCode #11",
+            "cards": [
+                ("۱. انفجار محاسباتی شدید", "برای n=100,000 تعداد جفت‌ها n(n-1)/2 یعنی ۵ میلیارد عملیات است که ۵۰ ثانیه طول می‌کشد!", RED),
+                ("۲. خطای Time Limit Exceeded", "سقف زمانی لیت‌کد حدود ۱ ثانیه (۱۰⁸ عملیات) است؛ این روش در اولین تست‌کیس‌های حجیم رد می‌شود.", PURPLE),
+                ("۳. محاسبات هرز و بیهوده", "بروت‌فورس جفت‌هایی را تست می‌کند که از نظر هندسی غیرممکن است مساحت بزرگ‌تری بسازند.", AMBER),
+                ("۴. راه نجات: دو نشانگر", "شروع از دورترین فاصله و همگرایی هدفمند در زمان خطی O(n) بدون محاسبات زائد.", TEAL)
+            ],
+            "code": "fun maxAreaBruteForce(height: IntArray): Int {\n    var maxWater = 0 // Time: O(1), Space: O(1)\n    for (i in 0 until height.size) { // O(n) outer iterations\n        for (j in i + 1 until height.size) { // O(n) inner iterations\n            val currentArea = (j - i) * minOf(height[i], height[j]) // O(1)\n            maxWater = maxOf(maxWater, currentArea) // O(1)\n        }\n    }\n    return maxWater // O(1)\n}\n// Overall Time: O(n²) (TLE for n = 10⁵) | Auxiliary Space: O(1) | Overall Space: O(1)",
+            "notes": "بیان کنید که چطور مطرح کردن و نقد هوشمندانه Brute Force در کمتر از ۱ دقیقه، تسلط شما بر تحلیل Big-O را به رخ می‌کشد."
+        },
+        {
+            "title": "تحلیل آنالوگ روی کاغذ: راز تصمیم حریصانه (Greedy Choice)",
+            "badge": "اثبات الگوریتمی · GREEDY INTUITION",
+            "subtitle": "چرا جابجا کردن ستون بلندتر بیهوده است و فقط تغییر ستون کوتاه‌تر شانس افزایش مساحت دارد؟",
+            "compare": {
+                "bad_title": "حرکت ستون بلندتر ❌",
+                "bad_text": "عرض ۱ واحد کم می‌شود. ارتفاع جدید هم توسط دیوار کوتاه فعلی محدود است؛ پس مساحت حتماً کمتر یا مساوی قبلی است!",
+                "good_title": "حرکت ستون کوتاه‌تر ✅",
+                "good_text": "عرض کم می‌شود اما گلوگاه کوتاهی حذف می‌شود؛ تنها شانس یافتن دیواری بسیار بلندتر برای جبران عرض همین است!"
+            },
+            "points": [
+                "تریس روی آرایه نمونه: height = [1, 8, 6, 2, 5, 4, 8, 3, 7]",
+                "گام ۱: L=0 (1), R=8 (7) ➔ عرض=۸، ارتفاع موثر=۱ ➔ مساحت = ۸. چون ۱ < ۷ است، ستون چپ حرکت می‌کند (L++).",
+                "گام ۲: L=1 (8), R=8 (7) ➔ عرض=۷، ارتفاع موثر=۷ ➔ مساحت = ۴۹ (بیشینه مطلق!). چون ۷ < ۸ است، R--.",
+                "گام‌های ۳ تا ۸: کاهش عرض باعث مساحت‌های ۱۸، ۴۰، ۱۶، ۱۵، ۴ و ۶ می‌شود و رکورد ۴۹ دست‌نخورده می‌ماند."
+            ],
+            "quote": "«در الگوریتم‌های دو نشانگر، اثبات ریاضی شرط حرکت اشاره‌گرها مهم‌ترین بخش ارزیابی است.»",
+            "notes": "اثبات حریصانه را با مثال روی تخته یا اسلاید برای حضار جا بیندازید."
+        },
+        {
+            "title": "پیاده‌سازی تمیز در کاتلین: الگوریتم O(n) با دو نشانگر",
+            "badge": "کدنویسی تمیز · CLEAN KOTLIN",
+            "subtitle": "پیاده‌سازی بدون نقص با زمان خطی O(n) و مصرف حافظه ثابت O(1) | LeetCode #11",
+            "code": "fun maxArea(height: IntArray): Int {\n    var maxWater = 0 // Time: O(1), Space: O(1)\n    var left = 0; var right = height.lastIndex // Time: O(1), Space: O(1)\n    while (left < right) { // O(n) iterations — 1 step convergence\n        val width = right - left // O(1)\n        val currentArea = width * minOf(height[left], height[right]) // O(1)\n        if (currentArea > maxWater) maxWater = currentArea // O(1)\n        if (height[left] < height[right]) left++ else right-- // O(1) greedy step\n    }\n    return maxWater // O(1)\n}\n// Overall Time: O(n) — single pass | Auxiliary Space: O(1) | Overall Space: O(1)",
+            "points": [
+                "پیچیدگی زمانی O(n): در هر دور دقیقاً یک نشانگر جابجا می‌شود؛ حلقه حداکثر n - 1 بار می‌چرخد.",
+                "پیچیدگی فضایی O(1): تنها ۴ متغیر عددی روی پشته Stack، بدون هیچ شیء اضافی در حافظه Heap.",
+                "مدیریت تساوی: در صورت hLeft == hRight، حرکت هر نشانگری معادل است و خللی به صحت الگوریتم نمی‌زند."
+            ],
+            "notes": "کد کاتلین را خط‌به‌خط توضیح دهید و بر سادگی و زیبایی پیاده‌سازی تأکید کنید."
+        },
+        {
+            "title": "شبیه‌ساز تعاملی و بصری: بیشینه‌سازی حجم آب (دو نشانگر)",
+            "badge": "شبیه‌ساز بصری · WATER LEVEL VISUALIZER",
+            "subtitle": "نمایش گام‌به‌گام ستون‌ها و تغییر حجم آب روی آرایه [1, 8, 6, 2, 5, 4, 8, 3, 7]  |  LeetCode #11",
+            "cards": [
+                ("گام ۰: L=0, R=8", "عرض ۸، ارتفاع موثر ۱ ➔ مساحت ۸. ستون چپ کوتاه‌تر است ➔ L++.", TEAL),
+                ("گام ۱: L=1, R=8", "عرض ۷، ارتفاع موثر ۷ ➔ مساحت ۴۹ 🎉 (صید بیشینه مطلق!). ستون راست کوتاه‌تر است ➔ R--.", CYAN),
+                ("گام‌های ۲ تا ۴: L=1", "بررسی ستون‌های ۳، ۸ و ۴ ➔ مساحت‌های ۱۸، ۴۰ و ۱۶ (کمتر از ۴۹) ➔ ادامه R--.", PURPLE),
+                ("گام‌های ۵ تا ۸: همگرایی", "بررسی ۵، ۲ و ۶ و رسیدن به L=R ➔ پایان جستجو با رکورد نهایی ۴۹.", AMBER)
+            ],
+            "points": [
+                "نمودار میله‌ای زنده: در نسخه وب ارائه، ارتفاع ستون‌ها و آب بین آن‌ها به صورت تعاملی و رنگی شبیه‌سازی می‌شود.",
+                "حفظ رکورد: با اینکه در گام ۳ دو ستون بلند ۸ و ۸ بررسی شدند، کاهش عرض مانع از شکستن رکورد ۴۹ شد.",
+                "صحت کامل الگوریتم: هیچ ظرف احتمالی با مساحت بیشتر از ۴۹ در آرایه جا نماند."
+            ],
+            "quote": "«تنها با ۸ گام در زمان خطی O(n)، بهینه‌ترین حالت بین ۳۶ جفت ممکن صید شد!»",
+            "notes": "لینک مسئله: https://leetcode.com/problems/container-with-most-water/description/  -- شبیه‌سازی گام‌به‌گام و نمایش بصری ستون‌ها و حجم آب."
+        },
+        {
+            "is_problem_hero": True,
+            "hero_color": CYAN,
             "hero_badge": "🚀 چالش پروداکشن · REAL-WORLD",
             "title": "مطالعه موردی در پروداکشن: چالش CardStack در سپینو",
             "badge": "تجربه عملی مهندسی · REAL-WORLD CASE STUDY",
-            "subtitle": "الگوریتم‌ها فقط برای مصاحبه نیستند؛ انتخاب درست داده ضامن روانی رابط کاربری است:",
+            "subtitle": "شرح کامل صورت مسئله در اپلیکیشن سپینو و نمایش کل کد ابتدایی پیاده‌سازی شده:",
             "cards": [
-                ("۱. داده‌های ورودی", "دو لیست currentItems (در حال نمایش) و newCardsList (تازه از سرور).", PURPLE),
-                ("۲. رفتار مورد انتظار", "حفظ کارت‌های مشترک بدون فلیکر، حذف قدیمی‌ها، و اضافه کردن جدیدها به انتها.", TEAL)
+                ("۱. صورت مسئله و داده‌های ورودی", "در CardStack سپینو (KMP & Compose): دو لیست currentItems (کارت‌های زنده با وضعیت انیمیشن و فوکوس) و newCardsList (دیتای تازه از سرور).", PURPLE),
+                ("۲. رفتار مورد انتظار معماری", "حفظ کارت‌های مشترک بدون فلیکر یا ریست انیمیشن، حذف کارت‌های منقضی‌شده، و الحاق جدیدها به انتهای پشته. پاک‌کردن لیست در Compose فاجعه است.", TEAL)
             ],
-            "points": [
-                "چالش در کامپوز: پاک‌کردن و ساخت مجدد لیست باعث Recomposition سنگین و نابودی انیمیشن کارت‌ها (Jank) می‌شود.",
-                "نیاز به تابع خالص: پیاده‌سازی syncCardStackState برای هماهنگ‌سازی بهینه پشته کارت‌ها."
-            ],
-            "quote": "«تفاوت مهندس ارشد با کدنویس معمولی در توانایی شناسایی پیچیدگی الگوریتمی کدهای به ظاهر ساده کاتلین است.»",
-            "notes": "بیان مسئله همگام‌سازی State در CardStack از پروژه سپینو با Jetpack Compose."
+            "code": "internal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val remainingOldItems = currentItems.filter { it in newCardsList } // Time: O(N × M), Space: O(N)\n    val newItems = newCardsList.filter { it !in currentItems } // Time: O(M × N), Space: O(M)\n    return remainingOldItems + newItems // Time: O(N + M), Space: O(N + M)\n}\n// Overall Time: O(N × M) ≈ O(N²) — linear List.contains() scans | Overall Space: O(N + M)",
+            "notes": "تشریح کامل صورت مسئله CardStack در سپینو، چرایی نیاز به تابع خالص همگام‌ساز، و نمایش کل کد ابتدایی پیاده‌سازی شده."
         },
         {
-            "title": "راه‌حل اول (غیربهینه): فیلتر مستقیم روی List",
-            "badge": "کد غیربهینه · BRUTE FORCE O(N²)",
-            "subtitle": "استفاده فریبنده از ابزارهای اعلانی کاتلین بدون توجه به پیچیدگی زیر کاپوت:",
-            "code": "// ❌ رویکرد کُند: جستجوی مستقیم در List با O(N²)\ninternal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val remainingOldItems = currentItems.filter { it in newCardsList }\n    val newItems = newCardsList.filter { it !in currentItems }\n    return remainingOldItems + newItems\n}",
+            "title": "کالبدشکافی کد اولیه: چطور دو خط کاتلین به حلقه O(N²) تبدیل شد؟",
+            "badge": "هزینه پنهان · HIDDEN O(N²)",
+            "subtitle": "وقتی کامپایلر این دو خط اعلانی را اجرا می‌کند، زیر کاپوت چه فاجعه‌ای رخ می‌دهد؟",
+            "code": "internal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val remainingOldItems = currentItems.filter { it in newCardsList } // Time: O(N × M), Space: O(N)\n    val newItems = newCardsList.filter { it !in currentItems } // Time: O(M × N), Space: O(M)\n    return remainingOldItems + newItems // Time: O(N + M), Space: O(N + M)\n}\n// Overall Time: O(N × M) ≈ O(N²) — linear List.contains() scans | Overall Space: O(N + M)",
             "cards": [
-                ("ظاهر فریبنده کاتلین", "کد فقط ۲ خط و بسیار خواناست و تست‌های کوچک را به راحتی پاس می‌کند.", AMBER),
-                ("زیر کاپوت عملگر in", "در List، عملگر in معادل contains() با پیمایش خطی O(M) است.", RED),
-                ("پیچیدگی نمایی", "برای دو لیست با اندازه N و M، کل مقایسه‌ها O(N × M) یعنی O(N²) است!", RED)
+                ("ظاهر فریبنده کاتلین", "کد فقط ۲ خط است، هیچ خطای کامپایلری ندارد و تست‌های اولیه با ۲-۳ کارت سریعاً پاس شدند.", AMBER),
+                ("زیر کاپوت عملگر in", "در List عملگر in معادل contains() است که کل لیست را خطی با O(M) جستجو می‌کند.", RED),
+                ("پیچیدگی نمایی O(N²)", "برای دو لیست با اندازه N و M، تعداد مقایسه‌ها برابر 2×N×M است (با ۱۰۰ کارت = ۲۰,۰۰۰ مقایسه!).", RED)
             ],
-            "notes": "کد غیربهینه اولیه که در نگاه اول شیک است اما در پس‌زمینه جستجوی خطی تودرتو انجام می‌دهد."
+            "notes": "کالبدشکافی مکانیسم عملگر in روی کالکشن List و تبدیل شدن ناخواسته کد به O(N²)."
         },
         {
             "title": "کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI",
@@ -522,7 +602,7 @@ def create_deck():
             "title": "راه‌حل بهینه: جهش به O(N) با HashSet و تحلیل چرایی",
             "badge": "کدنویسی تمیز · OPTIMAL O(N)",
             "subtitle": "به‌کارگیری جدول هش برای جستجوی آنی O(1) و کاهش زمان کل به خطی O(N + M):",
-            "code": "// ✅ رویکرد بهینه: تبدیل به Set و جستجوی آنی O(1)\ninternal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val newCardsSet = newCardsList.toSet()\n    val currentItemsSet = currentItems.toSet()\n    val remainingOldItems = currentItems.filter { it in newCardsSet }\n    val newItems = newCardsList.filter { it !in currentItemsSet }\n    return remainingOldItems + newItems\n}",
+            "code": "internal fun <T> syncCardStackState(\n    currentItems: List<T>,\n    newCardsList: List<T>,\n): List<T> {\n    val newCardsSet = newCardsList.toSet() // Time: O(M), Space: O(M)\n    val currentItemsSet = currentItems.toSet() // Time: O(N), Space: O(N)\n    val remainingOldItems = currentItems.filter { it in newCardsSet } // Time: O(N), Space: O(N)\n    val newItems = newCardsList.filter { it !in currentItemsSet } // Time: O(M), Space: O(M)\n    return remainingOldItems + newItems // Time: O(N + M), Space: O(N + M)\n}\n// Overall Time: O(N + M) — linear time (60 FPS) | Auxiliary Space: O(N + M)",
             "cards": [
                 ("⚡ جستجوی آنی O(1)", "با toSet() جدول هش ساخته می‌شود و جستجو با تابع هش در زمان ثابت انجام می‌گیرد.", TEAL),
                 ("🚀 کاهش به خطی O(N + M)", "کل هزینه به O(N + M) تبدیل شده و حتی برای ۱۰,۰۰۰ کارت در کسری از میلی‌ثانیه اجرا می‌شود.", TEAL)
@@ -662,13 +742,13 @@ def create_deck():
                 sp.font.size = Pt(13)
                 sp.font.color.rgb = TEXT_DIM
 
-            # Render 6 Agenda items in 2 columns x 3 rows
+            # Render 8 Agenda items in 2 columns x 4 rows
             items = data.get("agenda_items", [])
             col_w = 5.7
-            row_h = 1.35
+            row_h = 1.15
             gap_x = 0.3
-            gap_y = 0.15
-            start_y = 1.55
+            gap_y = 0.12
+            start_y = 1.5
 
             for idx, item in enumerate(items):
                 col_idx = idx % 2
@@ -761,9 +841,10 @@ def create_deck():
                 cards = data["cards"]
                 num_cards = len(cards)
                 card_w = (11.7 - (num_cards - 1) * 0.25) / num_cards
+                card_h = 1.45 if "code" in data else 2.2
                 for idx, (hd, desc, col) in enumerate(cards):
                     cx = 0.8 + idx * (card_w + 0.25)
-                    cshape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(cx), Inches(cur_y), Inches(card_w), Inches(2.2))
+                    cshape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(cx), Inches(cur_y), Inches(card_w), Inches(card_h))
                     cshape.fill.solid()
                     cshape.fill.fore_color.rgb = SURF_COLOR
                     cshape.line.color.rgb = col
@@ -773,16 +854,16 @@ def create_deck():
                     ctf.word_wrap = True
                     cp1 = ctf.paragraphs[0]
                     cp1.text = hd
-                    cp1.font.size = Pt(14)
+                    cp1.font.size = Pt(12.5 if "code" in data else 14)
                     cp1.font.bold = True
                     cp1.font.color.rgb = col
 
                     cp2 = ctf.add_paragraph()
                     cp2.text = desc
-                    cp2.font.size = Pt(11)
+                    cp2.font.size = Pt(9.5 if "code" in data else 11)
                     cp2.font.color.rgb = TEXT_LIGHT
 
-                cur_y += 2.45
+                cur_y += card_h + 0.15
 
             # Render Compare if present
             if "compare" in data:
@@ -827,7 +908,8 @@ def create_deck():
             # Render Code if present
             if "code" in data:
                 code_lines = data["code"].split("\n")
-                box_h = max(2.2, min(3.2, 0.35 + len(code_lines) * 0.23))
+                has_cards = "cards" in data
+                box_h = max(1.8, min(2.5, 0.3 + len(code_lines) * 0.2)) if has_cards else max(2.2, min(3.2, 0.35 + len(code_lines) * 0.23))
                 c_shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(cur_y), Inches(11.7), Inches(box_h))
                 c_shape.fill.solid()
                 c_shape.fill.fore_color.rgb = CODE_BG
@@ -839,10 +921,10 @@ def create_deck():
                     cp = ctf.paragraphs[0] if line_idx == 0 else ctf.add_paragraph()
                     cp.text = line_str
                     cp.font.name = "Consolas"
-                    cp.font.size = Pt(11)
+                    cp.font.size = Pt(10 if has_cards else 11)
                     cp.font.color.rgb = TEAL
                     cp.alignment = PP_ALIGN.LEFT
-                cur_y += box_h + 0.2
+                cur_y += box_h + 0.15
 
             # Render Bullet Points if present
             if "points" in data:

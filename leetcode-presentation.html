@@ -706,6 +706,92 @@
       color: var(--amber);
       font-size: calc(17px * var(--fs-scale));
     }
+    .slide.slide-problem-hero.hero-water {
+      border-top-color: #38bdf8;
+      background: radial-gradient(circle at 90% 12%, rgba(56,189,248,.15), transparent 50%),
+                  radial-gradient(circle at 10% 88%, rgba(78,204,163,.08), transparent 50%),
+                  var(--bg);
+    }
+    .slide-problem-hero.hero-water .sh {
+      background: linear-gradient(90deg, rgba(56,189,248,.18), rgba(78,204,163,.08), transparent);
+      border-bottom: 2px solid rgba(56,189,248,.35);
+    }
+
+    /* ── WATER CONTAINER VISUALIZER ──────────────────────── */
+    .water-chart-container {
+      position: relative;
+      height: 155px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px 10px 10px;
+      direction: ltr;
+      border-bottom: 2px solid rgba(124,143,245,.2);
+      margin-bottom: 8px;
+    }
+    .water-bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 44px;
+    }
+    .water-bar-ptr {
+      position: absolute;
+      top: -24px;
+      font-size: calc(11px * var(--fs-scale));
+      font-weight: 800;
+      font-family: monospace;
+      opacity: 0;
+      transition: all .25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .water-bar-col.ptr-l .water-bar-ptr {
+      opacity: 1;
+      color: var(--teal);
+    }
+    .water-bar-col.ptr-r .water-bar-ptr {
+      opacity: 1;
+      color: var(--purple);
+    }
+    .water-bar {
+      width: 34px;
+      background: var(--surf2);
+      border: 2px solid var(--border);
+      border-radius: 6px 6px 0 0;
+      transition: all .3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: calc(13px * var(--fs-scale));
+      color: var(--dim);
+    }
+    .water-bar-col.ptr-l .water-bar {
+      border-color: var(--teal);
+      background: linear-gradient(180deg, rgba(78,204,163,.4), rgba(78,204,163,.15));
+      color: #fff;
+      box-shadow: 0 0 14px rgba(78,204,163,.4);
+    }
+    .water-bar-col.ptr-r .water-bar {
+      border-color: var(--purple);
+      background: linear-gradient(180deg, rgba(124,143,245,.4), rgba(124,143,245,.15));
+      color: #fff;
+      box-shadow: 0 0 14px rgba(124,143,245,.4);
+    }
+    .water-bar-col.in-range .water-bar {
+      border-color: rgba(56,189,248,.35);
+      background: rgba(56,189,248,.08);
+    }
+    .water-bar-idx {
+      font-size: calc(10px * var(--fs-scale));
+      color: var(--dim);
+      margin-top: 4px;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
@@ -790,26 +876,36 @@
           <div class="toc-range" style="color:var(--amber);">اسلایدهای ۲۳ تا ۲۷ ↗</div>
         </div>
 
-        <!-- بخش ۶: مطالعه موردی پروداکشن -->
-        <div class="toc-card toc-card-hero" onclick="goTo(28)" style="border-right: 4px solid var(--cyan);">
+        <!-- بخش ۶: مسئله چهارم -->
+        <div class="toc-card toc-card-hero" onclick="goTo(28)" style="border-right: 4px solid #38bdf8;">
           <div class="toc-header">
-            <div class="toc-title" style="color:var(--cyan);"><span>🚀</span> ۶. مطالعه موردی در پروداکشن (سپینو)</div>
+            <div class="toc-title" style="color:#38bdf8;"><span>🌊</span> ۶. مسئله چهارم: ظرف با بیشترین آب</div>
+            <span class="toc-badge bcy" style="background:rgba(56,189,248,.2);border:1px solid #38bdf8;color:#38bdf8;">LeetCode #11 · Medium</span>
+          </div>
+          <div class="toc-desc">اثبات تصمیم حریصانه در Two Pointers · چرا حرکت ستون کوتاه‌تر تنها راه است؟ گذر از O(n²) به O(n) و شبیه‌ساز زنده</div>
+          <div class="toc-range" style="color:#38bdf8;">اسلایدهای ۲۸ تا ۳۲ ↗</div>
+        </div>
+
+        <!-- بخش ۷: مطالعه موردی پروداکشن -->
+        <div class="toc-card toc-card-hero" onclick="goTo(33)" style="border-right: 4px solid var(--cyan);">
+          <div class="toc-header">
+            <div class="toc-title" style="color:var(--cyan);"><span>🚀</span> ۷. مطالعه موردی در پروداکشن (سپینو)</div>
             <span class="toc-badge bcy" style="background:rgba(56,189,248,.2);border:1px solid var(--cyan);color:var(--cyan);">CardStack · Real-World</span>
           </div>
           <div class="toc-desc">تجربه واقعی در Compose و KMP: چرا فیلتر روی List باعث افت شدید فریم در انیمیشن شد؟ حل افت فریم و تثبیت ۶۰fps با HashSet</div>
-          <div class="toc-range" style="color:var(--cyan);">اسلایدهای ۲۸ تا ۳۱ ↗</div>
+          <div class="toc-range" style="color:var(--cyan);">اسلایدهای ۳۳ تا ۳۶ ↗</div>
         </div>
 
         <!-- بنر پایانی: نقشه راه و Q&A -->
-        <div class="toc-bottom-banner" onclick="goTo(32)">
+        <div class="toc-bottom-banner" onclick="goTo(37)">
           <div style="display:flex;align-items:center;gap:12px;">
             <span style="font-size:1.3rem;">🎯</span>
             <div>
-              <strong style="color:var(--text);font-size:calc(14.5px * var(--fs-scale));">۷. برنامه اقدام ۳۰ روزه، منابع طلایی و پرسش و پاسخ (Q&A)</strong>
+              <strong style="color:var(--text);font-size:calc(14.5px * var(--fs-scale));">۸. برنامه اقدام ۳۰ روزه، منابع طلایی و پرسش و پاسخ (Q&A)</strong>
               <div style="font-size:calc(12px * var(--fs-scale));color:var(--dim);">برنامه تمرین هفتگی · معرفی Blind 75 و NeetCode · جمع‌بندی نهایی</div>
             </div>
           </div>
-          <span style="color:var(--purple);font-size:calc(12px * var(--fs-scale));font-weight:700;">اسلایدهای ۳۲ تا ۳۴ ↗</span>
+          <span style="color:var(--purple);font-size:calc(12px * var(--fs-scale));font-weight:700;">اسلایدهای ۳۷ تا ۳۹ ↗</span>
         </div>
       </div>
     </div>
@@ -1374,26 +1470,28 @@
     <div class="sbody">
       <p class="anim">در جلسه ارزیابی، همیشه بیان راه‌حل اولیه (Brute Force) اولین گام است تا نشان دهید مسئله را کامل فهمیده‌اید.</p>
       <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSumBruteForce</span>(nums: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
-    <span class="kw">val</span> size = nums.size
+    <span class="kw">val</span> size = nums.size <span class="cm">// Time: O(1), Space: O(1)</span>
 
-    <span class="cm">// حلقه اول: یک عدد را برمی‌داریم</span>
-    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until size) {
-        <span class="kw">val</span> firstNumber = nums[i]
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until size) { <span class="cm">// O(n) outer iterations</span>
+        <span class="kw">val</span> firstNumber = nums[i] <span class="cm">// O(1)</span>
 
-        <span class="cm">// حلقه دوم: در خانه‌های بعدی به دنبال عدد دوم می‌گردیم</span>
-        <span class="kw">for</span> (j <span class="kw">in</span> (i + <span class="num">1</span>) until size) {
-            <span class="kw">val</span> secondNumber = nums[j]
+        <span class="kw">for</span> (j <span class="kw">in</span> (i + <span class="num">1</span>) until size) { <span class="cm">// O(n) inner iterations per outer loop</span>
+            <span class="kw">val</span> secondNumber = nums[j] <span class="cm">// O(1)</span>
 
-            <span class="cm">// آیا جمع این دو عدد برابر با هدف است؟</span>
-            <span class="kw">val</span> sum = firstNumber + secondNumber
-            <span class="kw">if</span> (sum == target) {
-                <span class="kw">return</span> <span class="fn">intArrayOf</span>(i, j)  <span class="cm">// پاسخ پیدا شد!</span>
+            <span class="kw">val</span> sum = firstNumber + secondNumber <span class="cm">// O(1)</span>
+            <span class="kw">if</span> (sum == target) { <span class="cm">// O(1)</span>
+                <span class="kw">return</span> <span class="fn">intArrayOf</span>(i, j) <span class="cm">// Time: O(1), Space: O(1) output</span>
             }
         }
     }
 
-    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// اگر هیچ جفتی پیدا نشد</span>
-}</code></pre>
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>() <span class="cm">// Time: O(1), Space: O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n²) — (n * (n - 1)) / 2 comparisons in worst case</span>
+<span class="cm">// Auxiliary Space Complexity: O(1) — zero extra memory allocated</span>
+<span class="cm">// Output Space Complexity: O(1) — returns fixed 2-element array</span>
+<span class="cm">// Overall Space Complexity: O(1)</span></code></pre>
       <h3 class="anim">تحلیل پیچیدگی:</h3>
       <ul class="anim">
         <li><strong>پیچیدگی زمانی:</strong> <code>O(n²)</code> — تعداد مقایسه‌ها برابر است با <code>n*(n-1)/2</code>.</li>
@@ -1413,28 +1511,28 @@
       <p class="anim">پیاده‌سازی تک‌پیمایشی (One-Pass Hash Table) با زبان Kotlin با ساختار کاملاً شفاف، گام‌به‌گام و قابل فهم:</p>
       <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSum</span>(nums: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
     <span class="cm">// دفترچه یادداشت: ذخیره اعدادی که قبلاً ملاقات کرده‌ایم</span>
-    <span class="cm">// کلید (Key) = مقدار خود عدد | مقدار (Value) = اندیس آن عدد در آرایه</span>
-    <span class="kw">val</span> seen = <span class="fn">mutableMapOf</span>&lt;<span class="ty">Int</span>, <span class="ty">Int</span>&gt;()
+    <span class="kw">val</span> seen = <span class="fn">mutableMapOf</span>&lt;<span class="ty">Int</span>, <span class="ty">Int</span>&gt;() <span class="cm">// Space: O(n) auxiliary in worst case</span>
 
-    <span class="cm">// پیمایش تک‌تک خانه‌های آرایه از ابتدا تا انتها</span>
-    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until nums.size) {
-        <span class="kw">val</span> currentNumber = nums[i]
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until nums.size) { <span class="cm">// O(n) iterations</span>
+        <span class="kw">val</span> currentNumber = nums[i] <span class="cm">// O(1)</span>
+        <span class="kw">val</span> neededNumber = target - currentNumber <span class="cm">// O(1)</span>
 
-        <span class="cm">// محاسبه مکمل: چه عددی کم داریم تا جمعش با عدد فعلی بشود target؟</span>
-        <span class="kw">val</span> neededNumber = target - currentNumber
-
-        <span class="cm">// آیا این مکمل را قبلاً دیده‌ایم و در حافظه داریم؟</span>
-        <span class="kw">if</span> (seen.<span class="fn">containsKey</span>(neededNumber)) {
-            <span class="kw">val</span> complementIndex = seen[neededNumber]!!
-            <span class="kw">return</span> <span class="fn">intArrayOf</span>(complementIndex, i)  <span class="cm">// جفت هدف پیدا شد!</span>
+        <span class="cm">// استعلام آنی از جدول هش</span>
+        <span class="kw">if</span> (seen.<span class="fn">containsKey</span>(neededNumber)) { <span class="cm">// Time: O(1) average lookup</span>
+            <span class="kw">val</span> complementIndex = seen[neededNumber]!! <span class="cm">// O(1)</span>
+            <span class="kw">return</span> <span class="fn">intArrayOf</span>(complementIndex, i) <span class="cm">// Time: O(1), Space: O(1) output</span>
         }
 
-        <span class="cm">// اگر مکمل نبود، عدد فعلی و اندیسش را برای مراحل بعد یادداشت می‌کنیم</span>
-        seen[currentNumber] = i
+        seen[currentNumber] = i <span class="cm">// Time: O(1) average insertion</span>
     }
 
-    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// اگر هیچ جفتی پیدا نشد</span>
-}</code></pre>
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>() <span class="cm">// Time: O(1), Space: O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n) — single pass with O(1) average hash map operations</span>
+<span class="cm">// Auxiliary Space Complexity: O(n) — stores at most n elements in Hash Map</span>
+<span class="cm">// Output Space Complexity: O(1) — returns fixed 2-element array</span>
+<span class="cm">// Overall Space Complexity: O(n)</span></code></pre>
       <h3 class="anim">تحلیل نکات ظریف پیاده‌سازی و خوانایی:</h3>
       <ul class="anim">
         <li><strong>تفکیک صریح متغیرها:</strong> استخراج عدد جاری (<code>currentNumber</code>)، محاسبه مکمل (<code>neededNumber</code>)، و خواندن اندیس مکمل (<code>complementIndex</code>) هرکدام در یک خط مستقل انجام شده تا جریان منطق کاملاً شفاف باشد.</li>
@@ -1753,32 +1851,29 @@
     <div class="sbody">
       <p class="anim">پیاده‌سازی الگوریتم Two Pointers با تفکیک صریح متغیرها و ساختار شفاف و خوانا در کاتلین:</p>
       <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">twoSum</span>(numbers: <span class="ty">IntArray</span>, target: <span class="ty">Int</span>): <span class="ty">IntArray</span> {
-    <span class="cm">// دو نشانگر در ابتدا و انتهای آرایه مرتب‌شده</span>
-    <span class="kw">var</span> leftIndex = <span class="num">0</span>
-    <span class="kw">var</span> rightIndex = numbers.size - <span class="num">1</span>
+    <span class="kw">var</span> leftIndex = <span class="num">0</span> <span class="cm">// Time: O(1), Space: O(1)</span>
+    <span class="kw">var</span> rightIndex = numbers.size - <span class="num">1</span> <span class="cm">// Time: O(1), Space: O(1)</span>
 
-    <span class="cm">// حرکت همگرای نشانگرها به سمت یکدیگر تا لحظه برخورد</span>
-    <span class="kw">while</span> (leftIndex &lt; rightIndex) {
-        <span class="kw">val</span> currentSum = numbers[leftIndex] + numbers[rightIndex]
+    <span class="kw">while</span> (leftIndex &lt; rightIndex) { <span class="cm">// O(n) total iterations (each step eliminates 1 element)</span>
+        <span class="kw">val</span> currentSum = numbers[leftIndex] + numbers[rightIndex] <span class="cm">// O(1)</span>
 
         <span class="kw">when</span> {
             currentSum == target -&gt; {
-                <span class="cm">// مسئله ۱-محور است؛ بنابراین ۱ واحد به هر اندیس اضافه می‌کنیم</span>
-                <span class="kw">return</span> <span class="fn">intArrayOf</span>(leftIndex + <span class="num">1</span>, rightIndex + <span class="num">1</span>)
+                <span class="cm">// مسئله ۱-محور است</span>
+                <span class="kw">return</span> <span class="fn">intArrayOf</span>(leftIndex + <span class="num">1</span>, rightIndex + <span class="num">1</span>) <span class="cm">// Time: O(1), Space: O(1) output</span>
             }
-            currentSum &lt; target -&gt; {
-                <span class="cm">// جمع کوچک‌تر از هدف است؛ برای افزایش جمع، نشانگر چپ را جلو می‌بریم</span>
-                leftIndex++
-            }
-            <span class="kw">else</span> -&gt; {
-                <span class="cm">// جمع بزرگ‌تر از هدف است؛ برای کاهش جمع، نشانگر راست را عقب می‌آوریم</span>
-                rightIndex--
-            }
+            currentSum &lt; target -&gt; leftIndex++ <span class="cm">// O(1)</span>
+            <span class="kw">else</span> -&gt; rightIndex-- <span class="cm">// O(1)</span>
         }
     }
 
-    <span class="kw">return</span> <span class="fn">intArrayOf</span>()  <span class="cm">// طبق صورت مسئله هرگز به این خط نمی‌رسد</span>
-}</code></pre>
+    <span class="kw">return</span> <span class="fn">intArrayOf</span>() <span class="cm">// O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n) — at most n pointer steps until convergence</span>
+<span class="cm">// Auxiliary Space Complexity: O(1) — zero extra memory allocated</span>
+<span class="cm">// Output Space Complexity: O(1) — returns fixed 2-element array</span>
+<span class="cm">// Overall Space Complexity: O(1)</span></code></pre>
 
       <h3 class="anim">تحلیل پیچیدگی و نکات طراحی کد:</h3>
       <ul class="anim">
@@ -2054,48 +2149,48 @@
     <div class="sbody">
       <p class="anim">پیاده‌سازی اصولی با زبان Kotlin با رعایت کامل مدیریت تکرارها و تفکیک نام متغیرها:</p>
       <pre class="code-box anim"><code><span class="kw">fun</span> <span class="fn">threeSum</span>(nums: <span class="ty">IntArray</span>): <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="ty">Int</span>&gt;&gt; {
-    <span class="kw">val</span> result = <span class="fn">mutableListOf</span>&lt;<span class="ty">List</span>&lt;<span class="ty">Int</span>&gt;&gt;()
-    nums.<span class="fn">sort</span>()  <span class="cm">// مرتب‌سازی در زمان O(n log n)</span>
+    nums.<span class="fn">sort</span>() <span class="cm">// Time: O(n log n), Space: O(1) auxiliary*</span>
 
-    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until nums.size - <span class="num">2</span>) {
-        <span class="kw">val</span> firstNum = nums[i]
+    <span class="kw">val</span> triplets = <span class="fn">mutableListOf</span>&lt;<span class="ty">List</span>&lt;<span class="ty">Int</span>&gt;&gt;() <span class="cm">// Space: O(k), where k is the output size</span>
 
-        <span class="cm">// بهینه‌سازی: اگر کوچک‌ترین عدد مثبت باشد، جمع سه عدد هرگز صفر نمی‌شود</span>
-        <span class="kw">if</span> (firstNum &gt; <span class="num">0</span>) <span class="kw">break</span>
+    <span class="kw">for</span> (firstIndex <span class="kw">in</span> <span class="num">0</span> until nums.size - <span class="num">2</span>) { <span class="cm">// O(n) iterations</span>
+        <span class="kw">if</span> (nums[firstIndex] &gt; <span class="num">0</span>) <span class="kw">break</span> <span class="cm">// Early exit: positive triplet sum can never be 0</span>
+        <span class="kw">if</span> (firstIndex &gt; <span class="num">0</span> &amp;&amp; nums[firstIndex] == nums[firstIndex - <span class="num">1</span>]) <span class="kw">continue</span> <span class="cm">// O(1)</span>
 
-        <span class="cm">// جلوگیری از تکرار: اگر عدد اول با قبلی یکی بود، از آن عبور کن</span>
-        <span class="kw">if</span> (i &gt; <span class="num">0</span> &amp;&amp; firstNum == nums[i - <span class="num">1</span>]) <span class="kw">continue</span>
+        <span class="kw">val</span> targetSum = -nums[firstIndex] <span class="cm">// O(1)</span>
+        <span class="kw">var</span> left = firstIndex + <span class="num">1</span> <span class="cm">// O(1)</span>
+        <span class="kw">var</span> right = nums.size - <span class="num">1</span> <span class="cm">// O(1)</span>
 
-        <span class="kw">var</span> leftIndex = i + <span class="num">1</span>
-        <span class="kw">var</span> rightIndex = nums.size - <span class="num">1</span>
-
-        <span class="kw">while</span> (leftIndex &lt; rightIndex) {
-            <span class="kw">val</span> currentSum = firstNum + nums[leftIndex] + nums[rightIndex]
+        <span class="kw">while</span> (left &lt; right) { <span class="cm">// O(n) per iteration of the outer loop</span>
+            <span class="kw">val</span> pairSum = nums[left] + nums[right] <span class="cm">// O(1)</span>
 
             <span class="kw">when</span> {
-                currentSum == <span class="num">0</span> -&gt; {
-                    result.<span class="fn">add</span>(<span class="fn">listOf</span>(firstNum, nums[leftIndex], nums[rightIndex]))
+                pairSum == targetSum -&gt; {
+                    triplets.<span class="fn">add</span>(
+                        <span class="fn">listOf</span>(nums[firstIndex], nums[left], nums[right])
+                    ) <span class="cm">// O(1) time, O(1) space per triplet (excluding output storage)</span>
 
-                    <span class="cm">// پرش از عناصر تکراری هم‌جوار در سمت چپ</span>
-                    <span class="kw">while</span> (leftIndex &lt; rightIndex &amp;&amp; nums[leftIndex] == nums[leftIndex + <span class="num">1</span>]) {
-                        leftIndex++
-                    }
-                    <span class="cm">// پرش از عناصر تکراری هم‌جوار در سمت راست</span>
-                    <span class="kw">while</span> (leftIndex &lt; rightIndex &amp;&amp; nums[rightIndex] == nums[rightIndex - <span class="num">1</span>]) {
-                        rightIndex--
-                    }
+                    <span class="kw">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left + <span class="num">1</span>]) left++ <span class="cm">// O(n) total per scan</span>
+                    <span class="kw">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right - <span class="num">1</span>]) right-- <span class="cm">// O(n) total per scan</span>
 
-                    leftIndex++
-                    rightIndex--
+                    left++ <span class="cm">// O(1)</span>
+                    right-- <span class="cm">// O(1)</span>
                 }
-                currentSum &lt; <span class="num">0</span> -&gt; leftIndex++   <span class="cm">// جمع کوچک است؛ حرکت به سمت اعداد بزرگ‌تر</span>
-                <span class="kw">else</span> -&gt; rightIndex--            <span class="cm">// جمع بزرگ است؛ حرکت به سمت اعداد کوچک‌تر</span>
+
+                pairSum &lt; targetSum -&gt; left++ <span class="cm">// O(1)</span>
+
+                <span class="kw">else</span> -&gt; right-- <span class="cm">// O(1)</span>
             }
         }
     }
 
-    <span class="kw">return</span> result
-}</code></pre>
+    <span class="kw">return</span> triplets <span class="cm">// O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n²) — O(n log n) sort + O(n²) two pointers</span>
+<span class="cm">// Auxiliary Space Complexity: O(log n) for sorting, depending on implementation</span>
+<span class="cm">// Output Space Complexity: O(k), where k is the number of unique triplets</span>
+<span class="cm">// Overall Space Complexity: O(n + k) in worst case, including sorting and output</span></code></pre>
 
       <h3 class="anim">تحلیل پیچیدگی و ظرافت‌های مهندسی:</h3>
       <ul class="anim">
@@ -2204,8 +2299,337 @@
     <span class="snum">۲۶ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 28 — مطالعه موردی پروداکشن: چالش CardStack در سپینو ═════ -->
-  <div class="slide slide-problem-hero hero-case" data-slide="28">
+  <!-- ══ SLIDE 28 — مسئله چهارم: ظرف با بیشترین آب (LeetCode #11) ═════════ -->
+  <div class="slide slide-problem-hero hero-water" data-slide="28">
+    <div class="sh">
+      <span class="problem-starter-pill" style="background:linear-gradient(135deg,#38bdf8,#0284c7);color:#081628;">🌊 مسئله چهارم</span>
+      <span class="shtitle">مسئله چهارم: ظرف با بیشترین آب (Container With Most Water)</span>
+      <span class="sp"></span>
+      <span class="badge bc" style="font-weight:800;border:1.5px solid var(--teal);">MEDIUM · دو نشانگر حریصانه</span>
+      <a href="https://leetcode.com/problems/container-with-most-water/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله در LeetCode">
+        <span>🔗 LeetCode #11</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="font-size:calc(16px * var(--fs-scale));line-height:1.8;">
+          <strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>height</code> به طول <code>n</code> داده شده است. دو خط عمودی انتخاب کنید که همراه با محور افقی، ظرفی با <strong>بیشترین حجم آب ممکن</strong> تشکیل دهند. مساحت با فرمول زیر محاسبه می‌شود:<br>
+          <code style="font-size:1.05em;color:var(--amber);">Area = min(height[left], height[right]) &times; (right - left)</code>
+        </div>
+        <a href="https://leetcode.com/problems/container-with-most-water/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
+      </div>
+
+      <div class="card-grid-4 anim">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">۱. عامل محدودکننده ارتفاع</div>
+          <div class="card-desc">آب از دیواره کوتاه‌تر سرریز می‌کند؛ بنابراین ارتفاع موثر ظرف منحصراً توسط <strong>کوتاه‌ترین ستون</strong> یعنی <code>min(hL, hR)</code> معین می‌شود.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۲. معضل کاهش پیوسته عرض</div>
+          <div class="card-desc">با نزدیک شدن نشانگرها به هم، عرض (<code>right - left</code>) پیوسته کم می‌شود؛ تنها راه جبران، یافتن ستون‌های با ارتفاع بلندتر است.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۳. مقیاس ورودی بزرگ (10⁵)</div>
+          <div class="card-desc">طول آرایه تا <code>10⁵</code> است؛ الگوریتم <code>O(n²)</code> با ۵ میلیارد عملیات قطعاً با خطای <strong>Time Limit Exceeded (TLE)</strong> رد می‌شود.</div>
+        </div>
+        <div class="card card-cyan">
+          <div class="card-hd" style="color:var(--cyan)">۴. قید حافظه O(1) کمکی</div>
+          <div class="card-desc">نیازی به ساختار داده کمکی یا آرایه اضافی نیست؛ هدایت هوشمندانه دو اشاره‌گر، مسئله را با <strong>صفر بایت حافظه اضافی</strong> حل می‌کند.</div>
+        </div>
+      </div>
+
+      <div class="compare anim" style="margin: 0.6rem 0;">
+        <div class="good">
+          <div class="label">چرا این مسئله در LeetCode 75 و مصاحبه‌ها یک شاهکار است؟</div>
+          <p>این سوال تست سنجش <strong>تفکر حریصانه (Greedy Choice)</strong> است. پرسشگر به دنبال این است که آیا می‌توانید اثبات کنید چرا حرکت ستون کوتاه‌تر بدون از دست رفتن جواب بهینه، صحیح است.</p>
+        </div>
+        <div class="bad">
+          <div class="label">تله رایج مصاحبه</div>
+          <p>بسیاری از داوطلبان به اشتباه سعی می‌کنند ستون بلندتر را جابجا کنند یا آرایه را سورت کنند؛ سورت کردن آرایه اندیس‌ها و عرض هندسی بین دیوارها را کاملاً نابود می‌کند!</p>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۲۸ / ۳۶</span>
+  </div>
+
+  <!-- ══ SLIDE 29 — راه‌حل اولیه و غیربهینه ظرف آب ═══════════════ -->
+  <div class="slide" data-slide="29">
+    <div class="sh">
+      <span class="shtitle">راه‌حل ساده و غیربهینه: بررسی تمام جفت‌ها با Brute Force O(n²)</span>
+      <span class="sp"></span>
+      <span class="badge bk">روش غیربهینه · O(n²) TLE</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">اولین رویکردی که به ذهن می‌رسد، تست تمام جفت‌های دو دیواره ممکن در آرایه با دو حلقه تو در تو است:</p>
+
+      <div class="card-grid-3 anim">
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">۱. انفجار محاسباتی شدید</div>
+          <div class="card-desc">برای آرایه با <code>n = 100,000</code> عنصر، تعداد جفت‌ها برابر است با <code>n(n-1)/2 &approx; 5,000,000,000</code> عملیات که بیش از ۵۰ ثانیه طول می‌کشد!</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">۲. ارور Time Limit Exceeded</div>
+          <div class="card-desc">سقف پردازش مجاز در لیت‌کد حدود ۱ ثانیه (10⁸ عملیات) است. راه‌حل بروت‌فورس در تست‌کیس‌های میانی بلافاصله رد صلاحیت می‌شود.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">۳. محاسبات هرز و بیهوده</div>
+          <div class="card-desc">بروت‌فورس جفت‌هایی را بررسی می‌کند که از نظر ریاضی محال است مساحت بزرگ‌تری تولید کنند؛ ما نیاز به قاعده‌ای برای نادیده گرفتن این موارد داریم.</div>
+        </div>
+      </div>
+
+      <div class="code-box anim"><span class="cm">// ❌ راه‌حل بروت‌فورس: O(n²) زمان و TLE قطعی</span>
+<span class="kw">fun</span> <span class="fn">maxAreaBruteForce</span>(height: <span class="ty">IntArray</span>): <span class="ty">Int</span> {
+    <span class="kw">var</span> maxWater = <span class="num">0</span> <span class="cm">// Time: O(1), Space: O(1)</span>
+
+    <span class="kw">for</span> (i <span class="kw">in</span> <span class="num">0</span> until height.size) { <span class="cm">// O(n) outer iterations</span>
+        <span class="kw">for</span> (j <span class="kw">in</span> i + <span class="num">1</span> until height.size) { <span class="cm">// O(n) inner iterations per outer loop</span>
+            <span class="kw">val</span> currentArea = (j - i) * <span class="fn">minOf</span>(height[i], height[j]) <span class="cm">// O(1)</span>
+            maxWater = <span class="fn">maxOf</span>(maxWater, currentArea) <span class="cm">// O(1)</span>
+        }
+    }
+
+    <span class="kw">return</span> maxWater <span class="cm">// O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n²) — (n * (n - 1)) / 2 pairs evaluated (TLE for n = 10⁵)</span>
+<span class="cm">// Auxiliary Space Complexity: O(1) — zero extra memory allocated</span>
+<span class="cm">// Output Space Complexity: O(1) — returns single integer</span>
+<span class="cm">// Overall Space Complexity: O(1)</span></div>
+
+      <p class="quote anim">«در جلسه فنی، اگر راه‌حل بروت‌فورس را در ۱ دقیقه بیان کرده و سپس خودتان محدودیت زمانی آن را تحلیل کنید، نشان‌دهنده اشراف شما بر تحلیل پیچیدگی است.»</p>
+    </div>
+    <span class="snum">۲۹ / ۳۶</span>
+  </div>
+
+  <!-- ══ SLIDE 30 — تحلیل آنالوگ و شهود حریصانه دو نشانگر ════════════ -->
+  <div class="slide" data-slide="30">
+    <div class="sh">
+      <span class="shtitle">تحلیل آنالوگ روی کاغذ: راز تصمیم حریصانه (Greedy Choice)</span>
+      <span class="sp"></span>
+      <span class="badge bc">اثبات الگوریتمی · Two Pointers Intuition</span>
+    </div>
+    <div class="sbody">
+      <h3 class="anim">معمای بنیادین: چرا همیشه باید نشانگر ستون «کوتاه‌تر» را حرکت دهیم؟</h3>
+      <p class="anim">فرض کنید دو نشانگر در <code>left</code> و <code>right</code> داریم و <code>height[left] &lt; height[right]</code> است:</p>
+
+      <div class="card-grid-2 anim">
+        <div class="card card-red">
+          <div class="card-hd" style="color:var(--red)">سناریوی اول: حرکت دادن ستون بلندتر (Right) ❌</div>
+          <div class="card-desc">
+            • عرض ظرف ۱ واحد کم می‌شود (<code>width - 1</code>).<br>
+            • ارتفاع جدید حداکثر توسط <code>height[left]</code> محدود است؛ حتی اگر دیوار جدید بلندتر باشد، سقف ارتفاع افزایش نمی‌یابد!<br>
+            • نتیجه قطعی: مساحت حاصل <strong>حتماً کمتر یا مساوی</strong> مساحت فعلی خواهد بود. تست این مسیر تلف کردن وقت است!
+          </div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">سناریوی دوم: حرکت دادن ستون کوتاه‌تر (Left) ✅</div>
+          <div class="card-desc">
+            • عرض ظرف ۱ واحد کم می‌شود (<code>width - 1</code>).<br>
+            • اما اکنون گلوگاه کوتاهی دیوار حذف شده و شانس داریم دیواری <strong>بسیار بلندتر</strong> کشف کنیم که کاهش عرض را جبران کند.<br>
+            • نتیجه قطعی: <strong>تنها شانس ممکن</strong> برای دستیابی به مساحتی بزرگ‌تر، تغییر ستون کوتاه‌تر است!
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario anim" style="margin-top:0.6rem;">
+        <strong>تریس گام‌به‌گام روی آرایه <code>height = [1, 8, 6, 2, 5, 4, 8, 3, 7]</code>:</strong><br>
+        • گام ۱: <code>L=0 (1), R=8 (7)</code> &rarr; عرض=۸، ارتفاع موثر=۱ &rarr; <span style="color:var(--teal)">مساحت = ۸</span>. چون ۱ &lt; ۷، نشانگر چپ حرکت می‌کند (<code>L++</code>).<br>
+        • گام ۲: <code>L=1 (8), R=8 (7)</code> &rarr; عرض=۷، ارتفاع موثر=۷ &rarr; <strong style="color:var(--amber)">مساحت = ۴۹ (بیشینه مطلق!)</strong>. چون ۷ &lt; ۸، نشانگر راست حرکت می‌کند (<code>R--</code>).<br>
+        • گام‌های ۳ تا ۸: عرض‌ها کاهش یافته و مساحت‌های ۱۸، ۴۰، ۱۶، ۱۵، ۴ و ۶ ثبت می‌شوند؛ رکورد ۴۹ بدون نقص دست‌نخورده باقی می‌ماند!
+      </div>
+    </div>
+    <span class="snum">۳۰ / ۳۶</span>
+  </div>
+
+  <!-- ══ SLIDE 31 — پیاده‌سازی تمیز کاتلین ظرف آب ═══════════════ -->
+  <div class="slide" data-slide="31">
+    <div class="sh">
+      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: الگوریتم O(n) با دو نشانگر</span>
+      <span class="sp"></span>
+      <span class="badge bc">کدنویسی تمیز · Clean Kotlin</span>
+      <span class="badge bs">پیچیدگی O(n) زمان | O(1) حافظه</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">پیاده‌سازی بدون هیچ خط کد اضافه، با خوانایی حداکثری و عملکرد در سطح پروداکشن:</p>
+
+      <div class="code-box anim"><span class="kw">fun</span> <span class="fn">maxArea</span>(height: <span class="ty">IntArray</span>): <span class="ty">Int</span> {
+    <span class="kw">var</span> maxWater = <span class="num">0</span> <span class="cm">// Time: O(1), Space: O(1)</span>
+    <span class="kw">var</span> left = <span class="num">0</span> <span class="cm">// Time: O(1), Space: O(1)</span>
+    <span class="kw">var</span> right = height.size - <span class="num">1</span> <span class="cm">// Time: O(1), Space: O(1)</span>
+
+    <span class="kw">while</span> (left &lt; right) { <span class="cm">// O(n) iterations — pointers converge inward by 1 step each loop</span>
+        <span class="kw">val</span> width = right - left <span class="cm">// O(1)</span>
+        <span class="kw">val</span> hLeft = height[left] <span class="cm">// O(1)</span>
+        <span class="kw">val</span> hRight = height[right] <span class="cm">// O(1)</span>
+
+        <span class="kw">val</span> currentArea = width * <span class="fn">minOf</span>(hLeft, hRight) <span class="cm">// O(1)</span>
+        <span class="kw">if</span> (currentArea &gt; maxWater) { <span class="cm">// O(1)</span>
+            maxWater = currentArea <span class="cm">// O(1)</span>
+        }
+
+        <span class="cm">// تصمیم حریصانه: ستون کوتاه‌تر را جابجا می‌کنیم</span>
+        <span class="kw">if</span> (hLeft &lt; hRight) {
+            left++ <span class="cm">// O(1)</span>
+        } <span class="kw">else</span> {
+            right-- <span class="cm">// O(1)</span>
+        }
+    }
+
+    <span class="kw">return</span> maxWater <span class="cm">// O(1)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(n) — single pass with two converging pointers</span>
+<span class="cm">// Auxiliary Space Complexity: O(1) — zero extra memory allocated</span>
+<span class="cm">// Output Space Complexity: O(1) — returns single integer</span>
+<span class="cm">// Overall Space Complexity: O(1)</span></div>
+
+      <div class="card-grid-3 anim" style="margin-top:0.6rem;">
+        <div class="card card-teal">
+          <div class="card-hd" style="color:var(--teal)">پیچیدگی زمانی: O(n)</div>
+          <div class="card-desc">در هر دور حلقه <code>while</code>، فاصله دو نشانگر دقیقاً ۱ واحد کاهش می‌یابد. حلقه دقیقاً <code>n - 1</code> بار اجرا می‌شود.</div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-hd" style="color:var(--purple)">پیچیدگی فضایی: O(1)</div>
+          <div class="card-desc">تنها ۴ متغیر ساده عددی (<code>left</code>, <code>right</code>, <code>width</code>, <code>maxWater</code>) روی پشته قرار می‌گیرند؛ بدون هیچ بار روی Heap.</div>
+        </div>
+        <div class="card card-amber">
+          <div class="card-hd" style="color:var(--amber)">مدیریت حالت مساوی</div>
+          <div class="card-desc">اگر <code>hLeft == hRight</code> باشد، حرکت هر کدام هیچ تفاوتی ایجاد نمی‌کند، زیرا در هر صورت هر دو به عرض بعدی وابسته خواهند بود.</div>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۳۱ / ۳۶</span>
+  </div>
+
+  <!-- ══ SLIDE 32 — شبیه‌ساز تعاملی ظرف آب ═════════════════════ -->
+  <div class="slide" data-slide="32">
+    <div class="sh">
+      <span class="shtitle">شبیه‌ساز تعاملی و بصری: بیشینه‌سازی حجم آب (دو نشانگر)</span>
+      <span class="sp"></span>
+      <span class="badge bc">شبیه‌ساز بصری · Water Level Visualizer</span>
+      <a href="https://leetcode.com/problems/container-with-most-water/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله">
+        <span>🔗 LeetCode #11</span>
+      </a>
+    </div>
+    <div class="sbody">
+      <!-- استپر کنترل ۹ مرحله‌ای -->
+      <div class="sim-header-ctrl anim">
+        <div class="sim-stepper" id="cw-stepper" style="overflow-x:auto;">
+          <button class="step-dot active" data-cw-step="0"><span>گام ۰</span><small>L=0, R=8</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="1"><span>گام ۱</span><small>🎯 صید ۴۹!</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="2"><span>گام ۲</span><small>L=1, R=7</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="3"><span>گام ۳</span><small>L=1, R=6</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="4"><span>گام ۴</span><small>L=1, R=5</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="5"><span>گام ۵</span><small>L=1, R=4</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="6"><span>گام ۶</span><small>L=1, R=3</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="7"><span>گام ۷</span><small>L=1, R=2</small></button>
+          <div class="step-connector"></div>
+          <button class="step-dot" data-cw-step="8"><span>پایان</span><small>همگرایی L=R</small></button>
+        </div>
+
+        <div class="sim-actions">
+          <button class="sim-btn" id="cw-prev">❮ گام قبل</button>
+          <button class="sim-btn sim-btn-primary" id="cw-next">گام بعد ❯</button>
+          <button class="sim-btn sim-btn-play" id="cw-play">⏵ پخش خودکار</button>
+          <button class="sim-btn" id="cw-reset">شروع مجدد ↺</button>
+        </div>
+      </div>
+
+      <div class="sim-board anim">
+        <!-- نمایش چارت میله‌ای دیواره‌ها و آب -->
+        <div class="sim-arr-section" style="padding-bottom:6px;">
+          <div class="sim-section-label">
+            <span>📊 آرایه ارتفاع دیواره‌ها: <code>height = [1, 8, 6, 2, 5, 4, 8, 3, 7]</code></span>
+            <span class="sim-target-badge" id="cw-status-badge">وضعیت: گام نخست L=0, R=8</span>
+          </div>
+
+          <div class="water-chart-container" id="cw-chart">
+            <div class="water-bar-col ptr-l" data-cw-idx="0">
+              <div class="water-bar-ptr"><span>▼</span><small>L</small></div>
+              <div class="water-bar" style="height:20px;">1</div>
+              <div class="water-bar-idx">[0]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="1">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:120px;">8</div>
+              <div class="water-bar-idx">[1]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="2">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:92px;">6</div>
+              <div class="water-bar-idx">[2]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="3">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:35px;">2</div>
+              <div class="water-bar-idx">[3]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="4">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:78px;">5</div>
+              <div class="water-bar-idx">[4]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="5">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:64px;">4</div>
+              <div class="water-bar-idx">[5]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="6">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:120px;">8</div>
+              <div class="water-bar-idx">[6]</div>
+            </div>
+            <div class="water-bar-col" data-cw-idx="7">
+              <div class="water-bar-ptr"><span>▼</span><small></small></div>
+              <div class="water-bar" style="height:50px;">3</div>
+              <div class="water-bar-idx">[7]</div>
+            </div>
+            <div class="water-bar-col ptr-r" data-cw-idx="8">
+              <div class="water-bar-ptr"><span>▼</span><small>R</small></div>
+              <div class="water-bar" style="height:106px;">7</div>
+              <div class="water-bar-idx">[8]</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- نوار مقادیر زنده و HUD -->
+        <div class="sim-hud">
+          <div class="hud-card">
+            <div class="hud-lbl">موقعیت و ارتفاع ستون‌ها</div>
+            <div class="hud-val" id="cw-hud-ptrs" style="color:var(--teal)">L=0 (h=1) · R=8 (h=7)</div>
+          </div>
+          <div class="hud-card">
+            <div class="hud-lbl">عرض و ارتفاع موثر ظرف</div>
+            <div class="hud-val" id="cw-hud-calc" style="color:var(--purple)">عرض: ۸ · ارتفاع موثر: ۱</div>
+          </div>
+          <div class="hud-card">
+            <div class="hud-lbl">مساحت آب فعلی</div>
+            <div class="hud-val" id="cw-hud-area" style="color:var(--amber)">۱ &times; ۸ = ۸</div>
+          </div>
+          <div class="hud-card" style="border-color:rgba(78,204,163,.4);background:rgba(78,204,163,.08);">
+            <div class="hud-lbl" style="color:var(--teal)">بیشترین مساحت کشف‌شده</div>
+            <div class="hud-val" id="cw-hud-max" style="color:var(--teal);font-weight:900;">۸</div>
+          </div>
+        </div>
+
+        <!-- باکس تحلیل استدلال تصمیم در هر گام -->
+        <div class="sim-log-box" id="cw-log">
+          <strong>آماده‌سازی اولیه:</strong> دو نشانگر در دورترین فاصله‌ی ممکن (اندیس ۰ با ارتفاع ۱ و اندیس ۸ با ارتفاع ۷) قرار دارند. عرض اولیه برابر با ۸ است. چون ارتفاع دیواره چپ (۱) کمتر از راست (۷) است، آب محدود به ۱ واحد است. برای اینکه شانسی برای مساحت بزرگ‌تر داشته باشیم، نشانگر ستون کوتاه‌تر به سمت جلو حرکت داده می‌شود (<code>left++</code>).
+        </div>
+      </div>
+    </div>
+    <span class="snum">۳۲ / ۳۶</span>
+  </div>
+
+  <!-- ══ SLIDE 33 — مطالعه موردی پروداکشن: چالش CardStack در سپینو ═════ -->
+  <div class="slide slide-problem-hero hero-case" data-slide="33">
     <div class="sh">
       <span class="problem-starter-pill" style="background:linear-gradient(135deg,var(--cyan),#0284c7);color:#081628;">🚀 سناریوی واقعی</span>
       <span class="shtitle">مطالعه موردی در پروداکشن: چالش همگام‌سازی State در CardStack</span>
@@ -2214,61 +2638,108 @@
       <span class="badge bs">تجربه عملی مهندسی</span>
     </div>
     <div class="sbody">
-      <p class="anim">الگوریتم‌های لیت‌کد فقط برای مصاحبه نیستند؛ در مهندسی نرم‌افزار روزمره، انتخاب هوشمندانه ساختار داده ضامن روانی رابط کاربری است:</p>
+      <div class="card-grid-2 anim" style="margin-top:0.4rem;">
+        <!-- ستون راست: شرح کامل صورت مسئله و بافت معماری در سپینو -->
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card card-purple" style="padding:12px 14px;">
+            <div class="card-hd" style="color:var(--purple);font-size:calc(14px * var(--fs-scale));">۱. صورت مسئله و داده‌های ورودی (CardStack در سپینو)</div>
+            <div class="card-desc" style="font-size:calc(13px * var(--fs-scale));line-height:1.7;">
+              در کامپوننت پشته کارت‌ها (<code>CardStack</code>) در اپلیکیشن سپینو (پیاده‌سازی‌شده با Jetpack Compose و KMP)، دو لیست مجزا وجود دارد:<br>
+              • <code>currentItems: List&lt;T&gt;</code>: کارت‌های فعال در حال حاضر در UI که دارای وضعیت داخلی زنده (Live Gesture State، آفست سوایپ، زاویه چرخش ۳D و فوکوس) هستند.<br>
+              • <code>newCardsList: List&lt;T&gt;</code>: لیست تازه‌نفس دریافت شده از سرور (API)، رفرش داده‌ها یا کش دیتابیس.
+            </div>
+          </div>
 
-      <div class="card-grid-2 anim">
-        <div class="card card-purple">
-          <div class="card-hd" style="color:var(--purple)">۱. صورت مسئله و داده‌های ورودی</div>
-          <div class="card-desc">
-            در کامپوننت پشته کارت‌ها (CardStack)، دو لیست مجزا وجود دارد:<br>
-            • <code>currentItems</code>: کارت‌های فعلی در حال رندر در UI (دارای وضعیت انیمیشن و فوکوس).<br>
-            • <code>newCardsList</code>: لیست تازه‌نفس دریافت شده از سرور یا رفرش دیتا.
+          <div class="card card-teal" style="padding:12px 14px;">
+            <div class="card-hd" style="color:var(--teal);font-size:calc(14px * var(--fs-scale));">۲. رفتار مورد انتظار معماری (State Synchronization)</div>
+            <div class="card-desc" style="font-size:calc(13px * var(--fs-scale));line-height:1.7;">
+              • <strong>کارت‌های مشترک:</strong> هویت، شیء و انیمیشن جاری آن‌ها باید بدون بازسازی مجدد (Re-creation / Flicker) حفظ شود تا انیمیشن سوایپ نپرد.<br>
+              • <strong>کارت‌های حذف‌شده:</strong> کارت‌هایی که دیگر در <code>newCardsList</code> نیستند باید پاکسازی گردند.<br>
+              • <strong>کارت‌های جدید:</strong> باید بدون برهم‌خوردن ترتیب کارت‌های موجود، به انتهای پشته الصاق (Append) شوند.
+            </div>
+          </div>
+
+          <div class="scenario" style="margin:0;padding:10px 14px;font-size:calc(13px * var(--fs-scale));line-height:1.65;">
+            <strong>چرا پاک‌کردن و ساخت مجدد لیست (Re-create) فاجعه است؟</strong> در Jetpack Compose اگر لیست از اول ساخته شود (مانند <code>clear()</code> و <code>addAll()</code>)، کل وضعیت داخلی Recompose شده، ژست لمسی و انیمیشن سوایپ کارت‌ها ریست می‌شود و لگ و پرش تصویر شدیدی ایجاد می‌گردد. بنابراین به یک تابع خالص (Pure Function) به نام <code>syncCardStackState</code> نیاز داریم.
           </div>
         </div>
-        <div class="card card-teal">
-          <div class="card-hd" style="color:var(--teal)">۲. رفتار مورد انتظار معماری (State Sync)</div>
-          <div class="card-desc">
-            • <strong>کارت‌های مشترک:</strong> باید بدون بازسازی مجدد یا فلیکر حفظ شوند.<br>
-            • <strong>کارت‌های حذف‌شده:</strong> از پشته پاکسازی گردند.<br>
-            • <strong>کارت‌های کاملاً جدید:</strong> به انتهای پشته الصاق شوند (Append).
-          </div>
-        </div>
-      </div>
 
-      <div class="scenario anim">
-        <strong>چرا پاک‌کردن و ساخت مجدد لیست (Re-create) فاجعه است؟</strong> در Jetpack Compose اگر لیست را از ابتدا بسازیم (مثلاً <code>clear()</code> و <code>addAll()</code>)، کل وضعیت داخلی Recompose شده، اسکرول و انیمیشن سوایپ کارت‌ها ریست می‌شود و لگ شدیدی ایجاد می‌گردد. ما نیاز به یک تابع خالص (Pure Function) به نام <code>syncCardStackState</code> داریم.
-      </div>
-
-      <div class="quote anim">
-        «تفاوت مهندس ارشد با کدنویس معمولی در توانایی شناسایی پیچیدگی الگوریتمی کدهای به ظاهر ساده کاتلین است.»
-      </div>
-    </div>
-    <span class="snum">۲۷ / ۳۱</span>
-  </div>
-
-  <!-- ══ SLIDE 28 — راه‌حل اول (غیربهینه): فیلتر مستقیم روی List ═════════ -->
-  <div class="slide" data-slide="29">
-    <div class="sh">
-      <span class="shtitle">راه‌حل اول (ساده اما غیربهینه): فیلتر مستقیم روی List</span>
-      <span class="sp"></span>
-      <span class="badge bb">کد غیربهینه · Brute Force O(N²)</span>
-    </div>
-    <div class="sbody">
-      <p class="anim">در نگاه اول، کاتلین ابزارهای تمیز و اعلانی مثل <code>filter</code> و <code>in</code> را فراهم کرده و کد به ظاهر بسیار شیک و مختصر است:</p>
-
-      <pre class="code-box anim"><code><span class="cm">// ❌ رویکرد کُند: جستجوی مستقیم در List با مرتبه زمانی O(N²)</span>
+        <!-- ستون چپ: نمایش کل کد پیاده‌سازی اولیه و معمای پروداکشن -->
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card card-amber" style="padding:12px 14px;">
+            <div class="card-hd" style="color:var(--amber);font-size:calc(14px * var(--fs-scale));display:flex;justify-content:space-between;align-items:center;">
+              <span>کل کد پیاده‌سازی اولیه (Initial Implementation)</span>
+              <span class="badge bb" style="font-size:10px;padding:2px 8px;">کد اعلانی کاتلین</span>
+            </div>
+            <pre class="code-box" style="margin:8px 0 6px;padding:12px 14px;font-size:calc(12px * var(--fs-scale));line-height:1.55;"><code><span class="cm">// ❌ پیاده‌سازی اولیه در پروداکشن: تابع اعلانی اما کُند با O(N × M)</span>
 <span class="kw">internal fun</span> &lt;<span class="ty">T</span>&gt; <span class="fn">syncCardStackState</span>(
     currentItems: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
     newCardsList: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
 ): <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; {
-    <span class="cm">// برای هر کارت در currentItems، کل newCardsList از ابتدا تا انتها پویش می‌شود</span>
-    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsList }
+    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsList } <span class="cm">// Time: O(N × M), Space: O(N)</span>
+    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItems } <span class="cm">// Time: O(M × N), Space: O(M)</span>
+    <span class="kw">return</span> remainingOldItems + newItems <span class="cm">// Time: O(N + M), Space: O(N + M)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(N × M) ≈ O(N²) — linear List.contains() scans</span>
+<span class="cm">// Auxiliary Space Complexity: O(N + M) — allocates intermediate sublists</span>
+<span class="cm">// Output Space Complexity: O(N + M) — returns merged synchronized state list</span>
+<span class="cm">// Overall Space Complexity: O(N + M)</span></code></pre>
+            <div class="card-desc" style="font-size:calc(12px * var(--fs-scale));line-height:1.6;color:var(--dim);">
+              • خط ۶: فیلتر کردن کارت‌های مشترک با شرط <code>it in newCardsList</code><br>
+              • خط ۹: شناسایی آیتم‌های نوظهور با شرط <code>it !in currentItems</code><br>
+              • خط ۱۱: الحاق دو لیست با عملگر <code>+</code> برای حفظ تقدم و تاخر پشته
+            </div>
+          </div>
+
+          <div class="compare" style="margin:0;">
+            <div class="good" style="padding:9px 12px;">
+              <div class="label" style="font-size:9.5px;">در نگاه اول و تست‌های محلی</div>
+              <p style="font-size:calc(12px * var(--fs-scale));line-height:1.55;">کد فقط ۲ خط و کاملاً اعلانی است؛ تمام تست‌های واحد با ۲ یا ۳ آیتم در کسری از میلی‌ثانیه پاس شدند.</p>
+            </div>
+            <div class="bad" style="padding:9px 12px;">
+              <div class="label" style="font-size:9.5px;">معمای فاجعه در پروداکشن</div>
+              <p style="font-size:calc(12px * var(--fs-scale));line-height:1.55;">با رسیدن کارت‌ها به ۵۰ عدد، انیمیشن سوایپ به ۱۲ FPS سقوط کرد! چرا این کد ساده چنین لگ سنگینی آفرید؟</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote anim" style="margin-top:8px;padding:7px 14px;font-size:calc(13.5px * var(--fs-scale));">
+        «تفاوت مهندس ارشد با کدنویس معمولی در توانایی شناسایی پیچیدگی الگوریتمی کدهای به ظاهر ساده کاتلین است.»
+      </div>
+    </div>
+    <span class="snum">۳۴ / ۳۹</span>
+  </div>
+
+  <!-- ══ SLIDE 34 — کالبدشکافی کد اولیه: چطور دو خط کاتلین به حلقه O(N²) تبدیل شد؟ ═════════ -->
+  <div class="slide" data-slide="34">
+    <div class="sh">
+      <span class="shtitle">کالبدشکافی کد اولیه: چطور دو خط ساده کاتلین به حلقه O(N²) تبدیل شد؟</span>
+      <span class="sp"></span>
+      <span class="badge bb">هزینه پنهان · Hidden O(N²)</span>
+    </div>
+    <div class="sbody">
+      <p class="anim">وقتی کامپایلر کاتلین این ۲ خط اعلانی را اجرا می‌کند، زیر کاپوت چه عملیاتی در پردازنده رخ می‌دهد؟</p>
+
+      <pre class="code-box anim"><code><span class="cm">// ❌ رویکرد کُند: جستجوی مستقیم در List با مرتبه زمانی O(N × M)</span>
+<span class="kw">internal fun</span> &lt;<span class="ty">T</span>&gt; <span class="fn">syncCardStackState</span>(
+    currentItems: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+    newCardsList: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
+): <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; {
+    <span class="cm">// برای هر کارت در currentItems، کل newCardsList خطی پویش می‌شود</span>
+    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsList } <span class="cm">// Time: O(N × M), Space: O(N)</span>
 
     <span class="cm">// برای هر کارت جدید، مجدداً کل currentItems پیمایش خطی می‌شود</span>
-    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItems }
+    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItems } <span class="cm">// Time: O(M × N), Space: O(M)</span>
 
-    <span class="kw">return</span> remainingOldItems + newItems
-}</code></pre>
+    <span class="kw">return</span> remainingOldItems + newItems <span class="cm">// Time: O(N + M), Space: O(N + M)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(N × M) ≈ O(N²) — 2 × N × M comparisons (20,000 ops for 100 cards)</span>
+<span class="cm">// Auxiliary Space Complexity: O(N + M) — allocates intermediate sublists</span>
+<span class="cm">// Output Space Complexity: O(N + M) — returns merged synchronized state list</span>
+<span class="cm">// Overall Space Complexity: O(N + M)</span></code></pre>
 
       <div class="card-grid-3 anim">
         <div class="card card-amber">
@@ -2285,11 +2756,11 @@
         </div>
       </div>
     </div>
-    <span class="snum">۲۸ / ۳۱</span>
+    <span class="snum">۳۵ / ۳۹</span>
   </div>
 
-  <!-- ══ SLIDE 29 — کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI ═════ -->
-  <div class="slide" data-slide="30">
+  <!-- ══ SLIDE 35 — کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI ═════ -->
+  <div class="slide" data-slide="35">
     <div class="sh">
       <span class="shtitle">کالبدشکافی ایراد: هزینه پنهان List.contains() و افت فریم در UI</span>
       <span class="sp"></span>
@@ -2315,11 +2786,11 @@
         <strong>درس عبرت مهندسی:</strong> موتورهای تحلیل استاتیک مثل Detekt یا Linterها ممکن است خطای گرامری از این کد نگیرند؛ اما Profiler و ابزارهای مانیتورینگ عملکرد، این حلقه $O(N^2)$ را به عنوان مقصر اصلی مصرف باتری و لگ معرفی می‌کنند.
       </div>
     </div>
-    <span class="snum">۲۹ / ۳۱</span>
+    <span class="snum">۳۶ / ۳۹</span>
   </div>
 
-  <!-- ══ SLIDE 30 — راه‌حل بهینه: قدرت جدول هش و Set ═══════════════════ -->
-  <div class="slide" data-slide="31">
+  <!-- ══ SLIDE 36 — راه‌حل بهینه: قدرت جدول هش و Set ═══════════════════ -->
+  <div class="slide" data-slide="36">
     <div class="sh">
       <span class="shtitle">راه‌حل بهینه: جهش به O(N) با HashSet و تحلیل چرایی بهینگی</span>
       <span class="sp"></span>
@@ -2333,16 +2804,21 @@
     currentItems: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
     newCardsList: <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;,
 ): <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; {
-    <span class="cm">// ۱. تبدیل لیست‌ها به HashSet در زمان خطی O(N + M)</span>
-    <span class="kw">val</span> newCardsSet = newCardsList.<span class="fn">toSet</span>()
-    <span class="kw">val</span> currentItemsSet = currentItems.<span class="fn">toSet</span>()
+    <span class="cm">// ۱. ساخت جدول هش در زمان خطی</span>
+    <span class="kw">val</span> newCardsSet = newCardsList.<span class="fn">toSet</span>() <span class="cm">// Time: O(M), Space: O(M)</span>
+    <span class="kw">val</span> currentItemsSet = currentItems.<span class="fn">toSet</span>() <span class="cm">// Time: O(N), Space: O(N)</span>
 
-    <span class="cm">// ۲. جستجوی فوق‌العاده سریع با زمان O(1) به کمک جدول هش</span>
-    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsSet }
-    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItemsSet }
+    <span class="cm">// ۲. فیلتر سریع با بررسی عضویت O(1) در جدول هش</span>
+    <span class="kw">val</span> remainingOldItems = currentItems.<span class="fn">filter</span> { it <span class="kw">in</span> newCardsSet } <span class="cm">// Time: O(N × 1) = O(N), Space: O(N)</span>
+    <span class="kw">val</span> newItems = newCardsList.<span class="fn">filter</span> { it !<span class="kw">in</span> currentItemsSet } <span class="cm">// Time: O(M × 1) = O(M), Space: O(M)</span>
 
-    <span class="kw">return</span> remainingOldItems + newItems
-}</code></pre>
+    <span class="kw">return</span> remainingOldItems + newItems <span class="cm">// Time: O(N + M), Space: O(N + M)</span>
+}
+
+<span class="cm">// Overall Time Complexity: O(N + M) — linear time, easily fits 16ms frame budget (60 FPS)</span>
+<span class="cm">// Auxiliary Space Complexity: O(N + M) — creates HashSets for O(1) membership lookups</span>
+<span class="cm">// Output Space Complexity: O(N + M) — returns merged synchronized state list</span>
+<span class="cm">// Overall Space Complexity: O(N + M)</span></code></pre>
 
       <h3 class="anim">چرا این راه‌حل فوق‌العاده بهینه است؟</h3>
       <div class="compare anim">
@@ -2360,11 +2836,11 @@
         <strong>قاعده طلایی (Golden Takeaway):</strong> هر زمان در کاتلین قصد فیلتر کردن یک کالکشن بر مبنای اشتراک یا تفاضل با کالکشن دیگر را دارید، <strong>همیشه کالکشن مرجع را به <code>Set</code> تبدیل کنید</strong>. یک خط <code>toSet()</code> تفاوت میان کد کند و کد استاندارد پروداکشن است.
       </div>
     </div>
-    <span class="snum">۳۰ / ۳۱</span>
+    <span class="snum">۳۷ / ۳۹</span>
   </div>
 
-  <!-- ══ SLIDE 31 — برنامه ۳۰ روزه ═══════════════════════════ -->
-  <div class="slide" data-slide="32">
+  <!-- ══ SLIDE 37 — برنامه ۳۰ روزه ═══════════════════════════ -->
+  <div class="slide" data-slide="37">
     <div class="sh"><span class="shtitle">جمع‌بندی و برنامه ۳۰ روزه آینده</span><span class="sp"></span><span class="badge bc">برنامه اقدام · Action Plan</span></div>
     <div class="sbody">
       <p class="anim">برای شروع از همین امروز، نیازی به برنامه سنگین غیرواقعی نیست. این تقویم ۴ هفته‌ای را دنبال کنید:</p>
@@ -2390,11 +2866,11 @@
         <strong>شعار پایانی:</strong> روزی ۴۵ دقیقه تمرین عمیق و با تمرکز، معجزه‌ای خلق می‌کند که تست‌زدن‌های ۱۰ ساعته‌ی بی‌هدف آخر هفته هرگز خلق نخواهد کرد.
       </div>
     </div>
-    <span class="snum">۳۱ / ۳۱</span>
+    <span class="snum">۳۸ / ۳۹</span>
   </div>
 
-  <!-- ══ SLIDE 32 — پایان و پرسش و پاسخ ══════════════════════ -->
-  <div class="slide" id="sthanks" data-slide="33">
+  <!-- ══ SLIDE 37 — پایان و پرسش و پاسخ ══════════════════════ -->
+  <div class="slide" id="sthanks" data-slide="38">
     <div class="tc">
       <h1 class="tqmain">متشکرم از توجه شما</h1>
       <p class="tqsub">پرسش و پاسخ (Q&A)</p>
@@ -2418,12 +2894,235 @@
   <button class="nb" id="font-up" title="بزرگ‌تر کردن فونت (+)">A+</button>
   <button class="nb" id="notes-btn" title="باز کردن یادداشت گوینده در پنجره جدا (N)">📝</button>
   <button class="nb" id="bnext" title="بعدی →">→</button>
-  <span id="ctr">۱ / ۳۴</span>
+  <span id="ctr">۱ / ۳۹</span>
   <button class="nb" id="bprev" title="قبلی ←">←</button>
 </div>
 
 <script src="speaker-notes-data.js"></script>
 <script>
+
+// ── CONTAINER WITH MOST WATER (LEETCODE #11) SIMULATOR ──
+const cwSteps = [
+  {
+    step: 0,
+    L: 0,
+    R: 8,
+    width: 8,
+    minH: 1,
+    area: 8,
+    maxWater: 8,
+    statusText: 'گام نخست: L=0 (h=1) و R=8 (h=7)',
+    hudPtrs: 'L=0 (h=1) · R=8 (h=7)',
+    hudCalc: 'عرض: ۸ · ارتفاع موثر: ۱',
+    hudArea: '۱ × ۸ = ۸',
+    hudMax: '۸',
+    decision: 'چون h[L]=1 < h[R]=7 است، ستون چپ محدودکننده است. برای شانس کشف ستون بلندتر، L جلو می‌رود (L++).'
+  },
+  {
+    step: 1,
+    L: 1,
+    R: 8,
+    width: 7,
+    minH: 7,
+    area: 49,
+    maxWater: 49,
+    statusText: '🎯 صید بیشترین مساحت: Area = 49',
+    hudPtrs: 'L=1 (h=8) · R=8 (h=7)',
+    hudCalc: 'عرض: ۷ · ارتفاع موثر: ۷',
+    hudArea: '۷ × ۷ = ۴۹ 🎉 (رکورد جدید!)',
+    hudMax: '۴۹ (بیشینه مطلق)',
+    decision: 'مساحت ۴۹ شد! چون h[R]=7 < h[L]=8 است، ستون راست کوتاه‌تر است؛ نشانگر راست به چپ می‌آید (R--).'
+  },
+  {
+    step: 2,
+    L: 1,
+    R: 7,
+    width: 6,
+    minH: 3,
+    area: 18,
+    maxWater: 49,
+    statusText: 'تکرار ۲: L=1 (h=8) و R=7 (h=3)',
+    hudPtrs: 'L=1 (h=8) · R=7 (h=3)',
+    hudCalc: 'عرض: ۶ · ارتفاع موثر: ۳',
+    hudArea: '۳ × ۶ = ۱۸',
+    hudMax: '۴۹',
+    decision: 'ستون راست با ارتفاع ۳ کوتاه‌تر است؛ مساحت ۱۸ شد و رکورد ۴۹ حفظ گردید. نشانگر راست عقب می‌رود (R--).'
+  },
+  {
+    step: 3,
+    L: 1,
+    R: 6,
+    width: 5,
+    minH: 8,
+    area: 40,
+    maxWater: 49,
+    statusText: 'تکرار ۳: دیوارهای بلند L=1 (h=8) و R=6 (h=8)',
+    hudPtrs: 'L=1 (h=8) · R=6 (h=8)',
+    hudCalc: 'عرض: ۵ · ارتفاع موثر: ۸',
+    hudArea: '۸ × ۵ = ۴۰',
+    hudMax: '۴۹',
+    decision: 'هر دو ستون ارتفاع یکسان ۸ دارند؛ مساحت ۴۰ شد اما به رکورد ۴۹ نرسید. به صورت قراردادی ستون راست عقب می‌رود (R--).'
+  },
+  {
+    step: 4,
+    L: 1,
+    R: 5,
+    width: 4,
+    minH: 4,
+    area: 16,
+    maxWater: 49,
+    statusText: 'تکرار ۴: L=1 (h=8) و R=5 (h=4)',
+    hudPtrs: 'L=1 (h=8) · R=5 (h=4)',
+    hudCalc: 'عرض: ۴ · ارتفاع موثر: ۴',
+    hudArea: '۴ × ۴ = ۱۶',
+    hudMax: '۴۹',
+    decision: 'ستون راست با ارتفاع ۴ کوتاه‌تر از ۸ است؛ مساحت ۱۶ کمتر از رکورد است. نشانگر راست عقب می‌رود (R--).'
+  },
+  {
+    step: 5,
+    L: 1,
+    R: 4,
+    width: 3,
+    minH: 5,
+    area: 15,
+    maxWater: 49,
+    statusText: 'تکرار ۵: L=1 (h=8) و R=4 (h=5)',
+    hudPtrs: 'L=1 (h=8) · R=4 (h=5)',
+    hudCalc: 'عرض: ۳ · ارتفاع موثر: ۵',
+    hudArea: '۵ × ۳ = ۱۵',
+    hudMax: '۴۹',
+    decision: 'ستون راست با ارتفاع ۵ کوتاه‌تر است؛ مساحت ۱۵ کمتر از رکورد است. نشانگر راست عقب می‌رود (R--).'
+  },
+  {
+    step: 6,
+    L: 1,
+    R: 3,
+    width: 2,
+    minH: 2,
+    area: 4,
+    maxWater: 49,
+    statusText: 'تکرار ۶: L=1 (h=8) و R=3 (h=2)',
+    hudPtrs: 'L=1 (h=8) · R=3 (h=2)',
+    hudCalc: 'عرض: ۲ · ارتفاع موثر: ۲',
+    hudArea: '۲ × ۲ = ۴',
+    hudMax: '۴۹',
+    decision: 'ستون راست با ارتفاع ۲ کوتاه‌تر است؛ مساحت ۴ ثبت شد. نشانگر راست عقب می‌رود (R--).'
+  },
+  {
+    step: 7,
+    L: 1,
+    R: 2,
+    width: 1,
+    minH: 6,
+    area: 6,
+    maxWater: 49,
+    statusText: 'تکرار ۷: آخرین جفت ممکن L=1 (h=8) و R=2 (h=6)',
+    hudPtrs: 'L=1 (h=8) · R=2 (h=6)',
+    hudCalc: 'عرض: ۱ · ارتفاع موثر: ۶',
+    hudArea: '۶ × ۱ = ۶',
+    hudMax: '۴۹',
+    decision: 'آخرین جفت با عرض ۱ بررسی شد. ستون راست با ارتفاع ۶ کوتاه‌تر از ۸ است. نشانگر راست عقب می‌رود (R--).'
+  },
+  {
+    step: 8,
+    L: 1,
+    R: 1,
+    width: 0,
+    minH: 8,
+    area: 0,
+    maxWater: 49,
+    statusText: '🏁 پایان الگوریتم: همگرایی نشانگرها (L == R)',
+    hudPtrs: 'L=1 · R=1 (همگرا شدند)',
+    hudCalc: 'عرض: ۰ (پایان جستجو)',
+    hudArea: 'پایان پیمایش حریصانه',
+    hudMax: '۴۹ (پاسخ نهایی)',
+    decision: 'هر دو نشانگر در اندیس ۱ به هم رسیدند (L >= R). تمام گزینه‌ها حریصانه بررسی شدند و حداکثر آب قابل ذخیره برابر با ۴۹ است.'
+  }
+];
+
+let currentCwStep = 0;
+let cwAutoPlayTimer = null;
+
+function stopCwAutoPlay() {
+  if (cwAutoPlayTimer) {
+    clearInterval(cwAutoPlayTimer);
+    cwAutoPlayTimer = null;
+    const btn = document.getElementById('cw-play');
+    if (btn) btn.textContent = '⏵ پخش خودکار';
+  }
+}
+
+function toggleCwAutoPlay() {
+  const btn = document.getElementById('cw-play');
+  if (cwAutoPlayTimer) {
+    stopCwAutoPlay();
+  } else {
+    if (currentCwStep >= cwSteps.length - 1) {
+      currentCwStep = 0;
+      renderCwTrace();
+    }
+    if (btn) btn.textContent = '⏸ توقف';
+    cwAutoPlayTimer = setInterval(() => {
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      } else {
+        stopCwAutoPlay();
+      }
+    }, 2000);
+  }
+}
+
+function renderCwTrace() {
+  const data = cwSteps[currentCwStep];
+  if (!data) return;
+
+  // Stepper dots
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(d => {
+    const s = parseInt(d.getAttribute('data-cw-step'), 10);
+    d.classList.toggle('active', s === currentCwStep);
+  });
+
+  // Columns & pointers
+  document.querySelectorAll('#cw-chart .water-bar-col').forEach(col => {
+    const idx = parseInt(col.getAttribute('data-cw-idx'), 10);
+    col.classList.remove('ptr-l', 'ptr-r', 'in-range');
+    const ptrTxt = col.querySelector('.water-bar-ptr small');
+    if (ptrTxt) ptrTxt.textContent = '';
+
+    if (idx === data.L) {
+      col.classList.add('ptr-l');
+      if (ptrTxt) ptrTxt.textContent = 'L';
+    }
+    if (idx === data.R) {
+      col.classList.add('ptr-r');
+      if (ptrTxt) ptrTxt.textContent = (idx === data.L) ? 'L/R' : 'R';
+    }
+    if (idx > data.L && idx < data.R) {
+      col.classList.add('in-range');
+    }
+  });
+
+  // HUD & labels
+  const stBadge = document.getElementById('cw-status-badge');
+  if (stBadge) stBadge.textContent = data.statusText;
+
+  const hPtrs = document.getElementById('cw-hud-ptrs');
+  if (hPtrs) hPtrs.textContent = data.hudPtrs;
+
+  const hCalc = document.getElementById('cw-hud-calc');
+  if (hCalc) hCalc.textContent = data.hudCalc;
+
+  const hArea = document.getElementById('cw-hud-area');
+  if (hArea) hArea.textContent = data.hudArea;
+
+  const hMax = document.getElementById('cw-hud-max');
+  if (hMax) hMax.textContent = data.hudMax;
+
+  const logBox = document.getElementById('cw-log');
+  if (logBox) logBox.innerHTML = '<strong>استدلال گام ' + data.step + ':</strong> ' + data.decision;
+}
+
 // ── SLIDE ENGINE ───────────────────────────────────────────
 let cur = 0, busy = false;
 const FS_MIN = 0.85, FS_MAX = 1.35, FS_STEP = 0.05;
@@ -2487,6 +3186,7 @@ function goTo(n) {
   if (typeof stopBfAutoPlay === 'function') stopBfAutoPlay();
   if (typeof stopT2AutoPlay === 'function') stopT2AutoPlay();
   if (typeof stopS3AutoPlay === 'function') stopS3AutoPlay();
+  if (typeof stopCwAutoPlay === 'function') stopCwAutoPlay();
   busy = true;
   slides[cur].classList.add('exit');
   slides[cur].classList.remove('active');
@@ -3396,12 +4096,108 @@ function toggleS3AutoPlay() {
     if (currentS3Step >= s3Steps.length - 1) {
       currentS3Step = 0;
       renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
     }
     if (btn) btn.textContent = '⏸ توقف';
     s3AutoPlayTimer = setInterval(() => {
       if (currentS3Step < s3Steps.length - 1) {
         currentS3Step++;
         renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
       } else {
         stopS3AutoPlay();
       }
@@ -3649,6 +4445,54 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentS3Step < s3Steps.length - 1) {
         currentS3Step++;
         renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
       }
     });
   }
@@ -3658,6 +4502,54 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentS3Step > 0) {
         currentS3Step--;
         renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
       }
     });
   }
@@ -3669,6 +4561,54 @@ document.addEventListener('DOMContentLoaded', () => {
       stopS3AutoPlay();
       currentS3Step = 0;
       renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
     });
   }
 
@@ -3679,11 +4619,107 @@ document.addEventListener('DOMContentLoaded', () => {
         stopS3AutoPlay();
         currentS3Step = stepIdx;
         renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
       }
     });
   });
 
   renderS3Trace();
+
+  // Container With Most Water listener init
+  const cwNextBtn = document.getElementById('cw-next');
+  const cwPrevBtn = document.getElementById('cw-prev');
+  const cwPlayBtn = document.getElementById('cw-play');
+  const cwResetBtn = document.getElementById('cw-reset');
+
+  if (cwNextBtn) {
+    cwNextBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep < cwSteps.length - 1) {
+        currentCwStep++;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPrevBtn) {
+    cwPrevBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      if (currentCwStep > 0) {
+        currentCwStep--;
+        renderCwTrace();
+      }
+    });
+  }
+  if (cwPlayBtn) {
+    cwPlayBtn.addEventListener('click', toggleCwAutoPlay);
+  }
+  if (cwResetBtn) {
+    cwResetBtn.addEventListener('click', () => {
+      stopCwAutoPlay();
+      currentCwStep = 0;
+      renderCwTrace();
+    });
+  }
+
+  document.querySelectorAll('#cw-stepper .step-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const stepIdx = parseInt(dot.getAttribute('data-cw-step'), 10);
+      if (!isNaN(stepIdx)) {
+        stopCwAutoPlay();
+        currentCwStep = stepIdx;
+        renderCwTrace();
+      }
+    });
+  });
+
+  renderCwTrace();
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
