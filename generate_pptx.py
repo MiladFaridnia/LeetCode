@@ -33,8 +33,24 @@ def create_deck():
             "subtitle": "چرا لیت‌کد ضروری است؟ چگونه اصولی مطالعه کنیم و حل عملی اولین مسئله",
             "author": "بر اساس متدولوژی سیستماتیک یادگیری و الگوهای کلیدی ارزیابی فنی",
             "presenter": "Milad Faridnia · ارائه‌دهنده",
-            "tags": ["تفکر الگوریتمی", "متدولوژی مطالعه", "حل عملی Two Sum"],
+            "tags": ["تفکر الگوریتمی", "متدولوژی مطالعه", "حل عملی جمع دو تایی"],
             "notes": "جلسه را با این سوال شروع کنید: چند نفر تا حالا لیت‌کد را باز کردند و احساس ناتوانی کردند؟ تأکید کنید که لیت‌کد آزمون هوش نیست، بلکه مهارتی تمرین‌پذیر است."
+        },
+        {
+            "type": "agenda",
+            "title": "نقشه راه و فهرست سرفصل‌های ارائه",
+            "badge": "ساختار جامع · AGENDA",
+            "subtitle": "مرور مسیر یادگیری از مبانی و چک‌لیست تا ۳ مسئله شاخص لیت‌کد و چالش پروداکشن",
+            "agenda_items": [
+                ("۱. مبانی، ذهنیت و متدولوژی یادگیری", "چرا لیت‌کد؟ · رفع سد روانی · ۵ اصل مطالعه فعال و تکرار فاصله‌دار · تحلیل Big-O", TEAL, "اسلایدهای ۲ تا ۱۱", False),
+                ("۲. چک‌لیست طلایی مصاحبه فنی", "چارچوب ۴ مرحله‌ای مواجهه با مسئله، تفکر آنالوگ روی کاغذ و مدیریت Edge Caseها", PURPLE, "اسلاید ۱۲", False),
+                ("🔥 ۳. مسئله اول: جمع دو تایی (Two Sum)", "گذر از Brute Force با O(n²) به کشف Hash Map با O(n) · تریس آنالوگ و شبیه‌ساز", TEAL, "اسلایدهای ۱۳ تا ۱۷", True),
+                ("⚡ ۴. مسئله دوم: جمع دو تایی ۲ (Two Sum II)", "آرایه مرتب و قید حافظه O(1)؛ حذف هش‌مپ و استقرار دو نشانگر Two Pointers", PURPLE, "اسلایدهای ۱۸ تا ۲۲", True),
+                ("💥 ۵. مسئله سوم: جمع سه تایی (3Sum)", "شکستن O(n³)؛ کاهش الگو به جمع دو تایی ۲ و چالش هوشمندانه حذف تکرارها", AMBER, "اسلایدهای ۲۳ تا ۲۷", True),
+                ("🚀 ۶. چالش پروداکشن: CardStack سپینو", "افت فریم UI در انیمیشن؛ گلوگاه O(N×M) در List و تثبیت ۶۰fps با HashSet", CYAN, "اسلایدهای ۲۸ تا ۳۱", True),
+            ],
+            "footer_note": "🎯 بخش پایانی: نقشه راه ۳۰ روزه مطالعه هدفمند، منابع طلایی (Blind 75 & NeetCode) و پرسش و پاسخ (اسلایدهای ۳۲ تا ۳۴)",
+            "notes": "در این اسلاید ساختار کلی ارائه را شرح دهید: ارائه شامل سه بخش اصلی است: متدولوژی و اصول یادگیری، حل گام‌به‌گام سه مسئله شاخص، و در نهایت یک نمونه واقعی از ارزش این مفاهیم در پروداکشن واقعی پروژه سپینو."
         },
         {
             "title": "چرا لیت‌کد؟ ضرورت و واقعیت بازار کار",
@@ -199,10 +215,13 @@ def create_deck():
                 ("۴. Clean Code & Dry Run (۲۵ دقیقه)", "کدنویسی تمیز و اجرای خط‌به‌خط تست با پرسشگر برای رفع باگ‌های مرزی.", TEAL)
             ],
             "quote": "«همیشه با صدای بلند فکر کنید (Think Out Loud)؛ پرسشگر به مسیر استدلال شما نمره می‌دهد، نه سکوت شما.»",
-            "notes": "بسیاری از داوطلبان به خاطر استرس و هول شدن در جلسه ارزیابی آسیب می‌بینند. داشتن این چک‌لیست ذهن را منظم و آرام نگه می‌دارد. در اسلاید بعد این مراحل را روی Two Sum پیاده می‌کنیم."
+            "notes": "بسیاری از داوطلبان به خاطر استرس و هول شدن در جلسه ارزیابی آسیب می‌بینند. داشتن این چک‌لیست ذهن را منظم و آرام نگه می‌دارد. در اسلاید بعد این مراحل را روی جمع دو تایی پیاده می‌کنیم."
         },
         {
-            "title": "ورود به فاز عملی: حل مسئله Two Sum (LeetCode #1)",
+            "is_problem_hero": True,
+            "hero_color": TEAL,
+            "hero_badge": "🔥 مسئله اول · EASY",
+            "title": "ورود به فاز عملی: حل مسئله جمع دو تایی (LeetCode #1)",
             "badge": "مسئله نمونه · LEETCODE #1",
             "subtitle": "اولین مسئله در هر دو لیست رسمی LeetCode 75 و Top Interview 150:",
             "points": [
@@ -212,7 +231,7 @@ def create_deck():
                 "محدودیت طول: طول آرایه تا ۱۰ به توان ۴ است؛ پس الگوریتم O(n²) با شکست مواجه می‌شود."
             ],
             "quote": "هدف ما: تبدیل یک تفکر خام O(n²) به راه‌حلی درخشان و خطی O(n) با تکیه بر ساختار داده Hash Map.",
-            "notes": "Two Sum بهترین نمونه برای نمایش قدرت تفکر الگوریتمی و معجزه Trade-off فضا در برابر زمان است."
+            "notes": "جمع دو تایی بهترین نمونه برای نمایش قدرت تفکر الگوریتمی و معجزه Trade-off فضا در برابر زمان است."
         },
         {
             "title": "تحلیل آنالوگ روی کاغذ: تریس روش ساده (Brute Force O(n²))",
@@ -257,7 +276,7 @@ def create_deck():
             "notes": "خط به خط کد کاتلین را توضیح دهید و نشان دهید چقدر تمیز، ایمن و فشرده است."
         },
         {
-            "title": "شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم Two Sum",
+            "title": "شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم جمع دو تایی",
             "badge": "شبیه‌ساز تعاملی · INTERACTIVE VISUALIZER",
             "subtitle": "ردیابی زنده مقادیر در باکس ساده و متمرکز روی nums = [4, -2, 5, 0, 6, 3, 2, 7] و target = 1  |  LeetCode #1",
             "cards": [
@@ -268,7 +287,7 @@ def create_deck():
             ],
             "points": [
                 "تک‌باکس متمرکز تریس: تمامی مقادیر (عنصر جاری، مکمل موردنیاز، استعلام و حافظه) در یک قالب منسجم خلاصه شده‌اند.",
-                "کشف بنیادین: مسئله Two Sum «جمع کردن همه جفت‌ها» نیست؛ بلکه «جستجوی تفاضل یا مکمل (target - x)» در زمان میانگین O(1) است!",
+                "کشف بنیادین: مسئله جمع دو تایی «جمع کردن همه جفت‌ها» نیست؛ بلکه «جستجوی تفاضل یا مکمل (target - x)» در زمان میانگین O(1) است!",
                 "پوشش طبیعی اعداد منفی: در اندیس ۱ با مقدار ۲-، مکمل مورد نیاز 1 - (-2) = 3 است که بدون شرط اضافی به درستی مدیریت می‌شود.",
                 "توقف زودهنگام (Early Exit): خانه‌های ۶ و ۷ (اعداد ۲ و ۷) هرگز بررسی نشدند و از اتلاف زمان جلوگیری گردید."
             ],
@@ -276,7 +295,10 @@ def create_deck():
             "notes": "لینک مسئله: https://leetcode.com/problems/two-sum/description/  -- شبیه‌ساز تک‌باکسی با تمرکز بر متغیرهای کلیدی و پایش وضعیت حافظه Hash Map در زمان O(1)."
         },
         {
-            "title": "مسئله دوم: Two Sum II - آرایه مرتب‌شده (LeetCode #167)",
+            "is_problem_hero": True,
+            "hero_color": PURPLE,
+            "hero_badge": "⚡ مسئله دوم · TWO POINTERS",
+            "title": "مسئله دوم: جمع دو تایی ۲ - آرایه مرتب‌شده (LeetCode #167)",
             "badge": "الگوی دو نشانگر · TWO POINTERS",
             "subtitle": "ورودی به صورت غیرنزولی مرتب است | خروجی ۱-محور | حافظه کمکی باید O(1) باشد",
             "cards": [
@@ -291,10 +313,10 @@ def create_deck():
                 "good_title": "الگوی دو نشانگر (Two Pointers)",
                 "good_text": "استقرار دو نشانگر در دو سر آرایه و هدایت همگرا بر اساس جمع مقادیر: زمان O(n) و حافظه O(1)!"
             },
-            "notes": "تفاوت کلیدی با Two Sum اول در مرتب بودن آرایه و قید سخت‌گیرانه حافظه O(1) است."
+            "notes": "تفاوت کلیدی با جمع دو تایی اول در مرتب بودن آرایه و قید سخت‌گیرانه حافظه O(1) است."
         },
         {
-            "title": "راه‌حل‌های اولیه و غیربهینه: چرا بروت‌فورس و هش‌مپ در Two Sum II رد می‌شوند؟",
+            "title": "راه‌حل‌های اولیه و غیربهینه: چرا بروت‌فورس و هش‌مپ در جمع دو تایی ۲ رد می‌شوند؟",
             "badge": "روش‌های غیربهینه · NAIVE APPROACHES",
             "subtitle": "کالبدشکافی دو راه‌حل دم‌دستی و علل رد شدن آن‌ها در الزامات LeetCode #167",
             "cards": [
@@ -330,7 +352,7 @@ def create_deck():
             "notes": "شهود ریاضی حرکت نشانگرها را روی کاغذ نشان دهید و اثبات کنید چرا هیچ پاسخی از دست نمی‌رود."
         },
         {
-            "title": "پیاده‌سازی تمیز در کاتلین: Two Sum II",
+            "title": "پیاده‌سازی تمیز در کاتلین: جمع دو تایی ۲",
             "badge": "کدنویسی تمیز · CLEAN KOTLIN",
             "subtitle": "الگوریتم دو نشانگر با تفکیک صریح متغیرها و زمان O(n) و حافظه O(1)",
             "code": "fun twoSum(numbers: IntArray, target: Int): IntArray {\n    var leftIndex = 0\n    var rightIndex = numbers.size - 1\n\n    while (leftIndex < rightIndex) {\n        val currentSum = numbers[leftIndex] + numbers[rightIndex]\n\n        when {\n            currentSum == target -> {\n                // مسئله ۱-محور است؛ ۱ واحد اضافه می‌کنیم\n                return intArrayOf(leftIndex + 1, rightIndex + 1)\n            }\n            currentSum < target -> {\n                // جمع کوچک است؛ حرکت به سمت اعداد بزرگ‌تر\n                leftIndex++\n            }\n            else -> {\n                // جمع بزرگ است؛ حرکت به سمت اعداد کوچک‌تر\n                rightIndex--\n            }\n        }\n    }\n\n    return intArrayOf()\n}",
@@ -343,7 +365,7 @@ def create_deck():
             "notes": "کد کاتلین را خط به خط تشریح کنید و تأکید کنید که چقدر ساختار when خوانا و مطمئن است."
         },
         {
-            "title": "شبیه‌ساز تعاملی و گام‌به‌گام Two Sum II",
+            "title": "شبیه‌ساز تعاملی و گام‌به‌گام جمع دو تایی ۲",
             "badge": "شبیه‌ساز تعاملی · TWO POINTERS VISUALIZER",
             "subtitle": "همگرایی گام‌به‌گام دو نشانگر روی numbers = [1, 2, 4, 6, 8, 11, 15] و target = 10  |  LeetCode #167",
             "cards": [
@@ -362,11 +384,14 @@ def create_deck():
             "notes": "لینک مسئله: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/  -- در این شبیه‌ساز نشان دهید که چطور مقایسه currentSum با target به تصمیم قطعی حرکت یکی از دو نشانگر می‌انجامد."
         },
         {
-            "title": "مسئله سوم (چالشی): 3Sum - مجموع سه عدد (LeetCode #15)",
+            "is_problem_hero": True,
+            "hero_color": AMBER,
+            "hero_badge": "💥 مسئله سوم · PATTERN REDUCTION",
+            "title": "مسئله سوم (چالشی): جمع سه تایی (LeetCode #15)",
             "badge": "مسئله چالشی · CHALLENGING PROBLEM",
             "subtitle": "یافتن تمام سه‌تایی‌های یکتای با مجموع صفر (a + b + c = 0) بدون تکرار",
             "cards": [
-                ("۱. معادله هدف", "معادله a + b + c = 0 معادل است با b + c = -a (کاهش به Two Sum!).", PURPLE),
+                ("۱. معادله هدف", "معادله a + b + c = 0 معادل است با b + c = -a (کاهش به جمع دو تایی!).", PURPLE),
                 ("۲. بن‌بست Brute Force", "سه حلقه تو در تو با O(n³)؛ برای ۳۰۰۰ عنصر به ۲۷ میلیارد عملیات می‌رسد!", RED),
                 ("۳. چالش بزرگ تکرارها", "قید اکید مسئله: خروجی نباید شامل هیچ سه‌تایی تکراری باشد.", AMBER),
                 ("۴. شاه‌کلید مرتب‌سازی", "مرتب‌سازی در O(n log n) امکان استفاده از Two Pointers و پرش از تکرارها را فراهم می‌کند.", TEAL)
@@ -377,28 +402,28 @@ def create_deck():
                 "good_title": "حذف تکرار درجا (In-Place)",
                 "good_text": "با مرتب بودن آرایه، عناصر تکراری هم‌جوارند و با پرش ساده نشانگرها، بدون حافظه اضافی حذف می‌شوند."
             },
-            "notes": "مسئله 3Sum آزمون سنجش عیار مهندسی است زیرا مدیریت بدون باگ تکرارها نیاز به دقت دارد."
+            "notes": "مسئله جمع سه تایی آزمون سنجش عیار مهندسی است زیرا مدیریت بدون باگ تکرارها نیاز به دقت دارد."
         },
         {
             "title": "راه‌حل ساده و غیربهینه: بن‌بست ۳ حلقه‌ای Brute Force و تله تکرارها با HashSet",
             "badge": "روش غیربهینه · NAIVE APPROACH",
-            "subtitle": "چرا تلاش برای حل مستقیم 3Sum به فاجعه زمانی و خطاهای متعدد می‌انجامد؟ | LeetCode #15",
+            "subtitle": "چرا تلاش برای حل مستقیم جمع سه تایی به فاجعه زمانی و خطاهای متعدد می‌انجامد؟ | LeetCode #15",
             "cards": [
                 ("۱. انفجار زمانی O(n³)", "سه حلقه تو در تو؛ برای n=3000 به ۴.۵ میلیارد عملیات می‌رسد و فوراً با خطای TLE متوقف می‌شود.", RED),
                 ("۲. تله حافظه با HashSet", "ریختن سه‌تایی‌ها در Set برای حذف تکرار، خطر بروز خطای Memory Limit Exceeded (MLE) دارد.", PURPLE),
                 ("۳. ضعف معماری کد", "تکیه بر Set به جای مهار ریاضی اندیس‌ها، نشان‌دهنده ناتوانی الگوریتمی در کنترل داده‌هاست.", AMBER),
-                ("۴. نقطه عطف: مرتب‌سازی", "با مرتب‌سازی در O(n log n)، مسئله ۳ عنصری به تثبیت یک عدد و حل Two Sum II کاهش می‌یابد.", TEAL)
+                ("۴. نقطه عطف: مرتب‌سازی", "با مرتب‌سازی در O(n log n)، مسئله ۳ عنصری به تثبیت یک عدد و حل جمع دو تایی ۲ کاهش می‌یابد.", TEAL)
             ],
             "compare": {
                 "bad_title": "شکست کامل Brute Force",
                 "bad_text": "زمان O(n³)، مصرف سرسام‌آور حافظه Heap با ساخت آبجکت‌های موقت، و افت وحشتناک پرفورمنس.",
-                "good_title": "راه نجات: کاهش مسئله به Two Sum II",
+                "good_title": "راه نجات: کاهش مسئله به جمع دو تایی ۲",
                 "good_text": "رسیدن به زمان O(n²) و حافظه کمکی O(1) با پرش‌های درجا از روی عناصر تکراری بدون نیاز به Set!"
             },
             "notes": "کالبدشکافی کنید که چرا رویکرد ۳ حلقه و Set در جلسات ارزیابی مردود است و کاهش مسئله چقدر ظریف و قدرتمند عمل می‌کند."
         },
         {
-            "title": "کاهش الگو: تبدیل 3Sum به Two Sum II و حذف تکرارها",
+            "title": "کاهش الگو: تبدیل جمع سه تایی به جمع دو تایی ۲ و حذف تکرارها",
             "badge": "کاهش الگو · PATTERN REDUCTION",
             "subtitle": "استراتژی ۴ گانه: مرتب‌سازی + تثبیت عنصر اول + دو نشانگر + پرش از تکرارها",
             "cards": [
@@ -409,15 +434,15 @@ def create_deck():
             ],
             "points": [
                 "تبدیل مسئله ۳ متغیره به ۲ متغیره: تثبیت firstNum = nums[i] و جستجوی جفت با جمع -firstNum.",
-                "چون آرایه مرتب است، جستجوی جفت در باقی‌مانده آرایه دقیقاً همان Two Sum II است!",
+                "چون آرایه مرتب است، جستجوی جفت در باقی‌مانده آرایه دقیقاً همان جمع دو تایی ۲ است!",
                 "حذف کامل سربار حافظه: مدیریت هوشمندانه اندیس‌ها نیاز به Set را کاملاً منتفی می‌کند.",
                 "پیچیدگی زمانی کلی: O(n log n + n²) = O(n²) با جهش از مرتبه O(n³)."
             ],
             "quote": "«مسائل سخت‌تر، تنها ترکیبی هنرمندانه از الگوهای پایه قبلی هستند.»",
-            "notes": "نشان دهید که چطور 3Sum با تثبیت عنصر اول به Two Sum II کاهش پیدا می‌کند."
+            "notes": "نشان دهید که چطور جمع سه تایی با تثبیت عنصر اول به جمع دو تایی ۲ کاهش پیدا می‌کند."
         },
         {
-            "title": "پیاده‌سازی تمیز در کاتلین: 3Sum",
+            "title": "پیاده‌سازی تمیز در کاتلین: جمع سه تایی",
             "badge": "کدنویسی تمیز · CLEAN KOTLIN",
             "subtitle": "مرتب‌سازی + حلقه بیرونی + الگوی Two Pointers با پرش کامل از عناصر تکراری",
             "code": "fun threeSum(nums: IntArray): List<List<Int>> {\n    val result = mutableListOf<List<Int>>()\n    nums.sort() // مرتب‌سازی O(n log n)\n\n    for (i in 0 until nums.size - 2) {\n        val firstNum = nums[i]\n        if (firstNum > 0) break // توقف زودهنگام\n        if (i > 0 && firstNum == nums[i - 1]) continue // پرش تکراری بیرونی\n\n        var leftIndex = i + 1\n        var rightIndex = nums.size - 1\n\n        while (leftIndex < rightIndex) {\n            val currentSum = firstNum + nums[leftIndex] + nums[rightIndex]\n            when {\n                currentSum == 0 -> {\n                    result.add(listOf(firstNum, nums[leftIndex], nums[rightIndex]))\n                    while (leftIndex < rightIndex && nums[leftIndex] == nums[leftIndex + 1]) leftIndex++\n                    while (leftIndex < rightIndex && nums[rightIndex] == nums[rightIndex - 1]) rightIndex--\n                    leftIndex++\n                    rightIndex--\n                }\n                currentSum < 0 -> leftIndex++\n                else -> rightIndex--\n            }\n        }\n    }\n    return result\n}",
@@ -430,8 +455,8 @@ def create_deck():
             "notes": "کد کاتلین را گام به گام توضیح دهید و تأکید کنید که چقدر پیاده‌سازی تمیز و حرفه‌ای است."
         },
         {
-            "title": "شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم 3Sum",
-            "badge": "شبیه‌ساز تعاملی · 3SUM REDUCTION VISUALIZER",
+            "title": "شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم جمع سه تایی",
+            "badge": "شبیه‌ساز تعاملی · شبیه‌ساز کاهش جمع سه تایی",
             "subtitle": "تثبیت عنصر اول، دو نشانگر و پرش از تکرارها روی nums = [-4, -1, -1, 0, 1, 2]  |  LeetCode #15",
             "cards": [
                 ("تکرار ۱: i=0 (عنصر ۴-)", "بازه [1..5] بررسی شد؛ حتی با بزرگ‌ترین عناصر، مجموع به صفر نمی‌رسد.", PURPLE),
@@ -441,14 +466,17 @@ def create_deck():
             ],
             "points": [
                 "باکس یکپارچه تریس: متغیرهای i، L، R، مقادیر سه‌تایی و وضعیت تصمیم‌گیری در یک قالب شسته‌رفته قرار دارند.",
-                "تثبیت عنصر اول و دو نشانگر: نمایش زنده کاهش مسئله 3Sum به الگوی Two Sum II در هر دور حلقه.",
+                "تثبیت عنصر اول و دو نشانگر: نمایش زنده کاهش مسئله جمع سه تایی به الگوی جمع دو تایی ۲ در هر دور حلقه.",
                 "پرش بدون هزینه حافظه: حذف سه‌تایی‌های تکراری با شرط continue و پرش‌های حلقه داخلی بدون نیاز به Set.",
                 "توقف زودهنگام (Early Exit): توقف فوری به محض مثبت شدن عنصر اول (firstNum > 0) به دلیل سورت بودن داده‌ها."
             ],
             "quote": "«با مرتب‌سازی و پرش‌های هوشمندانه، الگوریتم از O(n³) به O(n²) ارتقا یافت بدون تولید هیچ پاسخ تکراری!»",
-            "notes": "لینک مسئله: https://leetcode.com/problems/3sum/description/  -- شبیه‌سازی گام‌به‌گام کاهش مسئله 3Sum و نحوه خروج زودهنگام و پرش‌های بدون هزینه حافظه."
+            "notes": "لینک مسئله: https://leetcode.com/problems/3sum/description/  -- شبیه‌سازی گام‌به‌گام کاهش مسئله جمع سه تایی و نحوه خروج زودهنگام و پرش‌های بدون هزینه حافظه."
         },
         {
+            "is_problem_hero": True,
+            "hero_color": CYAN,
+            "hero_badge": "🚀 چالش پروداکشن · REAL-WORLD",
             "title": "مطالعه موردی در پروداکشن: چالش CardStack در سپینو",
             "badge": "تجربه عملی مهندسی · REAL-WORLD CASE STUDY",
             "subtitle": "الگوریتم‌ها فقط برای مصاحبه نیستند؛ انتخاب درست داده ضامن روانی رابط کاربری است:",
@@ -507,7 +535,7 @@ def create_deck():
             "badge": "برنامه اقدام · ACTION PLAN",
             "subtitle": "نقشه راه ۴ هفته‌ای برای رسیدن به آمادگی در جلسات ارزیابی:",
             "cards": [
-                ("هفته اول: مبانی آرایه و هش", "حل ۵ مسئله Easy اول Blind 75 مانند Two Sum و Contains Duplicate.", TEAL),
+                ("هفته اول: مبانی آرایه و هش", "حل ۵ مسئله Easy اول Blind 75 مانند جمع دو تایی و Contains Duplicate.", TEAL),
                 ("هفته دوم: نشانگرها و پنجره", "الگوهای Two Pointers و Sliding Window با مرور منظم مسائل هفته اول.", PURPLE),
                 ("هفته سوم: ساختارها و پشته", "درخت‌ها، پشته (Stack) و پیمایش‌های DFS و BFS پایه با رسم روی کاغذ.", AMBER),
                 ("هفته چهارم: تست‌های Medium", "ورود به مسائل سطح Medium و تمرین با تایمر ۳۰ دقیقه‌ای ارزیابی.", TEAL)
@@ -612,18 +640,112 @@ def create_deck():
             p4.font.color.rgb = AMBER
             p4.alignment = PP_ALIGN.CENTER
 
+        elif data.get("type") == "agenda":
+            # Table of Contents / Agenda slide
+            top_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), prs.slide_width, Inches(0.08))
+            top_bar.fill.solid()
+            top_bar.fill.fore_color.rgb = TEAL
+            top_bar.line.fill.background()
+
+            header_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.35), Inches(11.7), Inches(1.1))
+            htf = header_box.text_frame
+            htf.word_wrap = True
+            hp = htf.paragraphs[0]
+            hp.text = data.get("badge", "AGENDA") + "  |  " + data["title"]
+            hp.font.size = Pt(25)
+            hp.font.bold = True
+            hp.font.color.rgb = TEAL
+
+            if "subtitle" in data:
+                sp = htf.add_paragraph()
+                sp.text = data["subtitle"]
+                sp.font.size = Pt(13)
+                sp.font.color.rgb = TEXT_DIM
+
+            # Render 6 Agenda items in 2 columns x 3 rows
+            items = data.get("agenda_items", [])
+            col_w = 5.7
+            row_h = 1.35
+            gap_x = 0.3
+            gap_y = 0.15
+            start_y = 1.55
+
+            for idx, item in enumerate(items):
+                col_idx = idx % 2
+                row_idx = idx // 2
+                x = 0.8 + col_idx * (col_w + gap_x)
+                y = start_y + row_idx * (row_h + gap_y)
+
+                title_txt = item[0]
+                desc_txt = item[1]
+                accent_col = item[2]
+                range_txt = item[3]
+                is_hero = item[4] if len(item) > 4 else False
+
+                box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(col_w), Inches(row_h))
+                box.fill.solid()
+                box.fill.fore_color.rgb = SURF2_COLOR if is_hero else SURF_COLOR
+                box.line.color.rgb = accent_col
+                box.line.width = Pt(2.2) if is_hero else Pt(1.2)
+
+                btf = box.text_frame
+                btf.word_wrap = True
+
+                bp1 = btf.paragraphs[0]
+                bp1.text = title_txt
+                bp1.font.size = Pt(13)
+                bp1.font.bold = True
+                bp1.font.color.rgb = accent_col if is_hero else TEXT_LIGHT
+
+                bp2 = btf.add_paragraph()
+                bp2.text = desc_txt
+                bp2.font.size = Pt(10)
+                bp2.font.color.rgb = TEXT_DIM
+
+                bp3 = btf.add_paragraph()
+                bp3.text = range_txt
+                bp3.font.size = Pt(9.5)
+                bp3.font.bold = True
+                bp3.font.color.rgb = accent_col
+
+            if "footer_note" in data:
+                ft_box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(6.15), Inches(11.7), Inches(0.7))
+                ft_box.fill.solid()
+                ft_box.fill.fore_color.rgb = SURF_COLOR
+                ft_box.line.color.rgb = PURPLE
+                ft_box.line.width = Pt(1)
+                ft_tf = ft_box.text_frame
+                ft_tf.word_wrap = True
+                ftp = ft_tf.paragraphs[0]
+                ftp.text = data["footer_note"]
+                ftp.font.size = Pt(12)
+                ftp.font.bold = True
+                ftp.font.color.rgb = TEXT_LIGHT
+                ftp.alignment = PP_ALIGN.CENTER
+
         else:
             # Regular Content Slide
+            is_hero = data.get("is_problem_hero", False)
+            hero_col = data.get("hero_color", TEAL)
+
+            if is_hero:
+                # Add glowing top accent bar
+                top_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), prs.slide_width, Inches(0.08))
+                top_bar.fill.solid()
+                top_bar.fill.fore_color.rgb = hero_col
+                top_bar.line.fill.background()
+
             # Top Header Bar
-            header_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.7), Inches(1.0))
+            header_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.35 if is_hero else 0.4), Inches(11.7), Inches(1.1 if is_hero else 1.0))
             htf = header_box.text_frame
             htf.word_wrap = True
 
             hp = htf.paragraphs[0]
-            hp.text = data.get("badge", "LEETCODE") + "  |  " + data["title"]
-            hp.font.size = Pt(24)
+            badge_text = data.get("hero_badge", data.get("badge", "LEETCODE"))
+            hp.text = badge_text + "  |  " + data["title"]
+            hp.font.size = Pt(26 if is_hero else 24)
             hp.font.bold = True
-            hp.font.color.rgb = TEAL
+            hp.font.color.rgb = hero_col if is_hero else TEAL
 
             if "subtitle" in data:
                 sp = htf.add_paragraph()
@@ -645,7 +767,7 @@ def create_deck():
                     cshape.fill.solid()
                     cshape.fill.fore_color.rgb = SURF_COLOR
                     cshape.line.color.rgb = col
-                    cshape.line.width = Pt(1.5)
+                    cshape.line.width = Pt(2.2 if is_hero else 1.5)
 
                     ctf = cshape.text_frame
                     ctf.word_wrap = True

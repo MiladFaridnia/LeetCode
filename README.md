@@ -65,7 +65,7 @@ The presentation guides audience members through three progressively challenging
 
 ---
 
-### Case Study 1: LeetCode #1 — Two Sum (Easy)
+### Case Study 1: LeetCode #1 — Two Sum / جمع دو تایی (Easy)
 
 - **Problem**: Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
 - **Constraint**: Input size $N \le 10^4$. Exact single solution guaranteed.
@@ -81,9 +81,9 @@ The presentation guides audience members through three progressively challenging
 
 ---
 
-### Case Study 2: LeetCode #167 — Two Sum II (Sorted Array) (Easy/Medium)
+### Case Study 2: LeetCode #167 — Two Sum II / جمع دو تایی ۲ (Sorted Array) (Easy/Medium)
 
-- **Problem**: Same as Two Sum, but the input array `numbers` is already **sorted in non-decreasing order**.
+- **Problem**: Same as Two Sum (جمع دو تایی), but the input array `numbers` is already **sorted in non-decreasing order**.
 - **Constraint**: Must use **$\mathcal{O}(1)$ constant auxiliary space**.
 
 #### Why Previous Approaches Fail
@@ -100,7 +100,7 @@ The presentation guides audience members through three progressively challenging
 
 ---
 
-### Case Study 3: LeetCode #15 — 3Sum (Medium Challenge)
+### Case Study 3: LeetCode #15 — 3Sum / جمع سه تایی (Medium Challenge)
 
 - **Problem**: Given an integer array `nums`, return all unique triplets `[nums[i], nums[j], nums[k]]` such that $i \neq j \neq k$ and $nums[i] + nums[j] + nums[k] = 0$.
 - **Key Challenges**: Preventing duplicate triplets without memory overhead; avoiding $\mathcal{O}(N^3)$ complexity.

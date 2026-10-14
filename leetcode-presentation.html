@@ -537,6 +537,175 @@
       .slide{position:relative;opacity:1!important;transform:none!important;
         page-break-after:always;min-height:100vh}
     }
+
+    /* ── TABLE OF CONTENTS (AGENDA) ───────────────────────── */
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 0.6rem 0;
+    }
+    .toc-card {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all .22s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .toc-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      box-shadow: 0 6px 20px rgba(78,204,163,.15);
+      background: var(--surf2);
+    }
+    .toc-card-hero {
+      background: linear-gradient(135deg, rgba(20,20,40,.92), rgba(28,28,56,.96));
+      border: 1.5px solid rgba(78,204,163,.3);
+      box-shadow: 0 4px 16px rgba(0,0,0,.22);
+    }
+    html.light .toc-card-hero {
+      background: linear-gradient(135deg, rgba(232,232,248,.95), rgba(220,220,240,.9));
+      border-color: rgba(26,153,114,.35);
+    }
+    .toc-card-hero:hover {
+      box-shadow: 0 8px 24px rgba(78,204,163,.25);
+    }
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .toc-title {
+      font-size: calc(15px * var(--fs-scale));
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toc-badge {
+      font-size: calc(10.5px * var(--fs-scale));
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .toc-desc {
+      font-size: calc(12.5px * var(--fs-scale));
+      color: var(--dim);
+      line-height: 1.55;
+    }
+    .toc-range {
+      font-size: calc(11px * var(--fs-scale));
+      color: var(--teal);
+      font-weight: 700;
+      align-self: flex-start;
+      direction: rtl;
+    }
+    .toc-bottom-banner {
+      grid-column: 1 / -1;
+      background: var(--surf);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .toc-bottom-banner:hover {
+      border-color: var(--purple);
+      background: var(--surf2);
+      transform: translateY(-2px);
+    }
+
+    /* ── BOLDER PROBLEM STARTING SLIDES ──────────────────── */
+    .slide.slide-problem-hero {
+      background: radial-gradient(circle at 90% 12%, rgba(78,204,163,.12), transparent 50%),
+                  radial-gradient(circle at 10% 88%, rgba(124,143,245,.08), transparent 50%),
+                  var(--bg);
+      border-top: 4px solid var(--teal);
+    }
+    .slide.slide-problem-hero.hero-p2 {
+      border-top-color: var(--purple);
+      background: radial-gradient(circle at 90% 12%, rgba(124,143,245,.14), transparent 50%),
+                  radial-gradient(circle at 10% 88%, rgba(78,204,163,.06), transparent 50%),
+                  var(--bg);
+    }
+    .slide.slide-problem-hero.hero-p3 {
+      border-top-color: var(--amber);
+      background: radial-gradient(circle at 90% 12%, rgba(233,168,76,.14), transparent 50%),
+                  radial-gradient(circle at 10% 88%, rgba(233,108,108,.08), transparent 50%),
+                  var(--bg);
+    }
+    .slide.slide-problem-hero.hero-case {
+      border-top-color: var(--cyan);
+      background: radial-gradient(circle at 90% 12%, rgba(56,189,248,.14), transparent 50%),
+                  radial-gradient(circle at 10% 88%, rgba(124,143,245,.08), transparent 50%),
+                  var(--bg);
+    }
+    .slide-problem-hero .sh {
+      padding: 15px 44px;
+      background: linear-gradient(90deg, rgba(78,204,163,.15), rgba(124,143,245,.08), transparent);
+      border-bottom: 2px solid rgba(78,204,163,.35);
+    }
+    .slide-problem-hero.hero-p2 .sh {
+      background: linear-gradient(90deg, rgba(124,143,245,.16), rgba(78,204,163,.06), transparent);
+      border-bottom: 2px solid rgba(124,143,245,.35);
+    }
+    .slide-problem-hero.hero-p3 .sh {
+      background: linear-gradient(90deg, rgba(233,168,76,.16), rgba(233,108,108,.08), transparent);
+      border-bottom: 2px solid rgba(233,168,76,.35);
+    }
+    .slide-problem-hero.hero-case .sh {
+      background: linear-gradient(90deg, rgba(56,189,248,.16), rgba(124,143,245,.08), transparent);
+      border-bottom: 2px solid rgba(56,189,248,.35);
+    }
+    .slide-problem-hero .shtitle {
+      font-size: calc(26px * var(--fs-scale));
+      font-weight: 900;
+      letter-spacing: -.4px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.45);
+    }
+    html.light .slide-problem-hero .shtitle {
+      color: #111124;
+      text-shadow: none;
+    }
+    .problem-starter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      border-radius: 20px;
+      font-size: calc(12px * var(--fs-scale));
+      font-weight: 800;
+      letter-spacing: .5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+    .slide-problem-hero .scenario {
+      background: linear-gradient(90deg, rgba(233,168,76,.15), rgba(20,20,40,.7));
+      border-right: 5px solid var(--amber);
+      border-radius: 0 12px 12px 0;
+      padding: 15px 18px;
+      margin: 1rem 0;
+      font-size: calc(16.5px * var(--fs-scale));
+      box-shadow: 0 4px 18px rgba(0,0,0,.2);
+    }
+    html.light .slide-problem-hero .scenario {
+      background: linear-gradient(90deg, rgba(233,168,76,.14), rgba(232,232,248,.85));
+    }
+    .slide-problem-hero .scenario strong {
+      color: var(--amber);
+      font-size: calc(17px * var(--fs-scale));
+    }
   </style>
 </head>
 <body>
@@ -554,14 +723,101 @@
       <div class="ttags">
         <span class="ttag tt1">تفکر الگوریتمی</span>
         <span class="ttag tt2">متدولوژی مطالعه</span>
-        <span class="ttag tt3">حل عملی Two Sum</span>
+        <span class="ttag tt3">حل عملی جمع دو تایی</span>
       </div>
     </div>
     <p class="hint">→ یا Space برای اسلاید بعد · 📝 کلید N برای یادداشت گوینده</p>
   </div>
 
-  <!-- ══ SLIDE 1 — چرا لیت‌کد؟ ═══════════════════════════════ -->
+  <!-- ══ SLIDE 1 — فهرست و نقشه مسیر ارائه ════════════════════ -->
   <div class="slide" data-slide="1">
+    <div class="sh">
+      <span class="shtitle">نقشه راه و فهرست سرفصل‌های ارائه</span>
+      <span class="sp"></span>
+      <span class="badge bc">ساختار جامع · Agenda</span>
+    </div>
+    <div class="sbody">
+      <p class="anim" style="margin-bottom:0.6rem;">این ارائه برای تبدیل سردرگمی لیت‌کد به تسلط ساختاریافته طراحی شده است. می‌توانید روی هر بخش کلیک کنید:</p>
+
+      <div class="toc-grid anim">
+        <!-- بخش ۱: مبانی -->
+        <div class="toc-card" onclick="goTo(2)">
+          <div class="toc-header">
+            <div class="toc-title"><span>📘</span> ۱. مبانی، ذهنیت و متدولوژی یادگیری</div>
+            <span class="toc-badge bc">اصول بنیادین</span>
+          </div>
+          <div class="toc-desc">چرا لیت‌کد؟ · شکستن سد روانی · ۵ اصل مطالعه فعال و تکرار فاصله‌دار · تحلیل Big-O و نقشه راه</div>
+          <div class="toc-range">اسلایدهای ۲ تا ۱۱ ↗</div>
+        </div>
+
+        <!-- بخش ۲: چک لیست ارزیابی -->
+        <div class="toc-card" onclick="goTo(12)">
+          <div class="toc-header">
+            <div class="toc-title"><span>📋</span> ۲. چک‌لیست طلایی جلسه ارزیابی واقعی</div>
+            <span class="toc-badge bs">مهارت مصاحبه</span>
+          </div>
+          <div class="toc-desc">چارچوب گام‌به‌گام مواجهه با مسئله نامشخص: درک و شفاف‌سازی، Edge Caseها، تریس آنالوگ و کدنویسی تمیز</div>
+          <div class="toc-range">اسلاید ۱۲ ↗</div>
+        </div>
+
+        <!-- بخش ۳: مسئله اول -->
+        <div class="toc-card toc-card-hero" onclick="goTo(13)" style="border-right: 4px solid var(--teal);">
+          <div class="toc-header">
+            <div class="toc-title" style="color:var(--teal);"><span>🔥</span> ۳. مسئله اول: جمع دو تایی (Two Sum)</div>
+            <span class="toc-badge bc" style="background:rgba(78,204,163,.2);border:1px solid var(--teal);color:var(--teal);">LeetCode #1 · Easy</span>
+          </div>
+          <div class="toc-desc">گذر از تفکر Brute Force با <code>O(n²)</code> به کشف معجزه Hash Map با <code>O(n)</code> · تحلیل تریس روی کاغذ و شبیه‌ساز گام‌به‌گام</div>
+          <div class="toc-range" style="color:var(--teal);">اسلایدهای ۱۳ تا ۱۷ ↗</div>
+        </div>
+
+        <!-- بخش ۴: مسئله دوم -->
+        <div class="toc-card toc-card-hero" onclick="goTo(18)" style="border-right: 4px solid var(--purple);">
+          <div class="toc-header">
+            <div class="toc-title" style="color:var(--purple);"><span>⚡</span> ۴. مسئله دوم: جمع دو تایی ۲ (Two Sum II)</div>
+            <span class="toc-badge bs" style="background:rgba(124,143,245,.2);border:1px solid var(--purple);color:var(--purple);">LeetCode #167 · Medium</span>
+          </div>
+          <div class="toc-desc">شرط آرایه مرتب و قید سخت‌گیرانه حافظه <code>O(1)</code> · چرا Hash Map رد می‌شود؟ جهش به الگوی دو نشانگر (Two Pointers) و شبیه‌ساز</div>
+          <div class="toc-range" style="color:var(--purple);">اسلایدهای ۱۸ تا ۲۲ ↗</div>
+        </div>
+
+        <!-- بخش ۵: مسئله سوم -->
+        <div class="toc-card toc-card-hero" onclick="goTo(23)" style="border-right: 4px solid var(--amber);">
+          <div class="toc-header">
+            <div class="toc-title" style="color:var(--amber);"><span>💥</span> ۵. مسئله سوم (چالشی): جمع سه تایی (3Sum)</div>
+            <span class="toc-badge bb" style="background:rgba(233,168,76,.2);border:1px solid var(--amber);color:var(--amber);">LeetCode #15 · Medium+</span>
+          </div>
+          <div class="toc-desc">شکستن بن‌بست ۳ حلقه‌ای <code>O(n³)</code> · هنر کاهش الگو (Pattern Reduction) به جمع دو تایی ۲ و حذف هوشمندانه تکرارها + شبیه‌ساز</div>
+          <div class="toc-range" style="color:var(--amber);">اسلایدهای ۲۳ تا ۲۷ ↗</div>
+        </div>
+
+        <!-- بخش ۶: مطالعه موردی پروداکشن -->
+        <div class="toc-card toc-card-hero" onclick="goTo(28)" style="border-right: 4px solid var(--cyan);">
+          <div class="toc-header">
+            <div class="toc-title" style="color:var(--cyan);"><span>🚀</span> ۶. مطالعه موردی در پروداکشن (سپینو)</div>
+            <span class="toc-badge bcy" style="background:rgba(56,189,248,.2);border:1px solid var(--cyan);color:var(--cyan);">CardStack · Real-World</span>
+          </div>
+          <div class="toc-desc">تجربه واقعی در Compose و KMP: چرا فیلتر روی List باعث افت شدید فریم در انیمیشن شد؟ حل افت فریم و تثبیت ۶۰fps با HashSet</div>
+          <div class="toc-range" style="color:var(--cyan);">اسلایدهای ۲۸ تا ۳۱ ↗</div>
+        </div>
+
+        <!-- بنر پایانی: نقشه راه و Q&A -->
+        <div class="toc-bottom-banner" onclick="goTo(32)">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:1.3rem;">🎯</span>
+            <div>
+              <strong style="color:var(--text);font-size:calc(14.5px * var(--fs-scale));">۷. برنامه اقدام ۳۰ روزه، منابع طلایی و پرسش و پاسخ (Q&A)</strong>
+              <div style="font-size:calc(12px * var(--fs-scale));color:var(--dim);">برنامه تمرین هفتگی · معرفی Blind 75 و NeetCode · جمع‌بندی نهایی</div>
+            </div>
+          </div>
+          <span style="color:var(--purple);font-size:calc(12px * var(--fs-scale));font-weight:700;">اسلایدهای ۳۲ تا ۳۴ ↗</span>
+        </div>
+      </div>
+    </div>
+    <span class="snum">۱ / ۳۲</span>
+  </div>
+
+  <!-- ══ SLIDE 2 — چرا لیت‌کد؟ ═══════════════════════════════ -->
+  <div class="slide" data-slide="2">
     <div class="sh"><span class="shtitle">چرا لیت‌کد؟ ضرورت و واقعیت بازار کار</span><span class="sp"></span><span class="badge bc">ضرورت · Why LeetCode</span></div>
     <div class="sbody">
       <p class="anim">امروزه <strong>LeetCode</strong> به زبان مشترک و استاندارد ارزیابی مهندسان در جلسات فنی شرکت‌های بزرگ و بین‌المللی تبدیل شده است.</p>
@@ -591,7 +847,7 @@
   </div>
 
   <!-- ══ SLIDE 2 — افسانه‌زدایی ═══════════════════════════════ -->
-  <div class="slide" data-slide="2">
+  <div class="slide" data-slide="3">
     <div class="sh"><span class="shtitle">افسانه‌زدایی: لیت‌کد آزمون هوش نیست!</span><span class="sp"></span><span class="badge bs">تغییر نگرش · Mindset</span></div>
     <div class="sbody">
       <p class="anim">بزرگ‌ترین سد ذهنی مهندسان در مواجهه با لیت‌کد، یک باور نادرست است: <em>«من استعداد الگوریتم ندارم!»</em></p>
@@ -619,7 +875,7 @@
   </div>
 
   <!-- ══ SLIDE 3 — اصل اول ═══════════════════════════════════ -->
-  <div class="slide" data-slide="3">
+  <div class="slide" data-slide="4">
     <div class="sh"><span class="shtitle">اصل اول: فراتر از فقط خواندن راه‌حل‌ها بروید</span><span class="sp"></span><span class="badge bc">کدنویسی فعال · Active Coding</span></div>
     <div class="sbody">
       <p class="anim">بزرگ‌ترین دام در مسیر یادگیری: <strong>توهم دانایی (Illusion of Competence)</strong> ناشی از تماشای ویدیو یا خواندن راهنماها.</p>
@@ -645,7 +901,7 @@
   </div>
 
   <!-- ══ SLIDE 4 — اصل دوم ═══════════════════════════════════ -->
-  <div class="slide" data-slide="4">
+  <div class="slide" data-slide="5">
     <div class="sh"><span class="shtitle">اصل دوم: قدرت تکرار فاصله‌دار (Spaced Repetition)</span><span class="sp"></span><span class="badge bb">تکرار فاصله‌دار · Repetition</span></div>
     <div class="sbody">
       <p class="anim">یک مسئله یک‌بار حل شدنی نیست! اگر مسئله‌ای را امروز حل کنید و ۱ ماه بعد بازبینی نکنید، در روز جلسه ارزیابی مانند روز اول فراموش خواهید کرد.</p>
@@ -675,7 +931,7 @@
   </div>
 
   <!-- ══ SLIDE 5 — اصل سوم ═══════════════════════════════════ -->
-  <div class="slide" data-slide="5">
+  <div class="slide" data-slide="6">
     <div class="sh"><span class="shtitle">اصل سوم: تسلط برق‌آسا بر الگوریتم‌ها و ساختارهای پایه</span><span class="sp"></span><span class="badge bs">الگوهای پایه · Core Patterns</span></div>
     <div class="sbody">
       <p class="anim">اشتباه بزرگ مبتدی‌ها: حل تصادفی ۴۰۰ سوال! در حالی که باید ابتدا <strong>جعبه‌ابزار بنیادین</strong> خود را کامل کنند.</p>
@@ -705,7 +961,7 @@
   </div>
 
   <!-- ══ SLIDE 6 — پیچیدگی زمانی ═══════════════════════════════ -->
-  <div class="slide" data-slide="6">
+  <div class="slide" data-slide="7">
     <div class="sh"><span class="shtitle">مفهوم کلیدی: پیچیدگی زمانی (Big-O) و تحلیل کارایی</span><span class="sp"></span><span class="badge bs">تحلیل کارایی · Time Complexity</span></div>
     <div class="sbody">
       <p class="anim">پیچیدگی زمانی (Time Complexity) سنجش ثانیه‌ها با کرونومتر نیست؛ بلکه سنجش <strong>نرخ رشد تعداد عملیات کامپیوتر</strong> با افزایش حجم ورودی (<code>n</code>) است.</p>
@@ -759,7 +1015,7 @@
   </div>
 
   <!-- ══ SLIDE 7 — اصل چهارم ══════════════════════════════════ -->
-  <div class="slide" data-slide="7">
+  <div class="slide" data-slide="8">
     <div class="sh"><span class="shtitle">اصل چهارم: چرایی را بپرسید، حفظ نکنید</span><span class="sp"></span><span class="badge bcy">کشف چرایی · Ask "Why"</span></div>
     <div class="sbody">
       <p class="anim">حفظ کردن خطوط کد، خطرناک‌ترین دام یادگیری است. پرسشگر کافی است یک فرض کوچک را عوض کند تا کد حفظی کاملاً بی‌فایده شود.</p>
@@ -807,7 +1063,7 @@
   </div>
 
   <!-- ══ SLIDE 8 — اصل پنجم ══════════════════════════════════ -->
-  <div class="slide" data-slide="8">
+  <div class="slide" data-slide="9">
     <div class="sh"><span class="shtitle">اصل پنجم: ابزارهای آنالوگ؛ قدرت قلم و کاغذ</span><span class="sp"></span><span class="badge bk">ابزار آنالوگ · Pen & Paper</span></div>
     <div class="sbody">
       <p class="anim">در ۱۰ دقیقه اول مواجهه با مسئله، <strong>دستان خود را از کیبورد دور نگه دارید!</strong></p>
@@ -826,7 +1082,7 @@
   </div>
 
   <!-- ══ SLIDE 9 — نقشه راه ═══════════════════════════════════ -->
-  <div class="slide" data-slide="9">
+  <div class="slide" data-slide="10">
     <div class="sh"><span class="shtitle">نقشه راه مطالعه و سیستم منظم روزانه</span><span class="sp"></span><span class="badge bc">نقشه راه · Roadmap</span></div>
     <div class="sbody">
       <p class="anim">کیفیت تمرین بسیار مهم‌تر از کمیت آن است: <strong>۱ مسئله که در عمق فهمیده شود &gt; ۱۰ مسئله که سطحی رد شوید.</strong></p>
@@ -891,7 +1147,7 @@
   </div>
 
   <!-- ══ SLIDE 10 — ورود HASH MAP ════════════════════════════ -->
-  <div class="slide" data-slide="10">
+  <div class="slide" data-slide="11">
     <div class="sh"><span class="shtitle">پرسیدن «چرا؟» و کشف جهش بهینه: ورود Hash Map</span><span class="sp"></span><span class="badge bcy">جهش بهینه · Breakthrough</span></div>
     <div class="sbody">
       <p class="anim">طبق <strong>اصل چهارم</strong>، از خود می‌پرسیم: <em>«کجای راه‌حل‌های خام و مستقیم وقت هدر می‌رود و چطور آن را از بین ببریم؟»</em></p>
@@ -918,7 +1174,7 @@
   </div>
 
   <!-- ══ SLIDE 11 — چک‌لیست طلایی جلسه ارزیابی ════════════════ -->
-  <div class="slide" data-slide="11">
+  <div class="slide" data-slide="12">
     <div class="sh"><span class="shtitle">چک‌لیست طلایی جلسه ارزیابی واقعی</span><span class="sp"></span><span class="badge bs">جلسه فنی · Evaluation</span></div>
     <div class="sbody">
       <p class="anim">پروتکل گام‌به‌گام برای مدیریت جلسه ارزیابی ۴۵ دقیقه‌ای تا استرس مانع تفکر شما نشود:</p>
@@ -945,17 +1201,19 @@
     <span class="snum">۱۱ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 12 — معرفی TWO SUM ═════════════════════════════ -->
-  <div class="slide" data-slide="12">
+  <!-- ══ SLIDE 13 — معرفی جمع دو تایی ═════════════════════════════ -->
+  <div class="slide slide-problem-hero" data-slide="13">
     <div class="sh">
-      <span class="shtitle">ورود به فاز عملی: حل مسئله Two Sum</span>
+      <span class="problem-starter-pill" style="background:linear-gradient(135deg,var(--teal),#38bdf8);color:#081628;">🔥 مسئله اول</span>
+      <span class="shtitle">ورود به فاز عملی: حل مسئله جمع دو تایی (Two Sum)</span>
       <span class="sp"></span>
+      <span class="badge bc" style="font-weight:800;border:1.5px solid var(--teal);">EASY · حل بهینه O(N)</span>
       <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bs" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;" title="مشاهده مسئله در سایت LeetCode">
         <span>🔗 LeetCode #1</span>
       </a>
     </div>
     <div class="sbody">
-      <p class="anim">بیایید این اصول ۵گانه و چک‌لیست ارزیابی را روی <strong>مشهورترین مسئله تاریخ لیت‌کد یعنی Two Sum (#1)</strong> پیاده کنیم؛ مسئله‌ای که نقطه شروع مشترک در هر دو مجموعه معتبر <a href="https://leetcode.com/studyplan/leetcode-75/" target="_blank" style="color:var(--teal);text-decoration:underline;">LeetCode 75</a> و <a href="https://leetcode.com/studyplan/top-interview-150/" target="_blank" style="color:var(--purple);text-decoration:underline;">Top Interview 150</a> است.</p>
+      <p class="anim">بیایید این اصول ۵گانه و چک‌لیست ارزیابی را روی <strong>مشهورترین مسئله تاریخ لیت‌کد یعنی جمع دو تایی (#1)</strong> پیاده کنیم؛ مسئله‌ای که نقطه شروع مشترک در هر دو مجموعه معتبر <a href="https://leetcode.com/studyplan/leetcode-75/" target="_blank" style="color:var(--teal);text-decoration:underline;">LeetCode 75</a> و <a href="https://leetcode.com/studyplan/top-interview-150/" target="_blank" style="color:var(--purple);text-decoration:underline;">Top Interview 150</a> است.</p>
       <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>nums</code> و یک عدد صحیح بنام <code>target</code> داده شده است. اندیس دو عددی را بازگردانید که مجموع آن‌ها برابر با <code>target</code> شود.</div>
         <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
@@ -973,12 +1231,12 @@
   </div>
 
   <!-- ══ SLIDE 13 — تحلیل آنالوگ BRUTE FORCE O(n²) ═══════════════ -->
-  <div class="slide" data-slide="13">
+  <div class="slide" data-slide="14">
     <div class="sh">
       <span class="shtitle">تحلیل آنالوگ روی کاغذ: تریس روش ساده (Brute Force O(n²))</span>
       <span class="sp"></span>
       <span class="badge bb">روش اولیه · Brute Force O(n²)</span>
-      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum">
+      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله جمع دو تایی">
         <span>🔗 LeetCode #1</span>
       </a>
     </div>
@@ -1111,7 +1369,7 @@
   </div>
 
   <!-- ══ SLIDE 14 — روش اول BRUTE FORCE ══════════════════════ -->
-  <div class="slide" data-slide="14">
+  <div class="slide" data-slide="15">
     <div class="sh"><span class="shtitle">روش اول: راه‌حل ساده و مستقیم (Brute Force)</span><span class="sp"></span><span class="badge bb">روش اولیه · Brute Force</span></div>
     <div class="sbody">
       <p class="anim">در جلسه ارزیابی، همیشه بیان راه‌حل اولیه (Brute Force) اولین گام است تا نشان دهید مسئله را کامل فهمیده‌اید.</p>
@@ -1149,7 +1407,7 @@
   </div>
 
   <!-- ══ SLIDE 15 — پیاده‌سازی کد بهینه ═══════════════════════ -->
-  <div class="slide" data-slide="15">
+  <div class="slide" data-slide="16">
     <div class="sh"><span class="shtitle">پیاده‌سازی تمیز و خط به خط کد بهینه (Kotlin)</span><span class="sp"></span><span class="badge bc">کدنویسی تمیز · Clean Code</span></div>
     <div class="sbody">
       <p class="anim">پیاده‌سازی تک‌پیمایشی (One-Pass Hash Table) با زبان Kotlin با ساختار کاملاً شفاف، گام‌به‌گام و قابل فهم:</p>
@@ -1189,11 +1447,11 @@
   </div>
 
   <!-- ══ SLIDE 16 — شبیه‌ساز تعاملی ═══════════════════════════ -->
-  <div class="slide" data-slide="16">
+  <div class="slide" data-slide="17">
     <div class="sh">
-      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم Two Sum</span>
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم جمع دو تایی</span>
       <span class="sp"></span>
-      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum">
+      <a href="https://leetcode.com/problems/two-sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله جمع دو تایی">
         <span>🔗 LeetCode #1</span>
       </a>
       <span class="badge bcy">شبیه‌ساز فوق‌شهودی · Interactive Visualizer</span>
@@ -1310,8 +1568,8 @@
       <!-- باکس جمع‌بندی طلایی و مقایسه با روش اولیه -->
       <div class="compare anim" style="margin: 0.6rem 0;">
         <div class="good">
-          <div class="label">کشف طلایی Two Sum (تغییر پارادایم)</div>
-          <p>هسته مسئله Two Sum «جمع کردن همه جفت‌ها» نیست؛ بلکه <strong>«جستجوی عدد مکمل (target - currentNumber) در میانگین زمان O(1)»</strong> است!</p>
+          <div class="label">کشف طلایی جمع دو تایی (تغییر پارادایم)</div>
+          <p>هسته مسئله جمع دو تایی «جمع کردن همه جفت‌ها» نیست؛ بلکه <strong>«جستجوی عدد مکمل (target - currentNumber) در میانگین زمان O(1)»</strong> است!</p>
         </div>
         <div class="bad">
           <div class="label">تفاوت با روش ساده (Brute Force)</div>
@@ -1322,19 +1580,20 @@
     <span class="snum">۱۶ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 17 — TWO SUM II: صورت مسئله و تفاوت کلیدی ═══════════ -->
-  <div class="slide" data-slide="17">
+  <!-- ══ SLIDE 18 — جمع دو تایی ۲: صورت مسئله و تفاوت کلیدی ═══════════ -->
+  <div class="slide slide-problem-hero hero-p2" data-slide="18">
     <div class="sh">
-      <span class="shtitle">مسئله دوم: Two Sum II - آرایه مرتب‌شده (Input Array Is Sorted)</span>
+      <span class="problem-starter-pill" style="background:linear-gradient(135deg,var(--purple),#818cf8);color:#fff;">⚡ مسئله دوم</span>
+      <span class="shtitle">مسئله دوم: جمع دو تایی ۲ - آرایه مرتب‌شده (Input Array Is Sorted)</span>
       <span class="sp"></span>
-      <span class="badge bc">الگوی دو نشانگر · Two Pointers</span>
+      <span class="badge bs" style="font-weight:800;border:1.5px solid var(--purple);">MEDIUM · دو نشانگر O(1)</span>
       <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله در LeetCode">
         <span>🔗 LeetCode #167</span>
       </a>
     </div>
     <div class="sbody">
       <div class="scenario anim" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>numbers</code> داده شده که از قبل به صورت غیرنزولی مرتب شده است (<code>numbers[i] &le; numbers[i+1]</code>). اندیس دو عدد (۱-محور یا 1-indexed) را بیابید که جمعشان برابر با <code>target</code> شود.</div>
+        <div><strong>صورت مسئله:</strong> به شما یک آرایه از اعداد صحیح بنام <code>numbers</code> داده شده که از قبل به صورت غیرنزولی مرتب شده است (<code>numbers[i] &le; numbers[i+1]</code>). اندیس دو عدد را بیابید که جمعشان برابر با <code>target</code> شود.</div>
         <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" style="color:var(--amber);text-decoration:none;font-size:calc(12px * var(--fs-scale));font-weight:700;white-space:nowrap;">🔗 صفحه مسئله در LeetCode ↗</a>
       </div>
 
@@ -1371,10 +1630,10 @@
     <span class="snum">۱۷ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 18 — TWO SUM II: راه‌حل‌های اولیه و غیربهینه ════════════ -->
-  <div class="slide" data-slide="18">
+  <!-- ══ SLIDE 18 — جمع دو تایی ۲: راه‌حل‌های اولیه و غیربهینه ════════════ -->
+  <div class="slide" data-slide="19">
     <div class="sh">
-      <span class="shtitle">راه‌حل‌های اولیه و غیربهینه: چرا بروت‌فورس و هش‌مپ در Two Sum II رد می‌شوند؟</span>
+      <span class="shtitle">راه‌حل‌های اولیه و غیربهینه: چرا بروت‌فورس و هش‌مپ در جمع دو تایی ۲ رد می‌شوند؟</span>
       <span class="sp"></span>
       <span class="badge bb">روش‌های غیربهینه · Naive Approaches</span>
       <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
@@ -1422,8 +1681,8 @@
   </div>
 
 
-  <!-- ══ SLIDE 18 — TWO SUM II: تریس آنالوگ دو نشانگر ═══════════════ -->
-  <div class="slide" data-slide="19">
+  <!-- ══ SLIDE 18 — جمع دو تایی ۲: تریس آنالوگ دو نشانگر ═══════════════ -->
+  <div class="slide" data-slide="20">
     <div class="sh">
       <span class="shtitle">تحلیل آنالوگ روی کاغذ: تریس الگوریتم دو نشانگر (Two Pointers)</span>
       <span class="sp"></span>
@@ -1481,10 +1740,10 @@
     <span class="snum">۱۹ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 19 — TWO SUM II: پیاده‌سازی کاتلین ═══════════════════ -->
-  <div class="slide" data-slide="20">
+  <!-- ══ SLIDE 19 — جمع دو تایی ۲: پیاده‌سازی کاتلین ═══════════════════ -->
+  <div class="slide" data-slide="21">
     <div class="sh">
-      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: Two Sum II (دو نشانگر)</span>
+      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: جمع دو تایی ۲ (دو نشانگر)</span>
       <span class="sp"></span>
       <span class="badge bc">کدنویسی تمیز · Clean Code</span>
       <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
@@ -1532,13 +1791,13 @@
     <span class="snum">۲۰ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 20 — TWO SUM II: شبیه‌ساز تعاملی دو نشانگر ══════ -->
-  <div class="slide" data-slide="21">
+  <!-- ══ SLIDE 20 — جمع دو تایی ۲: شبیه‌ساز تعاملی دو نشانگر ══════ -->
+  <div class="slide" data-slide="22">
     <div class="sh">
-      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام Two Sum II (دو نشانگر)</span>
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام جمع دو تایی ۲ (دو نشانگر)</span>
       <span class="sp"></span>
       <span class="badge bc">الگوی دو نشانگر · Interactive Visualizer</span>
-      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله Two Sum II">
+      <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله جمع دو تایی ۲">
         <span>🔗 LeetCode #167</span>
       </a>
     </div>
@@ -1624,20 +1883,21 @@
           <p>جهت حرکت نشانگرها قطعی است: اگر جمع بزرگتر از هدف باشد با <code>right--</code> عدد بزرگتر حذف می‌شود و اگر جمع کمتر باشد با <code>left++</code> عدد کوچکتر جایگزین می‌گردد.</p>
         </div>
         <div class="bad">
-          <div class="label">تفاوت حیاتی مصرف حافظه با Two Sum</div>
-          <p>در Two Sum به جدول هش با حافظه <code>O(n)</code> نیاز داشتیم؛ اما در اینجا <strong>حافظه دقیقاً O(1)</strong> است و هیچ ساختار کمکی ساخته نمی‌شود!</p>
+          <div class="label">تفاوت حیاتی مصرف حافظه با جمع دو تایی</div>
+          <p>در جمع دو تایی به جدول هش با حافظه <code>O(n)</code> نیاز داشتیم؛ اما در اینجا <strong>حافظه دقیقاً O(1)</strong> است و هیچ ساختار کمکی ساخته نمی‌شود!</p>
         </div>
       </div>
     </div>
     <span class="snum">۲۱ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 21 — 3SUM: صورت مسئله و چالش تکرارها ════════════════ -->
-  <div class="slide" data-slide="22">
+  <!-- ══ SLIDE 23 — جمع سه تایی: صورت مسئله و چالش تکرارها ════════════════ -->
+  <div class="slide slide-problem-hero hero-p3" data-slide="23">
     <div class="sh">
-      <span class="shtitle">مسئله سوم (چالشی): 3Sum - مجموع سه عدد (LeetCode #15)</span>
+      <span class="problem-starter-pill" style="background:linear-gradient(135deg,var(--amber),#f59e0b);color:#1a1005;">💥 مسئله سوم</span>
+      <span class="shtitle">مسئله سوم (چالشی): جمع سه تایی (LeetCode #15)</span>
       <span class="sp"></span>
-      <span class="badge ba">مسئله چالشی · Challenging Problem</span>
+      <span class="badge bb" style="font-weight:800;border:1.5px solid var(--amber);">MEDIUM+ · مسئله چالشی</span>
       <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله در LeetCode">
         <span>🔗 LeetCode #15</span>
       </a>
@@ -1651,7 +1911,7 @@
       <div class="card-grid-4 anim">
         <div class="card card-purple">
           <div class="card-hd" style="color:var(--purple)">۱. معادله هدف</div>
-          <div class="card-desc">معادله اصلی: <code>a + b + c = 0</code> یا به بیانی دیگر: <code>b + c = -a</code>. آیا این ساختار شما را به یاد Two Sum نمی‌اندازد؟</div>
+          <div class="card-desc">معادله اصلی: <code>a + b + c = 0</code> یا به بیانی دیگر: <code>b + c = -a</code>. آیا این ساختار شما را به یاد جمع دو تایی نمی‌اندازد؟</div>
         </div>
         <div class="card card-red">
           <div class="card-hd" style="color:var(--red)">۲. بن‌بست Brute Force</div>
@@ -1669,7 +1929,7 @@
 
       <div class="compare anim" style="margin: 0.6rem 0;">
         <div class="good">
-          <div class="label">چرا 3Sum یک آزمون سنجش عیار واقعی است؟</div>
+          <div class="label">چرا جمع سه تایی یک آزمون سنجش عیار واقعی است؟</div>
           <p>در جلسات فنی، بسیاری از افراد ایده Two Pointers را می‌شناسند، اما در <strong>«مدیریت بدون باگ تکرارها (Deduplication)»</strong> بدون استفاده از حافظه سربار Set شکست می‌خورند!</p>
         </div>
         <div class="bad">
@@ -1681,8 +1941,8 @@
     <span class="snum">۲۲ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 23 — 3SUM: راه‌حل ساده و غیربهینه ═════════════════════ -->
-  <div class="slide" data-slide="23">
+  <!-- ══ SLIDE 23 — جمع سه تایی: راه‌حل ساده و غیربهینه ═════════════════════ -->
+  <div class="slide" data-slide="24">
     <div class="sh">
       <span class="shtitle">راه‌حل ساده و غیربهینه: بن‌بست ۳ حلقه‌ای Brute Force و تله تکرارها با HashSet</span>
       <span class="sp"></span>
@@ -1693,7 +1953,7 @@
     </div>
     <div class="sbody">
       <div class="scenario anim" style="margin-bottom:0.7rem;">
-        <strong>راه‌حل مستقیم اما فاجعه‌بار:</strong> بیایید ببینیم اگر بخواهیم 3Sum را بدون تفکر الگوریتمی و صرفاً با ساده‌ترین روش ممکن حل کنیم، با چه بن‌بست‌های مهلکی روبرو می‌شویم:
+        <strong>راه‌حل مستقیم اما فاجعه‌بار:</strong> بیایید ببینیم اگر بخواهیم جمع سه تایی را بدون تفکر الگوریتمی و صرفاً با ساده‌ترین روش ممکن حل کنیم، با چه بن‌بست‌های مهلکی روبرو می‌شویم:
       </div>
 
       <div class="card-grid-3 anim">
@@ -1720,11 +1980,11 @@
 
       <div class="compare anim" style="margin: 0.6rem 0;">
         <div class="good">
-          <div class="label">چرا Brute Force در 3Sum یک بن‌بست کامل است؟</div>
+          <div class="label">چرا Brute Force در جمع سه تایی یک بن‌بست کامل است؟</div>
           <p>پیچیدگی وحشتناک <code>O(n³)</code>، اتلاف شدید حافظه با HashSet و ناکارآمدی مطلق در داده‌های با اندازه بزرگ.</p>
         </div>
         <div class="bad">
-          <div class="label">نقطه عطف: مرتب‌سازی + کاهش به Two Sum II</div>
+          <div class="label">نقطه عطف: مرتب‌سازی + کاهش به جمع دو تایی ۲</div>
           <p>با مرتب‌سازی در زمان <code>O(n log n)</code> و تثبیت عنصر اول، مسئله را به <strong><code>O(n²)</code></strong> کاهش می‌دهیم و تکراری‌ها را درجا و با حافظه کمکی <strong><code>O(1)</code></strong> مهار می‌کنیم!</p>
         </div>
       </div>
@@ -1733,10 +1993,10 @@
   </div>
 
 
-  <!-- ══ SLIDE 22 — 3SUM: کاهش مسئله و حذف تکراری‌ها ═══════════════ -->
-  <div class="slide" data-slide="24">
+  <!-- ══ SLIDE 22 — جمع سه تایی: کاهش مسئله و حذف تکراری‌ها ═══════════════ -->
+  <div class="slide" data-slide="25">
     <div class="sh">
-      <span class="shtitle">کاهش الگو: تبدیل 3Sum به Two Sum II و حذف هوشمند تکرارها</span>
+      <span class="shtitle">کاهش الگو: تبدیل جمع سه تایی به جمع دو تایی ۲ و حذف هوشمند تکرارها</span>
       <span class="sp"></span>
       <span class="badge bb">کاهش الگو · Pattern Reduction</span>
       <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
@@ -1745,7 +2005,7 @@
     </div>
     <div class="sbody">
       <div class="scenario anim" style="margin-bottom:0.7rem;">
-        <strong>تبدیل مسئله پیچیده به مسئله حل‌شده قبلی:</strong> اگر یک عدد را تثبیت کنیم (<code>firstNum = nums[i]</code>)، پیدا کردن دو عدد بعدی با جمع <code>-firstNum</code> در آرایه مرتب، دقیقاً همان <strong>Two Sum II</strong> است!
+        <strong>تبدیل مسئله پیچیده به مسئله حل‌شده قبلی:</strong> اگر یک عدد را تثبیت کنیم (<code>firstNum = nums[i]</code>)، پیدا کردن دو عدد بعدی با جمع <code>-firstNum</code> در آرایه مرتب، دقیقاً همان <strong>جمع دو تایی ۲</strong> است!
       </div>
 
       <div class="card-grid-4 anim">
@@ -1781,10 +2041,10 @@
     <span class="snum">۲۴ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 23 — 3SUM: پیاده‌سازی کاتلین ═════════════════════════ -->
-  <div class="slide" data-slide="25">
+  <!-- ══ SLIDE 23 — جمع سه تایی: پیاده‌سازی کاتلین ═════════════════════════ -->
+  <div class="slide" data-slide="26">
     <div class="sh">
-      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: 3Sum با مدیریت خط به خط تکرارها</span>
+      <span class="shtitle">پیاده‌سازی تمیز در کاتلین: جمع سه تایی با مدیریت خط به خط تکرارها</span>
       <span class="sp"></span>
       <span class="badge bc">کدنویسی تمیز · Clean Code</span>
       <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
@@ -1847,13 +2107,13 @@
     <span class="snum">۲۵ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 24 — 3SUM: شبیه‌ساز تعاملی سه‌تایی‌ها ═════════════ -->
-  <div class="slide" data-slide="26">
+  <!-- ══ SLIDE 24 — جمع سه تایی: شبیه‌ساز تعاملی سه‌تایی‌ها ═════════════ -->
+  <div class="slide" data-slide="27">
     <div class="sh">
-      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم 3Sum</span>
+      <span class="shtitle">شبیه‌ساز تعاملی و گام‌به‌گام الگوریتم جمع سه تایی</span>
       <span class="sp"></span>
       <span class="badge ba">کاهش الگو و حذف تکراری‌ها · Interactive Visualizer</span>
-      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله 3Sum">
+      <a href="https://leetcode.com/problems/3sum/description/" target="_blank" class="badge bk" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;" title="مشاهده صورت مسئله جمع سه تایی">
         <span>🔗 LeetCode #15</span>
       </a>
     </div>
@@ -1944,13 +2204,14 @@
     <span class="snum">۲۶ / ۲۷</span>
   </div>
 
-  <!-- ══ SLIDE 27 — مطالعه موردی پروداکشن: چالش CardStack در سپینو ═════ -->
-  <div class="slide" data-slide="27">
+  <!-- ══ SLIDE 28 — مطالعه موردی پروداکشن: چالش CardStack در سپینو ═════ -->
+  <div class="slide slide-problem-hero hero-case" data-slide="28">
     <div class="sh">
+      <span class="problem-starter-pill" style="background:linear-gradient(135deg,var(--cyan),#0284c7);color:#081628;">🚀 سناریوی واقعی</span>
       <span class="shtitle">مطالعه موردی در پروداکشن: چالش همگام‌سازی State در CardStack</span>
       <span class="sp"></span>
-      <span class="badge bs">تجربه عملی مهندسی · Real-World Case Study</span>
-      <span class="badge bc">پروژه سپینو · KMP & Compose</span>
+      <span class="badge bcy" style="font-weight:800;border:1.5px solid var(--cyan);">پروژه سپینو · KMP & Compose</span>
+      <span class="badge bs">تجربه عملی مهندسی</span>
     </div>
     <div class="sbody">
       <p class="anim">الگوریتم‌های لیت‌کد فقط برای مصاحبه نیستند؛ در مهندسی نرم‌افزار روزمره، انتخاب هوشمندانه ساختار داده ضامن روانی رابط کاربری است:</p>
@@ -1986,7 +2247,7 @@
   </div>
 
   <!-- ══ SLIDE 28 — راه‌حل اول (غیربهینه): فیلتر مستقیم روی List ═════════ -->
-  <div class="slide" data-slide="28">
+  <div class="slide" data-slide="29">
     <div class="sh">
       <span class="shtitle">راه‌حل اول (ساده اما غیربهینه): فیلتر مستقیم روی List</span>
       <span class="sp"></span>
@@ -2028,7 +2289,7 @@
   </div>
 
   <!-- ══ SLIDE 29 — کالبدشکافی ایراد: هزینه پنهان و افت فریم در UI ═════ -->
-  <div class="slide" data-slide="29">
+  <div class="slide" data-slide="30">
     <div class="sh">
       <span class="shtitle">کالبدشکافی ایراد: هزینه پنهان List.contains() و افت فریم در UI</span>
       <span class="sp"></span>
@@ -2058,14 +2319,14 @@
   </div>
 
   <!-- ══ SLIDE 30 — راه‌حل بهینه: قدرت جدول هش و Set ═══════════════════ -->
-  <div class="slide" data-slide="30">
+  <div class="slide" data-slide="31">
     <div class="sh">
       <span class="shtitle">راه‌حل بهینه: جهش به O(N) با HashSet و تحلیل چرایی بهینگی</span>
       <span class="sp"></span>
       <span class="badge bc">کدنویسی تمیز · Optimal O(N)</span>
     </div>
     <div class="sbody">
-      <p class="anim">همان اصل طلایی مسئله Two Sum (استفاده از جدول هش برای جستجوی آنی) اینجا نیز مستقیماً مسئله را حل می‌کند:</p>
+      <p class="anim">همان اصل طلایی مسئله جمع دو تایی (استفاده از جدول هش برای جستجوی آنی) اینجا نیز مستقیماً مسئله را حل می‌کند:</p>
 
       <pre class="code-box anim"><code><span class="cm">// ✅ رویکرد بهینه: تبدیل لیست‌ها به Set و جستجوی آنی در زمان ثابت O(1)</span>
 <span class="kw">internal fun</span> &lt;<span class="ty">T</span>&gt; <span class="fn">syncCardStackState</span>(
@@ -2103,14 +2364,14 @@
   </div>
 
   <!-- ══ SLIDE 31 — برنامه ۳۰ روزه ═══════════════════════════ -->
-  <div class="slide" data-slide="31">
+  <div class="slide" data-slide="32">
     <div class="sh"><span class="shtitle">جمع‌بندی و برنامه ۳۰ روزه آینده</span><span class="sp"></span><span class="badge bc">برنامه اقدام · Action Plan</span></div>
     <div class="sbody">
       <p class="anim">برای شروع از همین امروز، نیازی به برنامه سنگین غیرواقعی نیست. این تقویم ۴ هفته‌ای را دنبال کنید:</p>
       <div class="card-grid-4 anim">
         <div class="card card-teal">
           <div class="card-hd" style="color:var(--teal)">هفته اول: پایه‌ها</div>
-          <div class="card-desc">آرایه‌ها و جداول هش. حل ۵ مسئله Easy از Blind 75 شامل Two Sum و Contains Duplicate.</div>
+          <div class="card-desc">آرایه‌ها و جداول هش. حل ۵ مسئله Easy از Blind 75 شامل جمع دو تایی و Contains Duplicate.</div>
         </div>
         <div class="card card-purple">
           <div class="card-hd" style="color:var(--purple)">هفته دوم: نشانگرها</div>
@@ -2133,7 +2394,7 @@
   </div>
 
   <!-- ══ SLIDE 32 — پایان و پرسش و پاسخ ══════════════════════ -->
-  <div class="slide" id="sthanks" data-slide="32">
+  <div class="slide" id="sthanks" data-slide="33">
     <div class="tc">
       <h1 class="tqmain">متشکرم از توجه شما</h1>
       <p class="tqsub">پرسش و پاسخ (Q&A)</p>
@@ -2157,7 +2418,7 @@
   <button class="nb" id="font-up" title="بزرگ‌تر کردن فونت (+)">A+</button>
   <button class="nb" id="notes-btn" title="باز کردن یادداشت گوینده در پنجره جدا (N)">📝</button>
   <button class="nb" id="bnext" title="بعدی →">→</button>
-  <span id="ctr">۱ / ۳۳</span>
+  <span id="ctr">۱ / ۳۴</span>
   <button class="nb" id="bprev" title="قبلی ←">←</button>
 </div>
 
@@ -2248,7 +2509,7 @@ function bumpFont(delta) {
   applyFontScale();
 }
 
-// ── TWO SUM SIMULATOR LOGIC ────────────────────────────────
+// ── جمع دو تایی (TWO SUM) SIMULATOR LOGIC ──────────────────
 const simSteps = [
   {
     step: 0,
@@ -2788,7 +3049,7 @@ function toggleBfAutoPlay() {
   }
 }
 
-// ── SLIDE 20 TWO SUM II SIMULATOR LOGIC ───────────────────
+// ── SLIDE 20 جمع دو تایی ۲ (TWO SUM II) SIMULATOR LOGIC ──
 const t2Steps = [
   {
     step: 0,
@@ -2995,7 +3256,7 @@ function renderT2Trace() {
   if (nextBtn) nextBtn.disabled = (currentT2Step === t2Steps.length - 1);
 }
 
-// ── SLIDE 24 3SUM SIMULATOR LOGIC ─────────────────────────
+// ── SLIDE 24 جمع سه تایی (3SUM) SIMULATOR LOGIC ──────────
 const s3Steps = [
   {
     step: 0,
@@ -3328,7 +3589,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderSim();
 
-  // Two Sum II Simulator Events
+  // جمع دو تایی ۲ (Two Sum II) Simulator Events
   const t2NextBtn = document.getElementById('t2-next');
   const t2PrevBtn = document.getElementById('t2-prev');
   const t2PlayBtn = document.getElementById('t2-play');
@@ -3376,7 +3637,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderT2Trace();
 
-  // 3Sum Simulator Events
+  // جمع سه تایی (3Sum) Simulator Events
   const s3NextBtn = document.getElementById('s3-next');
   const s3PrevBtn = document.getElementById('s3-prev');
   const s3PlayBtn = document.getElementById('s3-play');
