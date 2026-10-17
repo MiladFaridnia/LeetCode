@@ -5,6 +5,13 @@
 graphify-out/
 .graphify*/
 
+# AI Skills & Agent Configurations
+.agents/
+.gemini/
+.claude/
+.skills/
+skills/
+
 # JetBrains / IntelliJ IDEA
 # Official recommended practice: share core project settings, ignore user-specific files and caches
 .idea/caches/
@@ -22,4 +29,3 @@ __pycache__/
 *.py[cod]
 *$py.class
 .venv/
-
